@@ -37,3 +37,13 @@ D:\DuLich\DuLich\DuLich\obj\Debug\net6.0\refint\DuLich.dll
 D:\DuLich\DuLich\DuLich\obj\Debug\net6.0\DuLich.pdb
 D:\DuLich\DuLich\DuLich\obj\Debug\net6.0\DuLich.genruntimeconfig.cache
 D:\DuLich\DuLich\DuLich\obj\Debug\net6.0\ref\DuLich.dll
+D:\DULIEUHOCTAP\đuanotnet\DuLich\DuLich\DuLich\obj\Debug\net6.0\DuLich.csproj.AssemblyReference.cache
+D:\DULIEUHOCTAP\đuanotnet\DuLich\DuLich\DuLich\obj\Debug\net6.0\DuLich.GeneratedMSBuildEditorConfig.editorconfig
+D:\DULIEUHOCTAP\đuanotnet\DuLich\DuLich\DuLich\obj\Debug\net6.0\DuLich.AssemblyInfoInputs.cache
+D:\DULIEUHOCTAP\đuanotnet\DuLich\DuLich\DuLich\obj\Debug\net6.0\DuLich.AssemblyInfo.cs
+D:\DULIEUHOCTAP\đuanotnet\DuLich\DuLich\DuLich\obj\Debug\net6.0\DuLich.csproj.CoreCompileInputs.cache
+D:\DULIEUHOCTAP\đuanotnet\DuLich\DuLich\DuLich\obj\Debug\net6.0\DuLich.MvcApplicationPartsAssemblyInfo.cs
+D:\DULIEUHOCTAP\đuanotnet\DuLich\DuLich\DuLich\obj\Debug\net6.0\DuLich.MvcApplicationPartsAssemblyInfo.cache
+D:\DULIEUHOCTAP\đuanotnet\DuLich\DuLich\DuLich\obj\Debug\net6.0\DuLich.dll
+D:\DULIEUHOCTAP\đuanotnet\DuLich\DuLich\DuLich\obj\Debug\net6.0\refint\DuLich.dll
+D:\DULIEUHOCTAP\đuanotnet\DuLich\DuLich\DuLich\obj\Debug\net6.0\DuLich.pdb
