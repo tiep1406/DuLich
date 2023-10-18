@@ -11,5 +11,6 @@ namespace DemoCrud.Responsitory
         void Update(KhachSanVM KhachSan);
         void Delete(int id);
         Task<KhachSan> Add(KhachSanVM KhachSan);
+        Task<DatKhachSan> DatKhachSan(DatKhachSanVM datKhachSan);
     }
 }

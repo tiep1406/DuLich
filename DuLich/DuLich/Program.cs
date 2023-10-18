@@ -1,4 +1,7 @@
+using DemoCrud.Responsitory;
+using DuLich.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
@@ -19,7 +22,9 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
             IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(builder.Configuration["Jwt:Key"]))
         };
     });
-
+builder.Services.AddScoped<INhaHangRepositoty, NhaHangRepository>();
+builder.Services.AddScoped<IKhachSanRepositoty, KhachSanRepository>();
+builder.Services.AddScoped<IVanChuyenRepositoty, VanChuyenRepository>();
 builder.Services.AddControllers();
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
