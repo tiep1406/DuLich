@@ -69,5 +69,18 @@ namespace DemoCrud.Responsitory
             _DBContext.KhachSans.Update(_KhachSan);
             _DBContext.SaveChanges();
         }
+        public async Task<DatKhachSan> DatKhachSan(DatKhachSanVM datKhachSan)
+        {
+            DatKhachSan dat = new DatKhachSan
+            {
+                IdNguoiDung = datKhachSan.IdNguoiDung,
+                IdKhachSan = datKhachSan.IdKhachSan,
+                NgayDat = datKhachSan.NgayDat,
+                NgayTra = datKhachSan.NgayTra,
+            };
+            await _DBContext.DatKhachSans.AddAsync(dat);
+            await _DBContext.SaveChangesAsync();
+            return dat;
+        }
     }
 }

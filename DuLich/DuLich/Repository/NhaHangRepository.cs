@@ -76,6 +76,8 @@ namespace DemoCrud.Responsitory
             {
                 IdNguoiDung = datNhaHang.IdNguoiDung,
                 IdNhaHang = datNhaHang.IdNhaHang,
+                NgayDat = datKhachSan.NgayDat,
+                NgayTra = datKhachSan.NgayTra,
             };
             await _DBContext.DatNhaHangs.AddAsync(dat);
             await _DBContext.SaveChangesAsync();

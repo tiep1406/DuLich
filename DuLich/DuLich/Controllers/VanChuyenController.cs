@@ -10,53 +10,53 @@ namespace DuLich.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NhaHangController : ControllerBase
+    public class VanChuyenController : ControllerBase
     {
-        private INhaHangRepositoty _NhaHangRepositoty;
-        public NhaHangController(INhaHangRepositoty nhaHangRepositoty)
+        private IVanChuyenRepositoty _VanChuyenRepositoty;
+        public VanChuyenController(IVanChuyenRepositoty VanChuyenRepositoty)
         {
-            _NhaHangRepositoty = nhaHangRepositoty;
+            _VanChuyenRepositoty = VanChuyenRepositoty;
         }
         [HttpGet]
-        [Route("GetNhaHang")]
-        public IActionResult GetNhaHang(int id)
+        [Route("GetVanChuyen")]
+        public IActionResult GetVanChuyen(int id)
         {
-            var ds = _NhaHangRepositoty.GetNhaHang(id);
+            var ds = _VanChuyenRepositoty.GetVanChuyen(id);
             return Ok(ds);
         }
         [HttpGet]
         [Route("GetAll")]
         public IActionResult GetAll()
         {
-            var ds = _NhaHangRepositoty.GetAll();
+            var ds = _VanChuyenRepositoty.GetAll();
             return Ok(ds);
         }
         [HttpPost]
         [Route("add")]
-        public IActionResult Add(NhaHangVM nhaHangVM)
+        public IActionResult Add(VanChuyenVM VanChuyenVM)
         {
-            var ds = _NhaHangRepositoty.Add(nhaHangVM);
+            var ds = _VanChuyenRepositoty.Add(VanChuyenVM);
             return Ok(ds);
         }
         [HttpPost]
-        [Route("datnhahang")]
-        public IActionResult datnhahang(DatNhaHangVM nhaHangVM)
+        [Route("datVanChuyen")]
+        public IActionResult datVanChuyen(DatVanChuyenVM VanChuyenVM)
         {
-            var ds = _NhaHangRepositoty.DatNhaHang(nhaHangVM);
+            var ds = _VanChuyenRepositoty.DatVanChuyen(VanChuyenVM);
             return Ok(ds);
         }
         [HttpPut]
         [Route("Update")]
-        public IActionResult Update(NhaHangVM nhaHangVM)
+        public IActionResult Update(VanChuyenVM VanChuyenVM)
         {
-            _NhaHangRepositoty.Update(nhaHangVM);
+            _VanChuyenRepositoty.Update(VanChuyenVM);
             return Ok();
         }
         [HttpDelete]
         [Route("Delete")]
         public IActionResult Delete(int id)
         {
-            _NhaHangRepositoty.Delete(id);
+            _VanChuyenRepositoty.Delete(id);
             return Ok();
         }
     }

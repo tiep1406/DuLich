@@ -10,53 +10,53 @@ namespace DuLich.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class NhaHangController : ControllerBase
+    public class KhachSanController : ControllerBase
     {
-        private INhaHangRepositoty _NhaHangRepositoty;
-        public NhaHangController(INhaHangRepositoty nhaHangRepositoty)
+        private IKhachSanRepositoty _KhachSanRepositoty;
+        public KhachSanController(IKhachSanRepositoty KhachSanRepositoty)
         {
-            _NhaHangRepositoty = nhaHangRepositoty;
+            _KhachSanRepositoty = KhachSanRepositoty;
         }
         [HttpGet]
-        [Route("GetNhaHang")]
-        public IActionResult GetNhaHang(int id)
+        [Route("GetKhachSan")]
+        public IActionResult GetKhachSan(int id)
         {
-            var ds = _NhaHangRepositoty.GetNhaHang(id);
+            var ds = _KhachSanRepositoty.GetKhachSan(id);
             return Ok(ds);
         }
         [HttpGet]
         [Route("GetAll")]
         public IActionResult GetAll()
         {
-            var ds = _NhaHangRepositoty.GetAll();
+            var ds = _KhachSanRepositoty.GetAll();
             return Ok(ds);
         }
         [HttpPost]
         [Route("add")]
-        public IActionResult Add(NhaHangVM nhaHangVM)
+        public IActionResult Add(KhachSanVM KhachSanVM)
         {
-            var ds = _NhaHangRepositoty.Add(nhaHangVM);
+            var ds = _KhachSanRepositoty.Add(KhachSanVM);
             return Ok(ds);
         }
         [HttpPost]
-        [Route("datnhahang")]
-        public IActionResult datnhahang(DatNhaHangVM nhaHangVM)
+        [Route("datKhachSan")]
+        public IActionResult datKhachSan(DatKhachSanVM KhachSanVM)
         {
-            var ds = _NhaHangRepositoty.DatNhaHang(nhaHangVM);
+            var ds = _KhachSanRepositoty.DatKhachSan(KhachSanVM);
             return Ok(ds);
         }
         [HttpPut]
         [Route("Update")]
-        public IActionResult Update(NhaHangVM nhaHangVM)
+        public IActionResult Update(KhachSanVM KhachSanVM)
         {
-            _NhaHangRepositoty.Update(nhaHangVM);
+            _KhachSanRepositoty.Update(KhachSanVM);
             return Ok();
         }
         [HttpDelete]
         [Route("Delete")]
         public IActionResult Delete(int id)
         {
-            _NhaHangRepositoty.Delete(id);
+            _KhachSanRepositoty.Delete(id);
             return Ok();
         }
     }
