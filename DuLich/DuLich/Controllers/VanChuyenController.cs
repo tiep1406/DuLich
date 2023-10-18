@@ -16,7 +16,7 @@ namespace DuLich.Controllers
         }
 
         [HttpGet]
-        [Route("GetVanChuyen")]
+        [Route("GetVanChuyen/{id}")]
         public IActionResult GetVanChuyen(int id)
         {
             var ds = _VanChuyenRepositoty.GetVanChuyen(id);
