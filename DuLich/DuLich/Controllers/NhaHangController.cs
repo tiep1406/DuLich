@@ -16,7 +16,7 @@ namespace DuLich.Controllers
         }
 
         [HttpGet]
-        [Route("GetNhaHang")]
+        [Route("GetNhaHang/{id}")]
         public IActionResult GetNhaHang(int id)
         {
             var ds = _NhaHangRepositoty.GetNhaHang(id);
