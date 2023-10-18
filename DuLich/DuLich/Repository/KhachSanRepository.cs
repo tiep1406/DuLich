@@ -1,31 +1,32 @@
 ﻿using DuLich.Models;
-using System.Data;
-using Microsoft.EntityFrameworkCore;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using DuLich.Data;
 using DuLich.ModelsView;
-using Microsoft.AspNetCore.Mvc;
+using DuLich.Repository.DBContext;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace DemoCrud.Responsitory
 {
     public class KhachSanRepository : IKhachSanRepositoty
     {
-        private ApplicationDBContext _DBContext;
-        public KhachSanRepository(ApplicationDBContext dBContext)
+        private AppDBContext _DBContext;
+
+        public KhachSanRepository(AppDBContext dBContext)
         {
             _DBContext = dBContext;
         }
+
         public async Task<List<KhachSan>> GetAll()
         {
             var ds = await _DBContext.KhachSans.Select(t => t).ToListAsync();
             return ds;
         }
+
         public async Task<KhachSan> GetKhachSan(int id)
         {
             var ds = await _DBContext.KhachSans.FindAsync(id);
             return ds;
         }
+
         public async Task<KhachSan> Add(KhachSanVM KhachSan)
         {
             KhachSan user1 = new KhachSan
@@ -54,7 +55,6 @@ namespace DemoCrud.Responsitory
             }
         }
 
-
         public void Update(KhachSanVM KhachSan)
         {
             var _KhachSan = _DBContext.KhachSans.SingleOrDefault(lo => lo.Id == KhachSan.Id);
@@ -69,6 +69,7 @@ namespace DemoCrud.Responsitory
             _DBContext.KhachSans.Update(_KhachSan);
             _DBContext.SaveChanges();
         }
+
         public async Task<DatKhachSan> DatKhachSan(DatKhachSanVM datKhachSan)
         {
             DatKhachSan dat = new DatKhachSan

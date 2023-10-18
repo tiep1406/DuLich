@@ -135,6 +135,9 @@ namespace DuLich.Migrations
                     b.Property<DateTime>("NgayDat")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("NgayTra")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdKhachSan");
@@ -159,6 +162,9 @@ namespace DuLich.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("NgayDat")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("NgayTra")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");

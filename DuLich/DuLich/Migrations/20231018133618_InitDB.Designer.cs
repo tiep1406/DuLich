@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DuLich.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20231018110735_InitDB")]
+    [Migration("20231018133618_InitDB")]
     partial class InitDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -137,6 +137,9 @@ namespace DuLich.Migrations
                     b.Property<DateTime>("NgayDat")
                         .HasColumnType("datetime2");
 
+                    b.Property<DateTime>("NgayTra")
+                        .HasColumnType("datetime2");
+
                     b.HasKey("Id");
 
                     b.HasIndex("IdKhachSan");
@@ -161,6 +164,9 @@ namespace DuLich.Migrations
                         .HasColumnType("int");
 
                     b.Property<DateTime>("NgayDat")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("NgayTra")
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");

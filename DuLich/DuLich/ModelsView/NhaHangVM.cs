@@ -11,8 +11,7 @@ namespace DuLich.ModelsView
         public string TenNhaHang { get; set; }
         public string AnhDaiDien { get; set; }
         public string ChiTietNhaHang { get; set; }
-        public string MoTaKhachSan { get; set; }
+        public string MoTaNhaHang { get; set; }
         public int DanhGia { get; set; }
-
     }
 }

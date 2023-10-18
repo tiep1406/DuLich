@@ -11,7 +11,5 @@ namespace DuLich.Models
         public string MoTaDichVu { get; set; }
         public string DanhGia { get; set; }
         public DiemThamQuan DiemThamQuan { get; set; }
-
-        public virtual DiemThamQuan DiemThamQuan { get; set; }
     }
 }

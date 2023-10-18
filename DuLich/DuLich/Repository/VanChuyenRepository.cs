@@ -1,32 +1,32 @@
 ﻿using DuLich.Models;
-using System.Data;
-using Microsoft.EntityFrameworkCore;
-using System.Data.OleDb;
-using System.Data.SqlClient;
-using DuLich.Data;
 using DuLich.ModelsView;
-using Microsoft.AspNetCore.Mvc;
-using System;
+using DuLich.Repository.DBContext;
+using Microsoft.EntityFrameworkCore;
+using System.Data;
 
 namespace DemoCrud.Responsitory
 {
     public class VanChuyenRepository : IVanChuyenRepositoty
     {
-        private ApplicationDBContext _DBContext;
-        public VanChuyenRepository(ApplicationDBContext dBContext)
+        private AppDBContext _DBContext;
+
+        public VanChuyenRepository(AppDBContext dBContext)
         {
             _DBContext = dBContext;
         }
+
         public async Task<List<VanChuyen>> GetAll()
         {
             var ds = await _DBContext.VanChuyens.Select(t => t).ToListAsync();
             return ds;
         }
+
         public async Task<VanChuyen> GetVanChuyen(int id)
         {
             var ds = await _DBContext.VanChuyens.FindAsync(id);
             return ds;
         }
+
         public async Task<VanChuyen> Add(VanChuyenVM VanChuyen)
         {
             VanChuyen user1 = new VanChuyen
@@ -56,7 +56,6 @@ namespace DemoCrud.Responsitory
             }
         }
 
-
         public void Update(VanChuyenVM VanChuyen)
         {
             var _VanChuyen = _DBContext.VanChuyens.SingleOrDefault(lo => lo.Id == VanChuyen.Id);
@@ -72,6 +71,7 @@ namespace DemoCrud.Responsitory
             _DBContext.VanChuyens.Update(_VanChuyen);
             _DBContext.SaveChanges();
         }
+
         public async Task<DatVanChuyen> DatVanChuyen(DatVanChuyenVM datVanChuyen)
         {
             DatVanChuyen dat = new DatVanChuyen

@@ -1,14 +1,10 @@
+using DemoCrud.Responsitory;
 using DuLich.Middleware;
 using DuLich.Repository.DBContext;
 using DuLich.Repository.DiemThamQuan;
 using DuLich.Repository.NguoiDung;
 using DuLich.Repository.Tour;
 using DuLich.Service;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
-using DemoCrud.Responsitory;
-using DuLich.Data;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
@@ -35,16 +31,16 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddScoped<INhaHangRepositoty, NhaHangRepository>();
-builder.Services.AddScoped<IKhachSanRepositoty, KhachSanRepository>();
-builder.Services.AddScoped<IVanChuyenRepositoty, VanChuyenRepository>();
 builder.Services.AddControllers();
 
 builder.Services
     .AddScoped<IUploadService, UploadService>()
     .AddScoped<INguoiDungRepository, NguoiDungRepository>()
     .AddScoped<ITourRepository, TourRepository>()
-    .AddScoped<IDiemThamQuanRepository, DiemThamQuanRepository>();
+    .AddScoped<IDiemThamQuanRepository, DiemThamQuanRepository>()
+    .AddScoped<IVanChuyenRepositoty, VanChuyenRepository>()
+    .AddScoped<IKhachSanRepositoty, KhachSanRepository>()
+    .AddScoped<INhaHangRepositoty, NhaHangRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

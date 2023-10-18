@@ -11,6 +11,7 @@ namespace DuLich.Models
         public int IdKhachSan { get; set; }
 
         public DateTime NgayDat { get; set; }
+        public DateTime NgayTra { get; set; }
 
         public KhachSan KhachSan { get; set; }
         public NguoiDung NguoiDung { get; set; }

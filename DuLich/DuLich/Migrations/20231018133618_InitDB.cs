@@ -189,7 +189,8 @@ namespace DuLich.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdNguoiDung = table.Column<int>(type: "int", nullable: false),
                     IdKhachSan = table.Column<int>(type: "int", nullable: false),
-                    NgayDat = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    NgayDat = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NgayTra = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -245,7 +246,8 @@ namespace DuLich.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     IdNguoiDung = table.Column<int>(type: "int", nullable: false),
                     IdNhaHang = table.Column<int>(type: "int", nullable: false),
-                    NgayDat = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    NgayDat = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NgayTra = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
                 {
