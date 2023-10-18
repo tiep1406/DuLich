@@ -14,5 +14,7 @@
         public DateTime NgayBatDau { get; set; }
         public DateTime NgayKetThuc { get; set; }
         public string GiaTour { get; set; }
+        public List<DatTour> DatTours { get; set; }
+        public List<TourCT> TourCTs { get; set; }
     }
 }

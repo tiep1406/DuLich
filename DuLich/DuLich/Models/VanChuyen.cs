@@ -11,5 +11,6 @@
         public DateTime ThoiGianBatDau { get; set; }
         public DateTime ThoiGianKetThuc { get; set; }
         public string TaiXe { get; set; }
+        public List<DatVanChuyen> DatVanChuyens { get; set; }
     }
 }
