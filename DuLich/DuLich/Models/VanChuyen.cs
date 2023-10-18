@@ -1,6 +1,6 @@
 ﻿namespace DuLich.Models
 {
-    public class VanChuyen:BaseEntity
+    public class VanChuyen : BaseEntity
     {
         public int ChuDichVu { get; set; }
         public string DiaChiDung { get; set; }
@@ -11,5 +11,7 @@
         public DateTime ThoiGianBatDau { get; set; }
         public DateTime ThoiGianKetThuc { get; set; }
         public string TaiXe { get; set; }
+        public List<DatVanChuyen> DatVanChuyens { get; set; }
+        public List<BinhLuanVanChuyen> BinhLuanVanChuyens { get; set; }
     }
 }
