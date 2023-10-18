@@ -2,15 +2,18 @@
 
 namespace DuLich.Models
 {
-    public class DatNhaHang : BaseEntity
+    public class BinhLuanNhaHang : BaseEntity
     {
-        [ForeignKey("NguoiDung")]
-        public int IdNguoiDung { get; set; }
-
         [ForeignKey("NhaHang")]
         public int IdNhaHang { get; set; }
 
-        public DateTime NgayDat { get; set; }
+        [ForeignKey("NguoiDung")]
+        public int IdNguoiDung { get; set; }
+
+        public int ChuDichVu { get; set; }
+
+        public string NoiDung { get; set; }
+        public DateTime ThoiGian { get; set; }
         public NhaHang NhaHang { get; set; }
         public NguoiDung NguoiDung { get; set; }
     }

@@ -1,10 +1,18 @@
-﻿namespace DuLich.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace DuLich.Models
 {
-    public class DatTour
+    public class DatTour : BaseEntity
     {
+        [ForeignKey("NguoiDung")]
         public int IdNguoiDung { get; set; }
+
+        [ForeignKey("Tour")]
         public int IdTour { get; set; }
-        public virtual NguoiDung NguoiDung { get; set; }
-        public virtual Tour Tour { get; set; }
+
+        public DateTime NgayDat { get; set; }
+
+        public Tour Tour { get; set; }
+        public NguoiDung NguoiDung { get; set; }
     }
 }

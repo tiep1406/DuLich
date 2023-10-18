@@ -1,9 +1,14 @@
-﻿namespace DuLich.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace DuLich.Models
 {
-    public class TourCT:BaseEntity
+    public class TourCT : BaseEntity
     {
-        public int IdTour { get; set; }
+        public int ChuTour { get; set; }
+
+        [ForeignKey("Tour")]
         public int MaTour { get; set; }
+
         public string TenTour { get; set; }
         public string LichTrinhNgay { get; set; }
         public string ChiTietLichTrinh { get; set; }
