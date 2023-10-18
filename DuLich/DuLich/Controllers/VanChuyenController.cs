@@ -1,10 +1,6 @@
 ﻿using DemoCrud.Responsitory;
-using DuLich.Data;
-using DuLich.Models;
 using DuLich.ModelsView;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace DuLich.Controllers
 {
@@ -13,10 +9,12 @@ namespace DuLich.Controllers
     public class VanChuyenController : ControllerBase
     {
         private IVanChuyenRepositoty _VanChuyenRepositoty;
+
         public VanChuyenController(IVanChuyenRepositoty VanChuyenRepositoty)
         {
             _VanChuyenRepositoty = VanChuyenRepositoty;
         }
+
         [HttpGet]
         [Route("GetVanChuyen")]
         public IActionResult GetVanChuyen(int id)
@@ -24,6 +22,7 @@ namespace DuLich.Controllers
             var ds = _VanChuyenRepositoty.GetVanChuyen(id);
             return Ok(ds);
         }
+
         [HttpGet]
         [Route("GetAll")]
         public IActionResult GetAll()
@@ -31,6 +30,7 @@ namespace DuLich.Controllers
             var ds = _VanChuyenRepositoty.GetAll();
             return Ok(ds);
         }
+
         [HttpPost]
         [Route("add")]
         public IActionResult Add(VanChuyenVM VanChuyenVM)
@@ -38,6 +38,7 @@ namespace DuLich.Controllers
             var ds = _VanChuyenRepositoty.Add(VanChuyenVM);
             return Ok(ds);
         }
+
         [HttpPost]
         [Route("datVanChuyen")]
         public IActionResult datVanChuyen(DatVanChuyenVM VanChuyenVM)
@@ -45,6 +46,7 @@ namespace DuLich.Controllers
             var ds = _VanChuyenRepositoty.DatVanChuyen(VanChuyenVM);
             return Ok(ds);
         }
+
         [HttpPut]
         [Route("Update")]
         public IActionResult Update(VanChuyenVM VanChuyenVM)
@@ -52,6 +54,7 @@ namespace DuLich.Controllers
             _VanChuyenRepositoty.Update(VanChuyenVM);
             return Ok();
         }
+
         [HttpDelete]
         [Route("Delete")]
         public IActionResult Delete(int id)

@@ -1,10 +1,6 @@
 ﻿using DemoCrud.Responsitory;
-using DuLich.Data;
-using DuLich.Models;
 using DuLich.ModelsView;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace DuLich.Controllers
 {
@@ -13,10 +9,12 @@ namespace DuLich.Controllers
     public class KhachSanController : ControllerBase
     {
         private IKhachSanRepositoty _KhachSanRepositoty;
+
         public KhachSanController(IKhachSanRepositoty KhachSanRepositoty)
         {
             _KhachSanRepositoty = KhachSanRepositoty;
         }
+
         [HttpGet]
         [Route("GetKhachSan")]
         public IActionResult GetKhachSan(int id)
@@ -24,6 +22,7 @@ namespace DuLich.Controllers
             var ds = _KhachSanRepositoty.GetKhachSan(id);
             return Ok(ds);
         }
+
         [HttpGet]
         [Route("GetAll")]
         public IActionResult GetAll()
@@ -31,6 +30,7 @@ namespace DuLich.Controllers
             var ds = _KhachSanRepositoty.GetAll();
             return Ok(ds);
         }
+
         [HttpPost]
         [Route("add")]
         public IActionResult Add(KhachSanVM KhachSanVM)
@@ -38,6 +38,7 @@ namespace DuLich.Controllers
             var ds = _KhachSanRepositoty.Add(KhachSanVM);
             return Ok(ds);
         }
+
         [HttpPost]
         [Route("datKhachSan")]
         public IActionResult datKhachSan(DatKhachSanVM KhachSanVM)
@@ -45,6 +46,7 @@ namespace DuLich.Controllers
             var ds = _KhachSanRepositoty.DatKhachSan(KhachSanVM);
             return Ok(ds);
         }
+
         [HttpPut]
         [Route("Update")]
         public IActionResult Update(KhachSanVM KhachSanVM)
@@ -52,6 +54,7 @@ namespace DuLich.Controllers
             _KhachSanRepositoty.Update(KhachSanVM);
             return Ok();
         }
+
         [HttpDelete]
         [Route("Delete")]
         public IActionResult Delete(int id)

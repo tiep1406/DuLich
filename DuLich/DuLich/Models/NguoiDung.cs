@@ -1,6 +1,6 @@
 ﻿namespace DuLich.Models
 {
-    public class NguoiDung:BaseEntity
+    public class NguoiDung : BaseEntity
     {
         public string Email { get; set; }
         public string Sdt { get; set; }
@@ -14,5 +14,8 @@
         public List<DatNhaHang> DatNhaHangs { get; set; }
         public List<DatTour> DatTours { get; set; }
         public List<DatVanChuyen> DatVanChuyens { get; set; }
+        public List<BinhLuanKhachSan> BinhLuanKhachSans { get; set; }
+        public List<BinhLuanNhaHang> BinhLuanNhaHangs { get; set; }
+        public List<BinhLuanVanChuyen> BinhLuanVanChuyens { get; set; }
     }
 }

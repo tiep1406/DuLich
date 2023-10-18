@@ -1,9 +1,8 @@
 ﻿namespace DuLich.Models
 {
-    public class Tour:BaseEntity
+    public class Tour : BaseEntity
     {
         public int ChuTour { get; set; }
-        public int MaTour { get; set; }
         public string TenTour { get; set; }
         public int SoNgay { get; set; }
         public int LuotDanhGia { get; set; }
@@ -15,6 +14,6 @@
         public DateTime NgayKetThuc { get; set; }
         public string GiaTour { get; set; }
         public List<DatTour> DatTours { get; set; }
-        public List<TourCT> TourCTs { get; set; }
+        public TourCT TourCT { get; set; }
     }
 }
