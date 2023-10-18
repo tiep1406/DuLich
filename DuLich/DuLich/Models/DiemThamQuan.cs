@@ -7,5 +7,6 @@
         public int Gia { get; set; }
         public string DiaDiem { get; set; }
         public string AnhDaiDien { get; set; }
+        public List<DiemThamQuanCT> DiemThamQuanCTs { get; set; }
     }
 }

@@ -10,6 +10,7 @@
         public string ChiTietKhachSan { get; set; }
         public string MoTaKhachSan { get; set; }
         public int DanhGia { get; set; }
+        public List<DatNhaHang> DatNhaHangs { get; set; }
 
     }
 }
