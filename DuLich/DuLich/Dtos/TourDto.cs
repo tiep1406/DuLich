@@ -16,5 +16,7 @@
         public DateTime NgayBatDau { get; set; }
         public DateTime NgayKetThuc { get; set; }
         public string GiaTour { get; set; }
+
+        public DateTime? NgayDat { get; set; }
     }
 }

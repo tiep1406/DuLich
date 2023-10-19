@@ -36,6 +36,14 @@ namespace DuLich.Controllers
             return Ok(new { statusCode = StatusCodes.Status200OK, data = dtqs });
         }
 
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> XoaDiemThamQuan([FromRoute] int id)
+        {
+            await _repository.XoaDiemThamQuan(id);
+
+            return Ok(new { statusCode = StatusCodes.Status204NoContent, message = "Xoá điểm tham quan thành công" });
+        }
+
         [HttpPost]
         public async Task<IActionResult> ThemDiemThamQuan([FromForm] ThemDiemThamQuanRequest request)
         {

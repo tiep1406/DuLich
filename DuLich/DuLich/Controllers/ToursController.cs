@@ -45,6 +45,24 @@ namespace DuLich.Controllers
             return Ok(new { statusCode = StatusCodes.Status200OK, data = tours });
         }
 
+        [HttpGet("user/{id}")]
+        [Authorize(Roles = "0, 1, 2, 3")]
+        public async Task<IActionResult> GetDanhSachTourByNguoiDung([FromRoute] int id)
+        {
+            var tours = await _repository.GetDanhSachTourByNguoiDung(id);
+
+            return Ok(new { statusCode = StatusCodes.Status200OK, data = tours });
+        }
+
+        [HttpGet("owner/{id}")]
+        [Authorize(Roles = "0, 1, 2")]
+        public async Task<IActionResult> GetDanhSachTourByChuDichVu([FromRoute] int id)
+        {
+            var tours = await _repository.GetDanhSachTourByChuDichVu(id);
+
+            return Ok(new { statusCode = StatusCodes.Status200OK, data = tours });
+        }
+
         [HttpPost]
         [Authorize(Roles = "0, 1, 2")]
         public async Task<IActionResult> ThemTour([FromForm] ThemTourRequest request)

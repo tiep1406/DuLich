@@ -166,5 +166,50 @@ namespace DuLich.Repository.Tour
             }
             return tourDtos;
         }
+
+        public async Task<List<TourDto>> GetDanhSachTourByChuDichVu(int id)
+        {
+            var tours = await _context.Tours
+                .Include(x => x.TourCT)
+                .Where(x => x.ChuTour == id)
+                .ToListAsync();
+
+            var tourDtos = new List<TourDto>();
+            foreach (var tour in tours)
+            {
+                tourDtos.Add(MapToDto(tour));
+            }
+            return tourDtos;
+        }
+
+        public async Task<List<TourDto>> GetDanhSachTourByNguoiDung(int id)
+        {
+            var tours = await _context.DatTours
+                .Include(x => x.Tour)
+                .ThenInclude(x => x.TourCT)
+                .Where(x => x.IdNguoiDung == id)
+                .ToListAsync();
+
+            var tourDtos = new List<TourDto>();
+            foreach (var tour in tours)
+            {
+                var dto = MapToDto(tour.Tour);
+                dto.NgayDat = tour.NgayDat;
+                tourDtos.Add(dto);
+            }
+            return tourDtos;
+        }
+
+        public async Task XoaTour(int id)
+        {
+            var tour = await _context.Tours
+                .Include(x => x.TourCT)
+                .FirstOrDefaultAsync(x => x.Id == id)
+                ?? throw new KeyNotFoundException("Không tìm thấy tour tương ứng");
+
+            _context.TourCTs.Remove(tour.TourCT);
+            _context.Tours.Remove(tour);
+            await _context.SaveChangesAsync();
+        }
     }
 }

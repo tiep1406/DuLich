@@ -9,6 +9,8 @@ namespace DuLich.Repository.DiemThamQuan
 
         Task ChinhSuaDiemThamQuan(ChinhSuaDiemThamQuanRequest request);
 
+        Task XoaDiemThamQuan(int id);
+
         Task<List<DiemThamQuanDto>> GetDanhSachDiemThamQuan();
 
         Task<List<DiemThamQuanDto>> TimKiemDiemThamQuan(TimKiemDiemThamQuanRequest request);

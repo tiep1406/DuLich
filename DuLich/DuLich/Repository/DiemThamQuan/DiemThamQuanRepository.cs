@@ -127,6 +127,19 @@ namespace DuLich.Repository.DiemThamQuan
             return dtqDtos;
         }
 
+        public async Task XoaDiemThamQuan(int id)
+        {
+            var dtq = await _context.DiemThamQuans
+                .Include(x => x.DiemThamQuanCT)
+                .FirstOrDefaultAsync(x => x.Id == id)
+                ?? throw new KeyNotFoundException("Không tìm thấy điểm tham quan tương ứng");
+
+            _context.DiemThamQuanCTs.Remove(dtq.DiemThamQuanCT);
+            _context.DiemThamQuans.Remove(dtq);
+
+            await _context.SaveChangesAsync();
+        }
+
         private DiemThamQuanDto MapToDto(Models.DiemThamQuan d)
         {
             return new DiemThamQuanDto()

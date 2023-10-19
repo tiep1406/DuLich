@@ -11,7 +11,13 @@ namespace DuLich.Repository.Tour
 
         Task ChinhSuaTour(ChinhSuaTourRequest request);
 
+        Task XoaTour(int id);
+
         Task<List<TourDto>> GetDanhSachTour();
+
+        Task<List<TourDto>> GetDanhSachTourByChuDichVu(int id);
+
+        Task<List<TourDto>> GetDanhSachTourByNguoiDung(int id);
 
         Task<List<TourDto>> TimKiemTour(TimKiemTourRequest request);
 
