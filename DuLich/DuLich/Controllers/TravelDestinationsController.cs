@@ -1,8 +1,8 @@
 ﻿using DuLich.Repository.DiemThamQuan;
-using DuLich.Request.DiemThamQuan;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ViewModel.Request.DiemThamQuan;
 
 namespace DuLich.Controllers
 {

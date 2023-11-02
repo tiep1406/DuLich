@@ -1,8 +1,8 @@
 ﻿using DuLich.Repository.Tour;
-using DuLich.Request.Tour;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ViewModel.Request.Tour;
 
 namespace DuLich.Controllers
 {

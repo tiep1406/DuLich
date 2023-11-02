@@ -1,6 +1,6 @@
 ﻿using DemoCrud.Responsitory;
-using DuLich.ModelsView;
 using Microsoft.AspNetCore.Mvc;
+using ViewModel.ModelsView;
 
 namespace DuLich.Controllers
 {
@@ -17,9 +17,9 @@ namespace DuLich.Controllers
 
         [HttpGet]
         [Route("GetNhaHang/{id}")]
-        public IActionResult GetNhaHang(int id)
+        public async Task<IActionResult> GetNhaHang(int id)
         {
-            var ds = _NhaHangRepositoty.GetNhaHang(id);
+            var ds = await _NhaHangRepositoty.GetNhaHang(id);
             return Ok(ds);
         }
 

@@ -1,6 +1,6 @@
-﻿using DuLich.Models;
-using DuLich.Repository.DBContext.Configurations;
+﻿using DuLich.Repository.DBContext.Configurations;
 using Microsoft.EntityFrameworkCore;
+using ViewModel.Models;
 
 namespace DuLich.Repository.DBContext
 {
@@ -21,17 +21,17 @@ namespace DuLich.Repository.DBContext
             modelBuilder.ApplyConfigurationsFromAssembly(typeof(NguoiDungConfiguration).Assembly);
         }
 
-        public DbSet<Models.DatKhachSan> DatKhachSans { get; set; }
-        public DbSet<Models.DatNhaHang> DatNhaHangs { get; set; }
-        public DbSet<Models.DatTour> DatTours { get; set; }
-        public DbSet<Models.DatVanChuyen> DatVanChuyens { get; set; }
-        public DbSet<Models.DiemThamQuan> DiemThamQuans { get; set; }
-        public DbSet<Models.DiemThamQuanCT> DiemThamQuanCTs { get; set; }
-        public DbSet<Models.KhachSan> KhachSans { get; set; }
-        public DbSet<Models.NguoiDung> NguoiDungs { get; set; }
-        public DbSet<Models.NhaHang> NhaHangs { get; set; }
-        public DbSet<Models.Tour> Tours { get; set; }
-        public DbSet<Models.TourCT> TourCTs { get; set; }
-        public DbSet<Models.VanChuyen> VanChuyens { get; set; }
+        public DbSet<DatKhachSan> DatKhachSans { get; set; }
+        public DbSet<DatNhaHang> DatNhaHangs { get; set; }
+        public DbSet<ViewModel.Models.DatTour> DatTours { get; set; }
+        public DbSet<ViewModel.Models.DatVanChuyen> DatVanChuyens { get; set; }
+        public DbSet<ViewModel.Models.DiemThamQuan> DiemThamQuans { get; set; }
+        public DbSet<ViewModel.Models.DiemThamQuanCT> DiemThamQuanCTs { get; set; }
+        public DbSet<ViewModel.Models.KhachSan> KhachSans { get; set; }
+        public DbSet<ViewModel.Models.NguoiDung> NguoiDungs { get; set; }
+        public DbSet<NhaHang> NhaHangs { get; set; }
+        public DbSet<ViewModel.Models.Tour> Tours { get; set; }
+        public DbSet<TourCT> TourCTs { get; set; }
+        public DbSet<VanChuyen> VanChuyens { get; set; }
     }
 }

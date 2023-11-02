@@ -1,5 +1,4 @@
-﻿using DuLich.Dtos;
-using DuLich.Request.DiemThamQuan;
+﻿using ViewModel.Request.DiemThamQuan;
 
 namespace DuLich.Repository.DiemThamQuan
 {
@@ -11,10 +10,10 @@ namespace DuLich.Repository.DiemThamQuan
 
         Task XoaDiemThamQuan(int id);
 
-        Task<List<DiemThamQuanDto>> GetDanhSachDiemThamQuan();
+        Task<List<ViewModel.Models.DiemThamQuan>> GetDanhSachDiemThamQuan();
 
-        Task<List<DiemThamQuanDto>> TimKiemDiemThamQuan(TimKiemDiemThamQuanRequest request);
+        Task<List<ViewModel.Models.DiemThamQuan>> TimKiemDiemThamQuan(TimKiemDiemThamQuanRequest request);
 
-        Task<DiemThamQuanDto> GetChiTietDiemThamQuan(int id);
+        Task<ViewModel.Models.DiemThamQuan> GetChiTietDiemThamQuan(int id);
     }
 }

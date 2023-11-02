@@ -1,9 +1,9 @@
-﻿using DuLich.Models;
-using DuLich.ModelsView;
-using DuLich.Repository.DBContext;
+﻿using DuLich.Repository.DBContext;
 using DuLich.Service;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using ViewModel.Models;
+using ViewModel.ModelsView;
 
 namespace DemoCrud.Responsitory
 {
@@ -11,7 +11,8 @@ namespace DemoCrud.Responsitory
     {
         private AppDBContext _DBContext;
         private readonly IUploadService _uploadService;
-        public KhachSanRepository(AppDBContext dBContext,IUploadService uploadService)
+
+        public KhachSanRepository(AppDBContext dBContext, IUploadService uploadService)
         {
             _DBContext = dBContext;
             _uploadService = uploadService;

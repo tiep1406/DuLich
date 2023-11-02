@@ -22,7 +22,7 @@ namespace DuLich.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("DuLich.Models.BinhLuanKhachSan", b =>
+            modelBuilder.Entity("ViewModel.Models.BinhLuanKhachSan", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -54,7 +54,7 @@ namespace DuLich.Migrations
                     b.ToTable("BinhLuanKhachSan");
                 });
 
-            modelBuilder.Entity("DuLich.Models.BinhLuanNhaHang", b =>
+            modelBuilder.Entity("ViewModel.Models.BinhLuanNhaHang", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -86,7 +86,7 @@ namespace DuLich.Migrations
                     b.ToTable("BinhLuanNhaHang");
                 });
 
-            modelBuilder.Entity("DuLich.Models.BinhLuanVanChuyen", b =>
+            modelBuilder.Entity("ViewModel.Models.BinhLuanVanChuyen", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -118,7 +118,7 @@ namespace DuLich.Migrations
                     b.ToTable("BinhLuanVanChuyen");
                 });
 
-            modelBuilder.Entity("DuLich.Models.DatKhachSan", b =>
+            modelBuilder.Entity("ViewModel.Models.DatKhachSan", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -147,7 +147,7 @@ namespace DuLich.Migrations
                     b.ToTable("DatKhachSans");
                 });
 
-            modelBuilder.Entity("DuLich.Models.DatNhaHang", b =>
+            modelBuilder.Entity("ViewModel.Models.DatNhaHang", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -176,7 +176,7 @@ namespace DuLich.Migrations
                     b.ToTable("DatNhaHangs");
                 });
 
-            modelBuilder.Entity("DuLich.Models.DatTour", b =>
+            modelBuilder.Entity("ViewModel.Models.DatTour", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -202,7 +202,7 @@ namespace DuLich.Migrations
                     b.ToTable("DatTours");
                 });
 
-            modelBuilder.Entity("DuLich.Models.DatVanChuyen", b =>
+            modelBuilder.Entity("ViewModel.Models.DatVanChuyen", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -228,7 +228,7 @@ namespace DuLich.Migrations
                     b.ToTable("DatVanChuyens");
                 });
 
-            modelBuilder.Entity("DuLich.Models.DiemThamQuan", b =>
+            modelBuilder.Entity("ViewModel.Models.DiemThamQuan", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -256,7 +256,7 @@ namespace DuLich.Migrations
                     b.ToTable("DiemThamQuans");
                 });
 
-            modelBuilder.Entity("DuLich.Models.DiemThamQuanCT", b =>
+            modelBuilder.Entity("ViewModel.Models.DiemThamQuanCT", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -284,7 +284,7 @@ namespace DuLich.Migrations
                     b.ToTable("DiemThamQuanCTs");
                 });
 
-            modelBuilder.Entity("DuLich.Models.KhachSan", b =>
+            modelBuilder.Entity("ViewModel.Models.KhachSan", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -321,7 +321,7 @@ namespace DuLich.Migrations
                     b.ToTable("KhachSans");
                 });
 
-            modelBuilder.Entity("DuLich.Models.NguoiDung", b =>
+            modelBuilder.Entity("ViewModel.Models.NguoiDung", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -337,6 +337,9 @@ namespace DuLich.Migrations
 
                     b.Property<int>("GioiTinh")
                         .HasColumnType("int");
+
+                    b.Property<string>("HoTen")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("MatKhau")
                         .HasColumnType("nvarchar(max)");
@@ -372,7 +375,7 @@ namespace DuLich.Migrations
                         });
                 });
 
-            modelBuilder.Entity("DuLich.Models.NhaHang", b =>
+            modelBuilder.Entity("ViewModel.Models.NhaHang", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -409,7 +412,7 @@ namespace DuLich.Migrations
                     b.ToTable("NhaHangs");
                 });
 
-            modelBuilder.Entity("DuLich.Models.Tour", b =>
+            modelBuilder.Entity("ViewModel.Models.Tour", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -455,7 +458,7 @@ namespace DuLich.Migrations
                     b.ToTable("Tours");
                 });
 
-            modelBuilder.Entity("DuLich.Models.TourCT", b =>
+            modelBuilder.Entity("ViewModel.Models.TourCT", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -486,7 +489,7 @@ namespace DuLich.Migrations
                     b.ToTable("TourCTs");
                 });
 
-            modelBuilder.Entity("DuLich.Models.VanChuyen", b =>
+            modelBuilder.Entity("ViewModel.Models.VanChuyen", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
@@ -526,15 +529,15 @@ namespace DuLich.Migrations
                     b.ToTable("VanChuyens");
                 });
 
-            modelBuilder.Entity("DuLich.Models.BinhLuanKhachSan", b =>
+            modelBuilder.Entity("ViewModel.Models.BinhLuanKhachSan", b =>
                 {
-                    b.HasOne("DuLich.Models.KhachSan", "KhachSan")
+                    b.HasOne("ViewModel.Models.KhachSan", "KhachSan")
                         .WithMany("BinhLuanKhachSans")
                         .HasForeignKey("IdKhachSan")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DuLich.Models.NguoiDung", "NguoiDung")
+                    b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
                         .WithMany("BinhLuanKhachSans")
                         .HasForeignKey("IdNguoiDung")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -545,15 +548,15 @@ namespace DuLich.Migrations
                     b.Navigation("NguoiDung");
                 });
 
-            modelBuilder.Entity("DuLich.Models.BinhLuanNhaHang", b =>
+            modelBuilder.Entity("ViewModel.Models.BinhLuanNhaHang", b =>
                 {
-                    b.HasOne("DuLich.Models.NguoiDung", "NguoiDung")
+                    b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
                         .WithMany("BinhLuanNhaHangs")
                         .HasForeignKey("IdNguoiDung")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DuLich.Models.NhaHang", "NhaHang")
+                    b.HasOne("ViewModel.Models.NhaHang", "NhaHang")
                         .WithMany("BinhLuanNhaHangs")
                         .HasForeignKey("IdNhaHang")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -564,15 +567,15 @@ namespace DuLich.Migrations
                     b.Navigation("NhaHang");
                 });
 
-            modelBuilder.Entity("DuLich.Models.BinhLuanVanChuyen", b =>
+            modelBuilder.Entity("ViewModel.Models.BinhLuanVanChuyen", b =>
                 {
-                    b.HasOne("DuLich.Models.NguoiDung", "NguoiDung")
+                    b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
                         .WithMany("BinhLuanVanChuyens")
                         .HasForeignKey("IdNguoiDung")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DuLich.Models.VanChuyen", "VanChuyen")
+                    b.HasOne("ViewModel.Models.VanChuyen", "VanChuyen")
                         .WithMany("BinhLuanVanChuyens")
                         .HasForeignKey("IdVanChuyen")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -583,15 +586,15 @@ namespace DuLich.Migrations
                     b.Navigation("VanChuyen");
                 });
 
-            modelBuilder.Entity("DuLich.Models.DatKhachSan", b =>
+            modelBuilder.Entity("ViewModel.Models.DatKhachSan", b =>
                 {
-                    b.HasOne("DuLich.Models.KhachSan", "KhachSan")
+                    b.HasOne("ViewModel.Models.KhachSan", "KhachSan")
                         .WithMany("DatKhachSans")
                         .HasForeignKey("IdKhachSan")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DuLich.Models.NguoiDung", "NguoiDung")
+                    b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
                         .WithMany("DatKhachSans")
                         .HasForeignKey("IdNguoiDung")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -602,15 +605,15 @@ namespace DuLich.Migrations
                     b.Navigation("NguoiDung");
                 });
 
-            modelBuilder.Entity("DuLich.Models.DatNhaHang", b =>
+            modelBuilder.Entity("ViewModel.Models.DatNhaHang", b =>
                 {
-                    b.HasOne("DuLich.Models.NguoiDung", "NguoiDung")
+                    b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
                         .WithMany("DatNhaHangs")
                         .HasForeignKey("IdNguoiDung")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DuLich.Models.NhaHang", "NhaHang")
+                    b.HasOne("ViewModel.Models.NhaHang", "NhaHang")
                         .WithMany("DatNhaHangs")
                         .HasForeignKey("IdNhaHang")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -621,15 +624,15 @@ namespace DuLich.Migrations
                     b.Navigation("NhaHang");
                 });
 
-            modelBuilder.Entity("DuLich.Models.DatTour", b =>
+            modelBuilder.Entity("ViewModel.Models.DatTour", b =>
                 {
-                    b.HasOne("DuLich.Models.NguoiDung", "NguoiDung")
+                    b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
                         .WithMany("DatTours")
                         .HasForeignKey("IdNguoiDung")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DuLich.Models.Tour", "Tour")
+                    b.HasOne("ViewModel.Models.Tour", "Tour")
                         .WithMany("DatTours")
                         .HasForeignKey("IdTour")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -640,15 +643,15 @@ namespace DuLich.Migrations
                     b.Navigation("Tour");
                 });
 
-            modelBuilder.Entity("DuLich.Models.DatVanChuyen", b =>
+            modelBuilder.Entity("ViewModel.Models.DatVanChuyen", b =>
                 {
-                    b.HasOne("DuLich.Models.NguoiDung", "NguoiDung")
+                    b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
                         .WithMany("DatVanChuyens")
                         .HasForeignKey("IdNguoiDung")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("DuLich.Models.VanChuyen", "VanChuyen")
+                    b.HasOne("ViewModel.Models.VanChuyen", "VanChuyen")
                         .WithMany("DatVanChuyens")
                         .HasForeignKey("IdVanChuyen")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -659,41 +662,41 @@ namespace DuLich.Migrations
                     b.Navigation("VanChuyen");
                 });
 
-            modelBuilder.Entity("DuLich.Models.DiemThamQuanCT", b =>
+            modelBuilder.Entity("ViewModel.Models.DiemThamQuanCT", b =>
                 {
-                    b.HasOne("DuLich.Models.DiemThamQuan", "DiemThamQuan")
+                    b.HasOne("ViewModel.Models.DiemThamQuan", "DiemThamQuan")
                         .WithOne("DiemThamQuanCT")
-                        .HasForeignKey("DuLich.Models.DiemThamQuanCT", "MaDichVu")
+                        .HasForeignKey("ViewModel.Models.DiemThamQuanCT", "MaDichVu")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("DiemThamQuan");
                 });
 
-            modelBuilder.Entity("DuLich.Models.TourCT", b =>
+            modelBuilder.Entity("ViewModel.Models.TourCT", b =>
                 {
-                    b.HasOne("DuLich.Models.Tour", "Tour")
+                    b.HasOne("ViewModel.Models.Tour", "Tour")
                         .WithOne("TourCT")
-                        .HasForeignKey("DuLich.Models.TourCT", "MaTour")
+                        .HasForeignKey("ViewModel.Models.TourCT", "MaTour")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
                     b.Navigation("Tour");
                 });
 
-            modelBuilder.Entity("DuLich.Models.DiemThamQuan", b =>
+            modelBuilder.Entity("ViewModel.Models.DiemThamQuan", b =>
                 {
                     b.Navigation("DiemThamQuanCT");
                 });
 
-            modelBuilder.Entity("DuLich.Models.KhachSan", b =>
+            modelBuilder.Entity("ViewModel.Models.KhachSan", b =>
                 {
                     b.Navigation("BinhLuanKhachSans");
 
                     b.Navigation("DatKhachSans");
                 });
 
-            modelBuilder.Entity("DuLich.Models.NguoiDung", b =>
+            modelBuilder.Entity("ViewModel.Models.NguoiDung", b =>
                 {
                     b.Navigation("BinhLuanKhachSans");
 
@@ -710,21 +713,21 @@ namespace DuLich.Migrations
                     b.Navigation("DatVanChuyens");
                 });
 
-            modelBuilder.Entity("DuLich.Models.NhaHang", b =>
+            modelBuilder.Entity("ViewModel.Models.NhaHang", b =>
                 {
                     b.Navigation("BinhLuanNhaHangs");
 
                     b.Navigation("DatNhaHangs");
                 });
 
-            modelBuilder.Entity("DuLich.Models.Tour", b =>
+            modelBuilder.Entity("ViewModel.Models.Tour", b =>
                 {
                     b.Navigation("DatTours");
 
                     b.Navigation("TourCT");
                 });
 
-            modelBuilder.Entity("DuLich.Models.VanChuyen", b =>
+            modelBuilder.Entity("ViewModel.Models.VanChuyen", b =>
                 {
                     b.Navigation("BinhLuanVanChuyens");
 

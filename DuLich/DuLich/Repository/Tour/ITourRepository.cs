@@ -1,5 +1,4 @@
-﻿using DuLich.Dtos;
-using DuLich.Request.Tour;
+﻿using ViewModel.Request.Tour;
 
 namespace DuLich.Repository.Tour
 {
@@ -13,14 +12,14 @@ namespace DuLich.Repository.Tour
 
         Task XoaTour(int id);
 
-        Task<List<TourDto>> GetDanhSachTour();
+        Task<List<ViewModel.Models.Tour>> GetDanhSachTour();
 
-        Task<List<TourDto>> GetDanhSachTourByChuDichVu(int id);
+        Task<List<ViewModel.Models.Tour>> GetDanhSachTourByChuDichVu(int id);
 
-        Task<List<TourDto>> GetDanhSachTourByNguoiDung(int id);
+        Task<List<ViewModel.Models.Tour>> GetDanhSachTourByNguoiDung(int id);
 
-        Task<List<TourDto>> TimKiemTour(TimKiemTourRequest request);
+        Task<List<ViewModel.Models.Tour>> TimKiemTour(TimKiemTourRequest request);
 
-        Task<TourDto> GetChiTietTour(int id);
+        Task<ViewModel.Models.Tour> GetChiTietTour(int id);
     }
 }

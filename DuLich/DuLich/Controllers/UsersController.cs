@@ -1,9 +1,7 @@
-﻿using DuLich.Models;
-using DuLich.Repository.NguoiDung;
-using DuLich.Request.NguoiDung;
+﻿using DuLich.Repository.NguoiDung;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ViewModel.Request.NguoiDung;
 
 namespace DuLich.Controllers
 {

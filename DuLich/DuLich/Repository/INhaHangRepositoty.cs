@@ -1,6 +1,6 @@
-﻿using DuLich.Models;
-using DuLich.ModelsView;
-using System.Data;
+﻿using System.Data;
+using ViewModel.Models;
+using ViewModel.ModelsView;
 
 namespace DemoCrud.Responsitory
 {

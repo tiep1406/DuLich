@@ -1,12 +1,12 @@
-﻿using DuLich.Dtos;
-using DuLich.Repository.DBContext;
-using DuLich.Request.NguoiDung;
+﻿using DuLich.Repository.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using ViewModel.ModelsView;
+using ViewModel.Request.NguoiDung;
 
 namespace DuLich.Repository.NguoiDung
 {
@@ -23,8 +23,12 @@ namespace DuLich.Repository.NguoiDung
 
         public async Task DangKy(DangKyRequest request)
         {
-            var nguoiDung = new Models.NguoiDung()
+            var nd = await _context.NguoiDungs.Where(x => x.Email == request.Email).FirstOrDefaultAsync();
+            if(nd != null)
+                throw new InvalidDataException("Email đã tồn tại");
+            var nguoiDung = new ViewModel.Models.NguoiDung()
             {
+                HoTen = request.HoTen,
                 CCCD = request.CCCD,
                 Sdt = request.Sdt,
                 Email = request.Email,
@@ -64,49 +68,29 @@ namespace DuLich.Repository.NguoiDung
             return new JwtSecurityTokenHandler().WriteToken(token);
         }
 
-        public async Task<string> DangNhap(DangNhapRequest request)
+        public async Task<AuthResponse> DangNhap(DangNhapRequest request)
         {
             var nguoiDung = await _context.NguoiDungs.FirstOrDefaultAsync(x => x.Email == request.Email
             && x.MatKhau == request.Password)
                 ?? throw new Exception("Email hoặc mật khẩu không chính xác");
             var token = await CreateJWT(nguoiDung.Id);
 
-            return token;
+            return new AuthResponse() { Token = token };
         }
 
-        public async Task<List<NguoiDungDto>> GetDanhSachNguoiDung()
+        public async Task<List<ViewModel.Models.NguoiDung>> GetDanhSachNguoiDung()
         {
-            var nguoiDungs = await _context.NguoiDungs.Select(x => new NguoiDungDto()
-            {
-                CCCD = x.CCCD,
-                Email = x.Email,
-                GioiTinh = x.GioiTinh,
-                Id = x.Id,
-                NoiO = x.NoiO,
-                Sdt = x.Sdt,
-                TrangThai = x.TrangThai,
-                PhanQuyen = x.PhanQuyen
-            }).ToListAsync();
+            var nguoiDungs = await _context.NguoiDungs.ToListAsync();
 
             return nguoiDungs;
         }
 
-        public async Task<NguoiDungDto> GetNguoiDungById(int id)
+        public async Task<ViewModel.Models.NguoiDung> GetNguoiDungById(int id)
         {
             var nguoiDung = await _context.NguoiDungs.FindAsync(id)
                 ?? throw new KeyNotFoundException("Không tìm thấy người dùng");
 
-            return new NguoiDungDto()
-            {
-                CCCD = nguoiDung.CCCD,
-                Email = nguoiDung.Email,
-                GioiTinh = nguoiDung.GioiTinh,
-                Id = nguoiDung.Id,
-                NoiO = nguoiDung.NoiO,
-                Sdt = nguoiDung.Sdt,
-                TrangThai = nguoiDung.TrangThai,
-                PhanQuyen = nguoiDung.PhanQuyen
-            };
+            return nguoiDung;
         }
 
         public async Task ChinhSuaNguoiDung(ChinhSuaNguoiDungRequest request)
@@ -114,6 +98,7 @@ namespace DuLich.Repository.NguoiDung
             var nguoiDung = await _context.NguoiDungs.FindAsync(request.Id)
                 ?? throw new KeyNotFoundException("Không tìm thấy người dùng");
 
+            nguoiDung.HoTen = request.HoTen;
             nguoiDung.CCCD = request.CCCD;
             nguoiDung.Email = request.Email;
             nguoiDung.GioiTinh = request.GioiTinh;

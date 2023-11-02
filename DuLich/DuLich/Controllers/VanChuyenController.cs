@@ -1,6 +1,6 @@
 ﻿using DemoCrud.Responsitory;
-using DuLich.ModelsView;
 using Microsoft.AspNetCore.Mvc;
+using ViewModel.ModelsView;
 
 namespace DuLich.Controllers
 {

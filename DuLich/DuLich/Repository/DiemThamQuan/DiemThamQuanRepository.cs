@@ -1,9 +1,7 @@
-﻿using DuLich.Dtos;
-using DuLich.Models;
-using DuLich.Repository.DBContext;
-using DuLich.Request.DiemThamQuan;
+﻿using DuLich.Repository.DBContext;
 using DuLich.Service;
 using Microsoft.EntityFrameworkCore;
+using ViewModel.Request.DiemThamQuan;
 
 namespace DuLich.Repository.DiemThamQuan
 {
@@ -57,41 +55,36 @@ namespace DuLich.Repository.DiemThamQuan
             }
         }
 
-        public async Task<DiemThamQuanDto> GetChiTietDiemThamQuan(int id)
+        public async Task<ViewModel.Models.DiemThamQuan> GetChiTietDiemThamQuan(int id)
         {
             var dtq = await _context.DiemThamQuans
                 .Include(x => x.DiemThamQuanCT)
                 .FirstOrDefaultAsync(x => x.Id == id)
                 ?? throw new KeyNotFoundException("Không tìm thấy điểm tham quan tương ứng");
 
-            return MapToDto(dtq);
+            return dtq;
         }
 
-        public async Task<List<DiemThamQuanDto>> GetDanhSachDiemThamQuan()
+        public async Task<List<ViewModel.Models.DiemThamQuan>> GetDanhSachDiemThamQuan()
         {
             var dtqs = await _context.DiemThamQuans
                 .Include(x => x.DiemThamQuanCT)
                 .ToListAsync();
 
-            var dtqDtos = new List<DiemThamQuanDto>();
-            foreach (var dtq in dtqs)
-            {
-                dtqDtos.Add(MapToDto(dtq));
-            }
-            return dtqDtos;
+            return dtqs;
         }
 
         public async Task ThemDiemThamQuan(ThemDiemThamQuanRequest request)
         {
             var user = await _context.NguoiDungs.FirstOrDefaultAsync(x => x.Id == request.ChuDichVu)
                 ?? throw new KeyNotFoundException("Không tìm thấy người dùng tương ứng");
-            var dtq = new Models.DiemThamQuan()
+            var dtq = new ViewModel.Models.DiemThamQuan()
             {
                 ChuDichVu = request.ChuDichVu,
                 DiaDiem = request.DiaDiem,
                 Gia = request.Gia,
                 TenDiaDiem = request.TenDiaDiem,
-                DiemThamQuanCT = new DiemThamQuanCT()
+                DiemThamQuanCT = new ViewModel.Models.DiemThamQuanCT()
                 {
                     MoTaDichVu = request.MoTaDichVu,
                     DanhGia = string.Empty
@@ -110,7 +103,7 @@ namespace DuLich.Repository.DiemThamQuan
             await _context.SaveChangesAsync();
         }
 
-        public async Task<List<DiemThamQuanDto>> TimKiemDiemThamQuan(TimKiemDiemThamQuanRequest request)
+        public async Task<List<ViewModel.Models.DiemThamQuan>> TimKiemDiemThamQuan(TimKiemDiemThamQuanRequest request)
         {
             var dtqs = await _context.DiemThamQuans
                 .Include(x => x.DiemThamQuanCT)
@@ -119,12 +112,7 @@ namespace DuLich.Repository.DiemThamQuan
                 || x.DiaDiem.ToLower().Contains(request.Key))
                 .ToListAsync();
 
-            var dtqDtos = new List<DiemThamQuanDto>();
-            foreach (var dtq in dtqs)
-            {
-                dtqDtos.Add(MapToDto(dtq));
-            }
-            return dtqDtos;
+            return dtqs;
         }
 
         public async Task XoaDiemThamQuan(int id)
@@ -138,22 +126,6 @@ namespace DuLich.Repository.DiemThamQuan
             _context.DiemThamQuans.Remove(dtq);
 
             await _context.SaveChangesAsync();
-        }
-
-        private DiemThamQuanDto MapToDto(Models.DiemThamQuan d)
-        {
-            return new DiemThamQuanDto()
-            {
-                AnhChiTiet = _uploadService.GetFullPath(d.DiemThamQuanCT.AnhChiTiet),
-                AnhDaiDien = _uploadService.GetFullPath(d.AnhDaiDien),
-                ChuDichVu = d.ChuDichVu,
-                DanhGia = d.DiemThamQuanCT.DanhGia,
-                DiaDiem = d.DiaDiem,
-                Gia = d.Gia,
-                Id = d.Id,
-                MoTaDichVu = d.DiemThamQuanCT.MoTaDichVu,
-                TenDiaDiem = d.TenDiaDiem
-            };
         }
     }
 }

@@ -1,9 +1,9 @@
-﻿using DuLich.Models;
-using DuLich.ModelsView;
-using DuLich.Repository.DBContext;
+﻿using DuLich.Repository.DBContext;
 using DuLich.Service;
 using Microsoft.EntityFrameworkCore;
 using System.Data;
+using ViewModel.Models;
+using ViewModel.ModelsView;
 
 namespace DemoCrud.Responsitory
 {

@@ -1,10 +1,8 @@
-﻿using DuLich.Dtos;
-using DuLich.Models;
-using DuLich.Repository.DBContext;
-using DuLich.Request.Tour;
+﻿using DuLich.Repository.DBContext;
 using DuLich.Service;
 using Microsoft.EntityFrameworkCore;
-using System.Diagnostics.CodeAnalysis;
+using ViewModel.Models;
+using ViewModel.Request.Tour;
 
 namespace DuLich.Repository.Tour
 {
@@ -71,28 +69,23 @@ namespace DuLich.Repository.Tour
             await _context.SaveChangesAsync();
         }
 
-        public async Task<TourDto> GetChiTietTour(int id)
+        public async Task<ViewModel.Models.Tour> GetChiTietTour(int id)
         {
             var tour = await _context.Tours
                 .Include(x => x.TourCT)
                 .FirstOrDefaultAsync(x => x.Id == id)
                 ?? throw new KeyNotFoundException("Không tìm thấy tour tương ứng");
 
-            return MapToDto(tour);
+            return tour;
         }
 
-        public async Task<List<TourDto>> GetDanhSachTour()
+        public async Task<List<ViewModel.Models.Tour>> GetDanhSachTour()
         {
             var tours = await _context.Tours
                 .Include(x => x.TourCT)
                 .ToListAsync();
 
-            var tourDtos = new List<TourDto>();
-            foreach (var tour in tours)
-            {
-                tourDtos.Add(MapToDto(tour));
-            }
-            return tourDtos;
+            return tours;
         }
 
         public async Task ThemTour(ThemTourRequest request)
@@ -100,7 +93,7 @@ namespace DuLich.Repository.Tour
             var user = await _context.NguoiDungs.FirstOrDefaultAsync(x => x.Id == request.ChuTour)
                 ?? throw new KeyNotFoundException("Không tìm thấy người dùng tương ứng");
 
-            var tour = new Models.Tour()
+            var tour = new ViewModel.Models.Tour()
             {
                 ChiTietTour = request.ChiTietTour,
                 ChuTour = request.ChuTour,
@@ -129,28 +122,7 @@ namespace DuLich.Repository.Tour
             await _context.SaveChangesAsync();
         }
 
-        private TourDto MapToDto(Models.Tour tour)
-        {
-            return new TourDto()
-            {
-                Id = tour.Id,
-                ChiTietTour = tour.ChiTietTour,
-                ChuTour = tour.ChuTour,
-                GiaTour = tour.GiaTour,
-                HinhAnhTour = _uploadService.GetFullPath(tour.HinhAnhTour),
-                KhuyenMaiTour = tour.KhuyenMaiTour,
-                MoTaTour = tour.MoTaTour,
-                NgayBatDau = tour.NgayBatDau,
-                NgayKetThuc = tour.NgayKetThuc,
-                SoNgay = tour.SoNgay,
-                TenTour = tour.TenTour,
-                LuotDanhGia = tour.LuotDanhGia,
-                ChiTietLichTrinh = tour.TourCT.ChiTietLichTrinh,
-                LichTrinhNgay = tour.TourCT.LichTrinhNgay
-            };
-        }
-
-        public async Task<List<TourDto>> TimKiemTour(TimKiemTourRequest request)
+        public async Task<List<ViewModel.Models.Tour>> TimKiemTour(TimKiemTourRequest request)
         {
             var tours = await _context.Tours
                 .Include(x => x.TourCT)
@@ -159,30 +131,20 @@ namespace DuLich.Repository.Tour
                 || x.MoTaTour.ToLower().Contains(request.Key))
                 .ToListAsync();
 
-            var tourDtos = new List<TourDto>();
-            foreach (var tour in tours)
-            {
-                tourDtos.Add(MapToDto(tour));
-            }
-            return tourDtos;
+            return tours;
         }
 
-        public async Task<List<TourDto>> GetDanhSachTourByChuDichVu(int id)
+        public async Task<List<ViewModel.Models.Tour>> GetDanhSachTourByChuDichVu(int id)
         {
             var tours = await _context.Tours
                 .Include(x => x.TourCT)
                 .Where(x => x.ChuTour == id)
                 .ToListAsync();
 
-            var tourDtos = new List<TourDto>();
-            foreach (var tour in tours)
-            {
-                tourDtos.Add(MapToDto(tour));
-            }
-            return tourDtos;
+            return tours;
         }
 
-        public async Task<List<TourDto>> GetDanhSachTourByNguoiDung(int id)
+        public async Task<List<ViewModel.Models.Tour>> GetDanhSachTourByNguoiDung(int id)
         {
             var tours = await _context.DatTours
                 .Include(x => x.Tour)
@@ -190,14 +152,12 @@ namespace DuLich.Repository.Tour
                 .Where(x => x.IdNguoiDung == id)
                 .ToListAsync();
 
-            var tourDtos = new List<TourDto>();
+            var resp = new List<ViewModel.Models.Tour>();
             foreach (var tour in tours)
             {
-                var dto = MapToDto(tour.Tour);
-                dto.NgayDat = tour.NgayDat;
-                tourDtos.Add(dto);
+                resp.Add(tour.Tour);
             }
-            return tourDtos;
+            return resp;
         }
 
         public async Task XoaTour(int id)

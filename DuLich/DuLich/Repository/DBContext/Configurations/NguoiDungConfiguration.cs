@@ -3,11 +3,11 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace DuLich.Repository.DBContext.Configurations
 {
-    public class NguoiDungConfiguration : IEntityTypeConfiguration<Models.NguoiDung>
+    public class NguoiDungConfiguration : IEntityTypeConfiguration<ViewModel.Models.NguoiDung>
     {
-        public void Configure(EntityTypeBuilder<Models.NguoiDung> builder)
+        public void Configure(EntityTypeBuilder<ViewModel.Models.NguoiDung> builder)
         {
-            builder.HasData(new Models.NguoiDung()
+            builder.HasData(new ViewModel.Models.NguoiDung()
             {
                 Id = 1,
                 CCCD = "123456789",

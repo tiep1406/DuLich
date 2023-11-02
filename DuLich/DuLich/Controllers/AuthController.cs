@@ -1,12 +1,7 @@
-﻿using DuLich.Models;
-using DuLich.Repository.NguoiDung;
-using DuLich.Request.NguoiDung;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
+﻿using DuLich.Repository.NguoiDung;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.IdentityModel.Tokens;
-using System.IdentityModel.Tokens.Jwt;
-using System.Text;
+using ViewModel.ModelsView;
+using ViewModel.Request.NguoiDung;
 
 namespace DuLich.Controllers
 {
@@ -32,9 +27,9 @@ namespace DuLich.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> DangNhap([FromBody] DangNhapRequest request)
         {
-            var token = await _repository.DangNhap(request);
+            var authResp = await _repository.DangNhap(request);
 
-            return Ok(new { token });
+            return Ok(authResp);
         }
     }
 }
