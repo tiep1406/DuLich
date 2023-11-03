@@ -46,7 +46,7 @@ namespace DuLich.Repository.Tour
             tour.TourCT.ChuTour = request.ChuTour;
             tour.TourCT.ChiTietLichTrinh = request.ChiTietLichTrinh;
             tour.TourCT.LichTrinhNgay = request.LichTrinhNgay;
-            tour.TourCT.TenTour = request.TenTour;
+            tour.TourCT.DiaDiem = request.DiaDiem;
 
             _context.Tours.Update(tour);
             await _context.SaveChangesAsync();
@@ -75,7 +75,7 @@ namespace DuLich.Repository.Tour
                 .Include(x => x.TourCT)
                 .FirstOrDefaultAsync(x => x.Id == id)
                 ?? throw new KeyNotFoundException("Không tìm thấy tour tương ứng");
-
+            tour.HinhAnhTour = _uploadService.GetFullPath(tour.HinhAnhTour);
             return tour;
         }
 
@@ -84,7 +84,10 @@ namespace DuLich.Repository.Tour
             var tours = await _context.Tours
                 .Include(x => x.TourCT)
                 .ToListAsync();
-
+            foreach (var tour in tours)
+            {
+                tour.HinhAnhTour = _uploadService.GetFullPath(tour.HinhAnhTour);
+            }
             return tours;
         }
 
@@ -108,8 +111,8 @@ namespace DuLich.Repository.Tour
                 {
                     ChiTietLichTrinh = request.ChiTietLichTrinh,
                     ChuTour = request.ChuTour,
-                    LichTrinhNgay = request.LichTrinhNgay,
-                    TenTour = request.TenTour
+                    DiaDiem = request.DiaDiem,
+                    LichTrinhNgay = request.LichTrinhNgay
                 }
             };
 
@@ -130,7 +133,10 @@ namespace DuLich.Repository.Tour
                 || x.ChiTietTour.ToLower().Contains(request.Key)
                 || x.MoTaTour.ToLower().Contains(request.Key))
                 .ToListAsync();
-
+            foreach (var tour in tours)
+            {
+                tour.HinhAnhTour = _uploadService.GetFullPath(tour.HinhAnhTour);
+            }
             return tours;
         }
 
@@ -140,7 +146,10 @@ namespace DuLich.Repository.Tour
                 .Include(x => x.TourCT)
                 .Where(x => x.ChuTour == id)
                 .ToListAsync();
-
+            foreach (var tour in tours)
+            {
+                tour.HinhAnhTour = _uploadService.GetFullPath(tour.HinhAnhTour);
+            }
             return tours;
         }
 
@@ -155,6 +164,7 @@ namespace DuLich.Repository.Tour
             var resp = new List<ViewModel.Models.Tour>();
             foreach (var tour in tours)
             {
+                tour.Tour.HinhAnhTour = _uploadService.GetFullPath(tour.Tour.HinhAnhTour);
                 resp.Add(tour.Tour);
             }
             return resp;

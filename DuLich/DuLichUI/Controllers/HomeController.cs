@@ -1,8 +1,10 @@
 ﻿using APIIntegration.Interfaces;
 using Microsoft.AspNetCore.Authentication;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.IdentityModel.Logging;
 using Microsoft.IdentityModel.Tokens;
+using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
@@ -13,16 +15,22 @@ namespace DuLichUI.Controllers
     public class HomeController : Controller
     {
         private readonly IAuthAPI _authAPI;
+        private readonly IUserAPI _userAPI;
+        private readonly ITourAPI _tourAPI;
         private readonly IConfiguration _configuration;
 
-        public HomeController(IAuthAPI authAPI, IConfiguration configuration)
+        public HomeController(IAuthAPI authAPI, IConfiguration configuration, IUserAPI userAPI, ITourAPI tourAPI)
         {
             _authAPI = authAPI;
             _configuration = configuration;
+            _userAPI = userAPI;
+            _tourAPI = tourAPI;
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
+            var tours = await _tourAPI.GetAll();
+            ViewData["tours"] = tours;
             return View();
         }
 
@@ -83,8 +91,15 @@ namespace DuLichUI.Controllers
                 var res = await _authAPI.DangNhap(request);
                 if (res.Token != null)
                 {
-                    HttpContext.Session.SetString("BearerToken", res.Token);
                     await AssignCookies(res.Token);
+                    var userPrincipal = ValidateJWT(res.Token);
+                    string id = userPrincipal.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
+                    var nguoiDung = await _userAPI.GetById(int.Parse(id), "Bearer " + res.Token);
+
+                    HttpContext.Session.SetString("BearerToken", res.Token);
+                    HttpContext.Session.SetString("UserId", id);
+                    var obj = JsonConvert.SerializeObject(nguoiDung);
+                    HttpContext.Session.SetString("User", obj);
                 }
                 return Ok(res);
             }
@@ -98,6 +113,7 @@ namespace DuLichUI.Controllers
         public async Task<IActionResult> Logout()
         {
             HttpContext.Session.Remove("BearerToken");
+            HttpContext.Session.Remove("User");
             await HttpContext.SignOutAsync("UserAuth");
             HttpContext.Response.Cookies.Delete("X-Access-Token-User");
             return Redirect("/home");

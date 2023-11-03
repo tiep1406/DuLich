@@ -31,7 +31,10 @@ builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
         };
     });
 builder.Services.AddHttpContextAccessor();
-builder.Services.AddControllers();
+builder.Services.AddControllers()
+    .AddNewtonsoftJson(options =>
+    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+); ;
 
 builder.Services
     .AddScoped<IUploadService, UploadService>()
@@ -39,8 +42,8 @@ builder.Services
     .AddScoped<ITourRepository, TourRepository>()
     .AddScoped<IDiemThamQuanRepository, DiemThamQuanRepository>()
     .AddScoped<IVanChuyenRepositoty, VanChuyenRepository>()
-    .AddScoped<IKhachSanRepositoty, KhachSanRepository>()
-    .AddScoped<INhaHangRepositoty, NhaHangRepository>();
+    .AddScoped<IKhachSanRepository, KhachSanRepository>()
+    .AddScoped<INhaHangRepository, NhaHangRepository>();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();

@@ -4,7 +4,7 @@
     {
         public int ChuDichVu { get; set; }
         public string DiaChi { get; set; }
-        public int Gia { get; set; }
+        public decimal Gia { get; set; }
         public string TenNhaHang { get; set; }
         public string AnhDaiDien { get; set; }
         public string ChiTietNhaHang { get; set; }

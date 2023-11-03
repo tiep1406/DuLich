@@ -1,4 +1,22 @@
-﻿<!DOCTYPE html>
+﻿@using ViewModel.Models;
+@using Microsoft.AspNetCore.Http
+@inject IHttpContextAccessor HttpContextAccessor
+
+
+@{
+    NguoiDung user = null;
+    string temp = null;
+    if (User.Identity.IsAuthenticated)
+    {
+        temp = HttpContextAccessor.HttpContext.Session.GetString("User");
+        if(temp != null)
+            user = Newtonsoft.Json.JsonConvert.DeserializeObject<NguoiDung>(temp);
+        else{
+            temp = "nouser";
+        }
+    }
+}
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8" />
@@ -12,34 +30,69 @@
     <!-- Add to homescreen for Chrome on Android-->
     <meta name="mobile-web-app-capable" content="yes">
     <meta name="application-name" content="Looking for something amazing?">
-    <link rel="icon" sizes="192x192" href="img/touch/chrome-touch-icon-192x192.png">
+    <link rel="icon" sizes="192x192" href="/img/touch/chrome-touch-icon-192x192.png">
     <!-- Add to homescreen for Safari on iOS-->
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black">
     <meta name="apple-mobile-web-app-title" content="Your Travel World">
     <title>@ViewData["Title"]</title>
-    <link rel="apple-touch-icon" href="img/touch/apple-touch-icon.png">
+    <link rel="apple-touch-icon" href="/img/touch/apple-touch-icon.png">
     <!-- Google Fonts-->
     <link href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,500,600,700%7CPoppins:400,500,600,700" rel="stylesheet">
-    <link rel="stylesheet" href="~/css/jquery-ui.structure.min.css">
-    <link rel="stylesheet" href="~/css/jquery-ui.theme.min.css">
-    <link rel="stylesheet" href="css/bootstrap.min.css">
+    <link rel="stylesheet" href="/css/jquery-ui.structure.min.css">
+    <link rel="stylesheet" href="/css/jquery-ui.theme.min.css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
     <link id="cssRtl" rel="stylesheet" href="#">
-    <link rel="stylesheet" href="~/css/flatpickr.min.css">
-    <link rel="stylesheet" href="~/css/font-awesome.min.css">
-    <link rel="stylesheet" href="~/css/fontawesome-stars-o.css">
-    <link rel="stylesheet" href="~/css/swiper.min.css">
-    <link rel="stylesheet" href="~/css/jquery.mCustomScrollbar.min.css">
-    <link rel="stylesheet" href="~/css/select2.min.css">
-    <link rel="stylesheet" href="~/css/nouislider.min.css">
-    <link rel="stylesheet" href="~/css/blueimp-gallery.min.css">
-    <link rel="stylesheet" href="~/css/style.min.css">
-    <link id="cssTheme" rel="stylesheet" href="~/skins/style-default.css">
-    @*<link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />*@
-    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <link rel="stylesheet" href="~/DuLichUI.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/css/flatpickr.min.css">
+    <link rel="stylesheet" href="/css/font-awesome.min.css">
+    <link rel="stylesheet" href="/css/fontawesome-stars-o.css">
+    <link rel="stylesheet" href="/css/swiper.min.css">
+    <link rel="stylesheet" href="/css/jquery.mCustomScrollbar.min.css">
+    <link rel="stylesheet" href="/css/select2.min.css">
+    <link rel="stylesheet" href="/css/nouislider.min.css">
+    <link rel="stylesheet" href="/css/blueimp-gallery.min.css">
+    <link rel="stylesheet" href="/css/style.min.css">
+    <link id="cssTheme" rel="stylesheet" href="/skins/style-default.css">
+    <link rel="stylesheet" href="/css/jquery.dataTables.min.css">
+    @*<link rel="stylesheet" href="/lib/bootstrap/dist/css/bootstrap.min.css" />*@
+    <link rel="stylesheet" href="/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="/DuLichUI.styles.css" asp-append-version="true" />
+<style>
+     .overlay {
+        position: fixed;
+        width: 100%;
+        height: 100%;
+        z-index: 2000;
+        top: 0;
+        bottom: 0;
+        opacity: 0.5;
+        background-color:rgba(0, 0, 0, 0.5);
+     }
+     .loader {
+      border: 16px solid #f3f3f3; /* Light grey */
+      border-top: 16px solid #3498db; /* Blue */
+      border-radius: 50%;
+      width: 120px;
+      height: 120px;
+      animation: spin 2s linear infinite;
+    }
+
+    @@keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+</style>
 </head>
 <body>
+    <div id="loader" class="overlay d-none">
+      <div class="d-flex justify-content-center" style="position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);"
+      >  
+        <div class="loader"></div>
+      </div>
+    </div>
     <div class="progress-load js-progress-load"></div>
     <div class="demo-panel bx4dp d-none d-sm-block" id="demoSwitcher">
       <div class="container">
@@ -50,12 +103,12 @@
           <div class="row flex-nowrap">
             <div class="col-auto mb-2 d-flex align-items-center">
               <h4>Colors</h4>
-              <div class="demo-panel__colors nav"><a class="nav-link js-toggle-theme is-active" href="#" data-path="skins/style-default.css" role="button"></a><a class="nav-link js-toggle-theme" href="#" data-path="skins/style-orange.css" role="button"></a><a class="nav-link js-toggle-theme" href="#" data-path="skins/style-green.css" role="button"></a><a class="nav-link js-toggle-theme" href="#" data-path="skins/style-red.css" role="button"></a><a class="nav-link js-toggle-theme" href="#" data-path="skins/style-purple.css" role="button"></a><a class="nav-link js-toggle-theme" href="#" data-path="skins/style-pink.css" role="button"></a>
+              <div class="demo-panel__colors nav"><a class="nav-link js-toggle-theme is-active" href="#" data-path="/skins/style-default.css" role="button"></a><a class="nav-link js-toggle-theme" href="#" data-path="/skins/style-default.css" role="button"></a><a class="nav-link js-toggle-theme" href="#" data-path="/skins/style-default.css" role="button"></a><a class="nav-link js-toggle-theme" href="#" data-path="/skins/style-default.css" role="button"></a><a class="nav-link js-toggle-theme" href="#" data-path="/skins/style-default.css" role="button"></a><a class="nav-link js-toggle-theme" href="#" data-path="/skins/style-default.css" role="button"></a>
               </div>
             </div>
             <div class="col-auto mb-2 d-flex align-items-center">
               <h4>RTL</h4>
-              <button class="btn-switch text-primary js-switch-rtl" type="button" data-switch="css/bootstrap-rtl.min.css"><span class="bar bg-primary"></span><span class="toggle bg-secondary"></span></button>
+              <button class="btn-switch text-primary js-switch-rtl" type="button" data-switch="/css/bootstrap-rtl.min.css"><span class="bar bg-primary"></span><span class="toggle bg-secondary"></span></button>
             </div>
           </div>
         </div>
@@ -69,7 +122,15 @@
                 @if (User.Identity.IsAuthenticated)
                 {
                     <li class="nav-item d-flex">
-                        <a class="nav-link btn btn-light js-toggle-account" href="#" role="button"><span>sign out</span></a>
+                        <a class="nav-link btn btn-light" href="/Home/Logout" role="button"><span>sign out</span></a>
+                    </li>
+                    <li class="nav-item d-flex dropdown">
+                        <a class="nav-link btn btn-light text-primary" href="/User" data-toggle="dropdown" role="button">
+                            <div class="d-flex align-items-center">
+                                <img class="user-avatar mr-1 rounded-circle" src="@user?.AnhDaiDien" alt="#" width="35" height="35" />
+                                <span>@user?.HoTen</span>
+                            </div>
+                        </a>
                     </li>
                 }
                 else
@@ -105,8 +166,8 @@
                         <h5 class="font-weight-normal mx-2">Or click to sign in</h5>
                       </div>
                       <ul class="social-sign__list row">
-                        <li class="col col-sm-6"><a class="nav-link" href="#"><img class="nav-icon img-fluid mr-2" src="img/facebook.png" alt="#"/><span class="nav-text">Connect with Facebook</span></a></li>
-                        <li class="col col-sm-6"><a class="nav-link" href="#"><img class="nav-icon img-fluid mr-2" src="img/google-plus.png" alt="#"/><span class="nav-text">Connect with Google</span></a></li>
+                        <li class="col col-sm-6"><a class="nav-link" href="#"><img class="nav-icon img-fluid mr-2" src="/img/facebook.png" alt="#"/><span class="nav-text">Connect with Facebook</span></a></li>
+                        <li class="col col-sm-6"><a class="nav-link" href="#"><img class="nav-icon img-fluid mr-2" src="/img/google-plus.png" alt="#"/><span class="nav-text">Connect with Google</span></a></li>
                       </ul>
                     </div>
                   </div>
@@ -166,8 +227,8 @@
                         <h5 class="font-weight-normal mx-2">Or click to sign in</h5>
                       </div>
                       <ul class="social-sign__list row">
-                        <li class="col col-sm-6"><a class="nav-link" href="#"><img class="nav-icon img-fluid mr-2" src="img/facebook.png" alt="#"/><span class="nav-text">Sign up with Facebook</span></a></li>
-                        <li class="col col-sm-6"><a class="nav-link" href="#"><img class="nav-icon img-fluid mr-2" src="img/google-plus.png" alt="#"/><span class="nav-text">Sign up with Google</span></a></li>
+                        <li class="col col-sm-6"><a class="nav-link" href="#"><img class="nav-icon img-fluid mr-2" src="/img/facebook.png" alt="#"/><span class="nav-text">Sign up with Facebook</span></a></li>
+                        <li class="col col-sm-6"><a class="nav-link" href="#"><img class="nav-icon img-fluid mr-2" src="/img/google-plus.png" alt="#"/><span class="nav-text">Sign up with Google</span></a></li>
                       </ul>
                     </div>
                   </div>
@@ -204,7 +265,7 @@
         <div class="page-header__top bg-white js-header-top js-top-panel">
           <div class="container">
             <div class="row justify-content-center justify-content-between">
-              <div class="col-12 col-md col-lg-3 d-flex justify-content-center justify-content-md-start"><a class="navbar-logo d-inline-flex align-items-center" href="index.html"><img class="img-fluid mr-3" src="img/logo.png" alt="#"/>
+              <div class="col-12 col-md col-lg-3 d-flex justify-content-center justify-content-md-start"><a class="navbar-logo d-inline-flex align-items-center" href="index.html"><img class="img-fluid mr-3" src="/img/logo.png" alt="#"/>
                   <h4 class="m-0">Your Travel World</h4></a></div>
               <div class="col col-lg-6 d-none d-md-flex align-items-center justify-content-center"><a class="page-header__call d-flex align-items-center text-nowrap" href="tel:880000112222333"><i class="icon icon-call js-tooltip-call mr-3" data-toggle="tooltip" data-placement="bottom" title="Support 8-800-0011-2222-333"></i>
                   <div class="page-header__call-right">
@@ -227,8 +288,16 @@
                     @if (User.Identity.IsAuthenticated)
                     {
                         <li class="nav-item d-flex">
-                            <a class="nav-link btn btn-light" href="/Home/Logout" ><span>sign out</span></a>
+                            <a class="nav-link btn btn-light" href="/Home/Logout" role="button"><span>sign out</span></a>
                         </li>
+                        <li class="nav-item d-flex dropdown">
+                            <a class="nav-link btn btn-light text-primary" href="/User">
+                              <div class="d-flex align-items-center">
+                                    <img class="user-avatar mr-1 rounded-circle" src="@user?.AnhDaiDien" alt="#" width="35" height="35" />
+                                    <span>@user?.HoTen</span>
+                              </div>
+                            </a>
+                      </li>
                     }
                     else
                     {
@@ -359,7 +428,7 @@
     <main class="page-main">
         @RenderBody()
     </main>
-    <footer class="page-footer">
+    @{/*<footer class="page-footer">
       <div class="page-footer__cover jarallax" data-speed="0.5"><img class="jarallax-img" src="img/footer.jpg" alt="#"></div>
       <div class="container mb-5 mb-lg-4">
         <div class="row">
@@ -416,7 +485,7 @@
             <script>document.write(new Date().getFullYear());</script></a>
         </div>
       </div>
-    </footer>
+    </footer>*/}
     <div class="modal-map modal" id="modalMap" tabindex="-1">
       <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
@@ -430,41 +499,64 @@
       </div>
     </div>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyD3gFKhVywUkygSxQEBdGVrI5-ZRrdjueA"></script>
-    <script src="~/js/maps.js"></script>
-    <script src="~/js/libs/moment.min.js"></script>
-    <script src="~/js/libs/wNumb.js"></script>
-    <script src="~/js/libs/nouislider.min.js"></script>
-    <script src="~/js/libs/jquery.min.js"></script>
-    <script src="~/js/libs/jquery-ui.min.js"></script>
-    <script src="~/js/libs/barba.min.js"></script>
-    <script src="~/js/libs/sticky-kit.min.js"></script>
-    <script src="~/js/libs/velocity.min.js"></script>
-    <script src="~/js/libs/velocity.ui.min.js"></script>
-    <script src="~/js/libs/jquery.waypoints.min.js"></script>
-    <script src="~/js/libs/popper.min.js"></script>
-    <script src="~/js/libs/bootstrap.min.js"></script>
-    <script src="~/js/libs/imagesloaded.pkgd.min.js"></script>
-    <script src="~/js/libs/masonry.pkgd.min.js"></script>
-    <script src="~/js/libs/isotope.pkgd.min.js"></script>
-    <script src="~/js/libs/ofi.min.js"></script>
-    <script src="~/js/libs/jarallax.min.js"></script>
-    <script src="~/js/libs/jarallax-video.min.js"></script>
-    <script src="~/js/libs/jarallax-element.min.js"></script>
-    <script src="~/js/libs/jquery.mCustomScrollbar.min.js"></script>
-    <script src="~/js/libs/swiper.min.js"></script>
-    <script src="~/js/libs/flatpickr/flatpickr.min.js"></script>
-    <script src="~/js/libs/flatpickr/rangePlugin.js"></script>
-    <script src="~/js/libs/select2.min.js"></script>
-    <script src="~/js/libs/select2/en.js"></script>
-    <script src="~/js/libs/jquery.mask.min.js"></script>
-    <script src="~/js/libs/validator.min.js"></script>
-    <script src="~/js/libs/jquery.barrating.min.js"></script>
-    <script src="~/js/libs/jquery.blueimp-gallery.min.js"></script>
-    <script src="~/js/script.min.js"></script>
-    <script src="~/js/demo-switcher.js"></script>
-    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="/js/maps.js"></script>
+    <script src="/js/libs/moment.min.js"></script>
+    <script src="/js/libs/wNumb.js"></script>
+    <script src="/js/libs/nouislider.min.js"></script>
+    <script src="/js/libs/jquery.min.js"></script>
+    <script src="/js/libs/jquery-ui.min.js"></script>
+    <script src="/js/libs/barba.min.js"></script>
+    <script src="/js/libs/sticky-kit.min.js"></script>
+    <script src="/js/libs/velocity.min.js"></script>
+    <script src="/js/libs/velocity.ui.min.js"></script>
+    <script src="/js/libs/jquery.waypoints.min.js"></script>
+    <script src="/js/libs/popper.min.js"></script>
+    <script src="/js/libs/bootstrap.min.js"></script>
+    <script src="/js/libs/imagesloaded.pkgd.min.js"></script>
+    <script src="/js/libs/masonry.pkgd.min.js"></script>
+    <script src="/js/libs/isotope.pkgd.min.js"></script>
+    <script src="/js/libs/ofi.min.js"></script>
+    <script src="/js/libs/jarallax.min.js"></script>
+    <script src="/js/libs/jarallax-video.min.js"></script>
+    <script src="/js/libs/jarallax-element.min.js"></script>
+    <script src="/js/libs/jquery.mCustomScrollbar.min.js"></script>
+    <script src="/js/libs/swiper.min.js"></script>
+    <script src="/js/libs/flatpickr/flatpickr.min.js"></script>
+    <script src="/js/libs/flatpickr/rangePlugin.js"></script>
+    <script src="/js/libs/select2.min.js"></script>
+    <script src="/js/libs/select2/en.js"></script>
+    <script src="/js/libs/jquery.mask.min.js"></script>
+    <script src="/js/libs/validator.min.js"></script>
+    <script src="/js/libs/jquery.barrating.min.js"></script>
+    <script src="/js/libs/jquery.blueimp-gallery.min.js"></script>
+    <script src="/js/script.min.js"></script>
+    <script src="/js/demo-switcher.js"></script>
+    <script src="/js/site.js" asp-append-version="true"></script>
+    <script src="/js/libs/jquery.dataTables.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function () {
+
+            @if (temp == "nouser")
+            {
+                <text>window.location.href = '/home/logout'</text>
+            }
+        });
+    </script>
+    <script>
+        $(document).ready(function () {
+
+            $('#dataTable').DataTable(
+                {
+                    "scrollY": 500,
+                    "scrollX": true
+                }
+            );
+        });
+    </script>
     <script>
         function login() {
+            $('#loader').removeClass('d-none');
             $.ajax({
                 url: '/Home/Login',
                 type: 'POST',
@@ -478,9 +570,11 @@
                     }else{
                         $('#login-err').addClass('d-block').removeClass('d-none');;
                     }
+                    $('#loader').addClass('d-none');
                 },
                 error: (err) => {
                     console.log(err)
+                    $('#loader').addClass('d-none');
                 }
             });
         }
@@ -498,6 +592,7 @@
             let hasEmpty = hasEmptyProperty(data);
             if (hasEmpty || $("#register_matKhauConfirm").val() != $('#register_matKhau').val() || !$("#agreePolicy").is(':checked'))
                 return false;
+            $('#loader').removeClass('d-none');
             $.ajax({
                 url: '/Home/Register',
                 type: 'POST',
@@ -505,9 +600,11 @@
                 success: (data) => {
                     window.location.href = '';
                     alert('Đăng ký thành công');
+                    $('#loader').addClass('d-none');
                 },
                 error: (err) => {
                     alert('Đăng ký thất bại, vui lòng chọn email khác');
+                    $('#loader').addClass('d-none');
                 }
             });
         }

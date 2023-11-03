@@ -9,22 +9,28 @@ builder.Services.AddControllersWithViews();
 
 builder.Services.AddHttpClient("example")
     .ConfigureHttpClient(x => x.BaseAddress = new Uri(configuration["BaseAddress"] + "/api/"))
-    .UseWithRestEaseClient<IAuthAPI>();
+    .UseWithRestEaseClient<IAuthAPI>()
+    .UseWithRestEaseClient<ITourAPI>()
+    .UseWithRestEaseClient<IDestinationAPI>()
+    .UseWithRestEaseClient<IRestaurantAPI>()
+    .UseWithRestEaseClient<IHotelAPI>()
+    .UseWithRestEaseClient<IUserAPI>();
+
 builder.Services
     .AddAuthentication("UserAuth")
     .AddCookie("UserAuth", options =>
     {
-        options.LoginPath = "/home/login";
+        options.LoginPath = "/home";
         options.ExpireTimeSpan = TimeSpan.FromDays(1);
-        options.AccessDeniedPath = "/signin";
-        options.LogoutPath = "/signout";
+        options.AccessDeniedPath = "/home";
+        options.LogoutPath = "/home/logout";
         options.Cookie.Name = "User";
     });
 builder.Services.AddAuthorization();
 builder.Services.AddHttpContextAccessor();
 builder.Services.AddSession(options =>
 {
-    options.IdleTimeout = TimeSpan.FromSeconds(10);
+    options.IdleTimeout = TimeSpan.FromMinutes(30);
     options.Cookie.HttpOnly = true;
     options.Cookie.IsEssential = true;
 });

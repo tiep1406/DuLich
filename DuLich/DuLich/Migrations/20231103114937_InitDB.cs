@@ -60,7 +60,8 @@ namespace DuLich.Migrations
                     PhanQuyen = table.Column<int>(type: "int", nullable: false),
                     NoiO = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     GioiTinh = table.Column<int>(type: "int", nullable: false),
-                    CCCD = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    CCCD = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AnhDaiDien = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -98,12 +99,12 @@ namespace DuLich.Migrations
                     SoNgay = table.Column<int>(type: "int", nullable: false),
                     LuotDanhGia = table.Column<int>(type: "int", nullable: false),
                     ChiTietTour = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    KhuyenMaiTour = table.Column<int>(type: "int", nullable: false),
+                    KhuyenMaiTour = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     MoTaTour = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     HinhAnhTour = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     NgayBatDau = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NgayKetThuc = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    GiaTour = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    GiaTour = table.Column<decimal>(type: "decimal(18,2)", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -302,9 +303,9 @@ namespace DuLich.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ChuTour = table.Column<int>(type: "int", nullable: false),
                     MaTour = table.Column<int>(type: "int", nullable: false),
-                    TenTour = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     LichTrinhNgay = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ChiTietLichTrinh = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                    ChiTietLichTrinh = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DiaDiem = table.Column<string>(type: "nvarchar(max)", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -375,8 +376,8 @@ namespace DuLich.Migrations
 
             migrationBuilder.InsertData(
                 table: "NguoiDungs",
-                columns: new[] { "Id", "CCCD", "Email", "GioiTinh", "HoTen", "MatKhau", "NoiO", "PhanQuyen", "Sdt", "TrangThai" },
-                values: new object[] { 1, "123456789", "admin@admin.com", 1, null, "admin", "Ha Noi", 0, "0123456789", 1 });
+                columns: new[] { "Id", "AnhDaiDien", "CCCD", "Email", "GioiTinh", "HoTen", "MatKhau", "NoiO", "PhanQuyen", "Sdt", "TrangThai" },
+                values: new object[] { 1, "default-avatar.jpg", "123456789", "admin@admin.com", 1, null, "admin", "Ha Noi", 0, "0123456789", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BinhLuanKhachSan_IdKhachSan",

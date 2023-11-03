@@ -26,7 +26,7 @@ namespace DuLich.Controllers
         }
 
         [HttpPut]
-        public async Task<IActionResult> SuaThongTinNguoiDung([FromBody] ChinhSuaNguoiDungRequest request)
+        public async Task<IActionResult> SuaThongTinNguoiDung([FromForm] ChinhSuaNguoiDungRequest request)
         {
             await _repository.ChinhSuaNguoiDung(request);
 
@@ -34,7 +34,6 @@ namespace DuLich.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "0, 1")]
         public async Task<IActionResult> GetDanhSachNguoiDung()
         {
             var users = await _repository.GetDanhSachNguoiDung();

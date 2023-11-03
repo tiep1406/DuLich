@@ -62,6 +62,9 @@ namespace DuLich.Repository.DiemThamQuan
                 .FirstOrDefaultAsync(x => x.Id == id)
                 ?? throw new KeyNotFoundException("Không tìm thấy điểm tham quan tương ứng");
 
+            dtq.AnhDaiDien = _uploadService.GetFullPath(dtq.AnhDaiDien);
+            dtq.DiemThamQuanCT.AnhChiTiet = _uploadService.GetFullPath(dtq.DiemThamQuanCT.AnhChiTiet);
+
             return dtq;
         }
 
@@ -70,6 +73,27 @@ namespace DuLich.Repository.DiemThamQuan
             var dtqs = await _context.DiemThamQuans
                 .Include(x => x.DiemThamQuanCT)
                 .ToListAsync();
+
+            foreach (var dtq in dtqs)
+            {
+                dtq.AnhDaiDien = _uploadService.GetFullPath(dtq.AnhDaiDien);
+                dtq.DiemThamQuanCT.AnhChiTiet = _uploadService.GetFullPath(dtq.DiemThamQuanCT.AnhChiTiet);
+            }
+            return dtqs;
+        }
+
+        public async Task<List<ViewModel.Models.DiemThamQuan>> GetDanhSachDiemThamQuanByChuDichVu(int idChuDichVu)
+        {
+            var dtqs = await _context.DiemThamQuans
+                .Where(x => x.ChuDichVu == idChuDichVu)
+                .Include(x => x.DiemThamQuanCT)
+                .ToListAsync();
+
+            foreach (var dtq in dtqs)
+            {
+                dtq.AnhDaiDien = _uploadService.GetFullPath(dtq.AnhDaiDien);
+                dtq.DiemThamQuanCT.AnhChiTiet = _uploadService.GetFullPath(dtq.DiemThamQuanCT.AnhChiTiet);
+            }
 
             return dtqs;
         }
@@ -111,6 +135,12 @@ namespace DuLich.Repository.DiemThamQuan
                 || x.DiemThamQuanCT.MoTaDichVu.ToLower().Contains(request.Key)
                 || x.DiaDiem.ToLower().Contains(request.Key))
                 .ToListAsync();
+
+            foreach (var dtq in dtqs)
+            {
+                dtq.AnhDaiDien = _uploadService.GetFullPath(dtq.AnhDaiDien);
+                dtq.DiemThamQuanCT.AnhChiTiet = _uploadService.GetFullPath(dtq.DiemThamQuanCT.AnhChiTiet);
+            }
 
             return dtqs;
         }

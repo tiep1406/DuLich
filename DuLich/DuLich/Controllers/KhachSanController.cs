@@ -1,66 +1,80 @@
 ﻿using DemoCrud.Responsitory;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ViewModel.ModelsView;
+using ViewModel.Request.KhachSan;
 
 namespace DuLich.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class KhachSanController : ControllerBase
     {
-        private IKhachSanRepositoty _KhachSanRepositoty;
+        private readonly IKhachSanRepository _repository;
 
-        public KhachSanController(IKhachSanRepositoty KhachSanRepositoty)
+        public KhachSanController(IKhachSanRepository repository)
         {
-            _KhachSanRepositoty = KhachSanRepositoty;
+            _repository = repository;
         }
 
         [HttpGet]
-        [Route("GetKhachSan/{id}")]
-        public IActionResult GetKhachSan(int id)
+        [AllowAnonymous]
+        public async Task<IActionResult> GetDanhSachKhachSan()
         {
-            var ds = _KhachSanRepositoty.GetKhachSan(id);
-            return Ok(ds);
+            var dtqs = await _repository.GetAll();
+
+            return Ok(dtqs);
         }
 
-        [HttpGet]
-        [Route("GetAll")]
-        public IActionResult GetAll()
+        [HttpGet("owner/{id}")]
+        public async Task<IActionResult> GetDanhSachKhachSanByChuDichVu([FromRoute] int id)
         {
-            var ds = _KhachSanRepositoty.GetAll();
-            return Ok(ds);
+            var dtqs = await _repository.GetByOwner(id);
+
+            return Ok(dtqs);
+        }
+
+        [HttpGet("search")]
+        [AllowAnonymous]
+        public async Task<IActionResult> TimKiemKhachSan([FromQuery] TimKiemKhachSanRequest request)
+        {
+            var dtqs = await _repository.Search(request);
+
+            return Ok(dtqs);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> XoaKhachSan([FromRoute] int id)
+        {
+            await _repository.Delete(id);
+
+            return NoContent();
         }
 
         [HttpPost]
-        [Route("add")]
-        public IActionResult Add(KhachSanVM KhachSanVM)
+        public async Task<IActionResult> ThemKhachSan([FromForm] KhachSanVM request)
         {
-            var ds = _KhachSanRepositoty.Add(KhachSanVM);
-            return Ok(ds);
-        }
+            await _repository.Add(request);
 
-        [HttpPost]
-        [Route("datKhachSan")]
-        public IActionResult datKhachSan(DatKhachSanVM KhachSanVM)
-        {
-            var ds = _KhachSanRepositoty.DatKhachSan(KhachSanVM);
-            return Ok(ds);
+            return NoContent();
         }
 
         [HttpPut]
-        [Route("Update")]
-        public IActionResult Update(KhachSanVM KhachSanVM)
+        public async Task<IActionResult> ChinhSuaThongTinKhachSan([FromForm] KhachSanVM request)
         {
-            _KhachSanRepositoty.Update(KhachSanVM);
-            return Ok();
+            await _repository.Update(request);
+
+            return NoContent();
         }
 
-        [HttpDelete]
-        [Route("Delete")]
-        public IActionResult Delete(int id)
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetChiTietKhachSan([FromRoute] int id)
         {
-            _KhachSanRepositoty.Delete(id);
-            return Ok();
+            var dtq = await _repository.GetKhachSan(id);
+
+            return Ok(dtq);
         }
     }
 }

@@ -4,10 +4,11 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using ViewModel.Models;
 using ViewModel.ModelsView;
+using ViewModel.Request.KhachSan;
 
 namespace DemoCrud.Responsitory
 {
-    public class KhachSanRepository : IKhachSanRepositoty
+    public class KhachSanRepository : IKhachSanRepository
     {
         private AppDBContext _DBContext;
         private readonly IUploadService _uploadService;
@@ -21,19 +22,22 @@ namespace DemoCrud.Responsitory
         public async Task<List<KhachSan>> GetAll()
         {
             var ds = await _DBContext.KhachSans.Select(t => t).ToListAsync();
+            foreach (var d in ds)
+            {
+                d.AnhDaiDien = _uploadService.GetFullPath(d.AnhDaiDien);
+            }
             return ds;
         }
 
         public async Task<KhachSan> GetKhachSan(int id)
         {
             var ds = await _DBContext.KhachSans.FindAsync(id);
+            ds.AnhDaiDien = _uploadService.GetFullPath(ds.AnhDaiDien);
             return ds;
         }
 
-        public async Task<KhachSan> Add(KhachSanVM KhachSan)
+        public async Task Add(KhachSanVM KhachSan)
         {
-            var user = _DBContext.NguoiDungs.FirstOrDefaultAsync(x => x.Id == KhachSan.ChuDichVu)
-                ?? throw new KeyNotFoundException("Không tìm thấy người dùng tương ứng");
             KhachSan user1 = new KhachSan
             {
                 ChuDichVu = KhachSan.ChuDichVu,
@@ -42,7 +46,7 @@ namespace DemoCrud.Responsitory
                 TenKhachSan = KhachSan.TenKhachSan,
                 ChiTietKhachSan = KhachSan.ChiTietKhachSan,
                 MoTaKhachSan = KhachSan.MoTaKhachSan,
-                DanhGia = KhachSan.DanhGia
+                DanhGia = 0
             };
             if (KhachSan.AnhDaiDien != null)
             {
@@ -50,24 +54,22 @@ namespace DemoCrud.Responsitory
             }
             await _DBContext.KhachSans.AddAsync(user1);
             await _DBContext.SaveChangesAsync();
-            return user1;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             var KhachSan = _DBContext.KhachSans.SingleOrDefault(lo => lo.Id == id);
             if (KhachSan != null)
             {
                 _DBContext.Remove(KhachSan);
-                _DBContext.SaveChanges();
+                await _DBContext.SaveChangesAsync();
             }
         }
 
-        public async void Update(KhachSanVM KhachSan)
+        public async Task Update(KhachSanVM KhachSan)
         {
             var _KhachSan = _DBContext.KhachSans.SingleOrDefault(lo => lo.Id == KhachSan.IdKS);
-            var user = _DBContext.NguoiDungs.FirstOrDefaultAsync(x => x.Id == KhachSan.ChuDichVu)
-                ?? throw new KeyNotFoundException("Không tìm thấy người dùng tương ứng");
+
             if (KhachSan != null)
             {
                 _KhachSan.ChuDichVu = KhachSan.ChuDichVu;
@@ -76,7 +78,7 @@ namespace DemoCrud.Responsitory
                 _KhachSan.TenKhachSan = KhachSan.TenKhachSan;
                 _KhachSan.ChiTietKhachSan = KhachSan.ChiTietKhachSan;
                 _KhachSan.MoTaKhachSan = KhachSan.MoTaKhachSan;
-                _KhachSan.DanhGia = KhachSan.DanhGia;
+                _KhachSan.DanhGia = 0;
                 string anh = "";
                 if (KhachSan.AnhDaiDien != null)
                 {
@@ -84,11 +86,11 @@ namespace DemoCrud.Responsitory
                     _KhachSan.AnhDaiDien = await _uploadService.SaveFile(KhachSan.AnhDaiDien);
                 }
                 _DBContext.KhachSans.Update(_KhachSan);
-                _DBContext.SaveChanges();
+                await _DBContext.SaveChangesAsync();
             }
         }
 
-        public async Task<DatKhachSan> DatKhachSan(DatKhachSanVM datKhachSan)
+        public async Task DatKhachSan(DatKhachSanVM datKhachSan)
         {
             DatKhachSan dat = new DatKhachSan
             {
@@ -99,7 +101,26 @@ namespace DemoCrud.Responsitory
             };
             await _DBContext.DatKhachSans.AddAsync(dat);
             await _DBContext.SaveChangesAsync();
-            return dat;
+        }
+
+        public async Task<List<KhachSan>> Search(TimKiemKhachSanRequest request)
+        {
+            var ds = await _DBContext.KhachSans.Where(x => x.TenKhachSan.Contains(request.Key)).ToListAsync();
+            foreach (var d in ds)
+            {
+                d.AnhDaiDien = _uploadService.GetFullPath(d.AnhDaiDien);
+            }
+            return ds;
+        }
+
+        public async Task<List<KhachSan>> GetByOwner(int id)
+        {
+            var ds = await _DBContext.KhachSans.Where(x => x.ChuDichVu == id).ToListAsync();
+            foreach (var d in ds)
+            {
+                d.AnhDaiDien = _uploadService.GetFullPath(d.AnhDaiDien);
+            }
+            return ds;
         }
     }
 }

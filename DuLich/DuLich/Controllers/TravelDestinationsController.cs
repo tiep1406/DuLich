@@ -8,7 +8,7 @@ namespace DuLich.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    [Authorize(Roles = "0, 1, 2")]
+    [Authorize]
     public class TravelDestinationsController : ControllerBase
     {
         private readonly IDiemThamQuanRepository _repository;
@@ -24,7 +24,15 @@ namespace DuLich.Controllers
         {
             var dtqs = await _repository.GetDanhSachDiemThamQuan();
 
-            return Ok(new { statusCode = StatusCodes.Status200OK, data = dtqs });
+            return Ok(dtqs);
+        }
+
+        [HttpGet("owner/{id}")]
+        public async Task<IActionResult> GetDanhSachDiemThamQuanByChuDichVu([FromRoute] int id)
+        {
+            var dtqs = await _repository.GetDanhSachDiemThamQuanByChuDichVu(id);
+
+            return Ok(dtqs);
         }
 
         [HttpGet("search")]
@@ -33,7 +41,7 @@ namespace DuLich.Controllers
         {
             var dtqs = await _repository.TimKiemDiemThamQuan(request);
 
-            return Ok(new { statusCode = StatusCodes.Status200OK, data = dtqs });
+            return Ok(dtqs);
         }
 
         [HttpDelete("{id}")]
@@ -41,7 +49,7 @@ namespace DuLich.Controllers
         {
             await _repository.XoaDiemThamQuan(id);
 
-            return Ok(new { statusCode = StatusCodes.Status204NoContent, message = "Xoá điểm tham quan thành công" });
+            return NoContent();
         }
 
         [HttpPost]
@@ -49,7 +57,7 @@ namespace DuLich.Controllers
         {
             await _repository.ThemDiemThamQuan(request);
 
-            return Ok(new { statusCode = StatusCodes.Status201Created, message = "Thêm điểm tham quan du lịch thành công" });
+            return NoContent();
         }
 
         [HttpPut]
@@ -57,7 +65,7 @@ namespace DuLich.Controllers
         {
             await _repository.ChinhSuaDiemThamQuan(request);
 
-            return Ok(new { statusCode = StatusCodes.Status204NoContent, message = "Chỉnh sửa điểm tham quan du lịch thành công" });
+            return NoContent();
         }
 
         [HttpGet("{id}")]
@@ -66,7 +74,7 @@ namespace DuLich.Controllers
         {
             var dtq = await _repository.GetChiTietDiemThamQuan(id);
 
-            return Ok(new { statusCode = StatusCodes.Status200OK, data = dtq });
+            return Ok(dtq);
         }
     }
 }

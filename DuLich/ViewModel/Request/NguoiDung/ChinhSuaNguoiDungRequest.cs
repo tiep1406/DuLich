@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using Microsoft.AspNetCore.Http;
+using System.ComponentModel.DataAnnotations;
 
 namespace ViewModel.Request.NguoiDung
 {
@@ -33,5 +34,7 @@ namespace ViewModel.Request.NguoiDung
 
         [Required]
         public string CCCD { get; set; }
+
+        public IFormFile AnhDaiDien { get; set; }
     }
 }

@@ -1,0 +1,52 @@
+﻿@using ViewModel.Models;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Quản lý tour";
+    List<Tour> tours = (List<Tour>)ViewData["tours"];
+}
+<div class="container-xl px-4 mt-4">
+    <!-- Account page navigation-->
+    <nav class="nav nav-borders">
+        <a class="nav-link" href="/user">Profile</a>
+        <a class="nav-link active ms-0">Quản lý tour</a>
+        <a class="nav-link" href="/destination">Quản lý điểm tham quan</a>
+        <a class="nav-link" href="/restaurant">Quản lý nhà hàng</a>
+        <a class="nav-link" href="/hotel">Quản lý khách sạn</a>
+        <a class="nav-link" href="/delivery">Quản lý vận chuyển</a>
+    </nav>
+    <hr class="mt-0 mb-4">
+    <a href="tour/create">
+        <button type="button" class="btn btn-primary mb-3">Thêm Tour</button>
+    </a>
+    <table id="dataTable" class="table table-bordered  dataTable">
+        <thead>
+            <tr class="text-center">
+                <th style="text-align: center; width: 5%">Mã tour</th>
+                <th style="text-align: center; width: 20%">Tên tour </th>
+                <th style="text-align: center; width: 5%">Số ngày </th>
+                <th style="text-align: center; width: 10%">Giá tour</th>
+                <th style="text-align: center; width: 10%">Lượt đánh giá </th>
+                <th style="text-align: center; width: 15%">Ngày bắt đầu </th>
+                <th style="text-align: center; width: 15%">Ngày kết thúc </th>
+                <th style="text-align: center; width: 20%">Thao tác </th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach(var tour in tours)
+            {
+                <tr>
+                    <td class="text-center">@tour.Id</td>
+                    <td class="text-center">@tour.TenTour</td>
+                    <td class="text-center">@tour.SoNgay</td>
+                    <td class="text-center">@tour.GiaTour</td>
+                    <td class="text-center">@tour.LuotDanhGia</td>
+                    <td class="text-center">@tour.NgayBatDau.ToString()</td>
+                    <td class="text-center">@tour.NgayKetThuc.ToString()</td>
+                    <td class="text-center">
+                        <a href="/tour/edit/@tour.Id" class="btn btn-success">Edit</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+</div>

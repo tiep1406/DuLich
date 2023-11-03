@@ -18,7 +18,7 @@ namespace ViewModel.Request.Tour
         public string ChiTietTour { get; set; }
 
         [Required]
-        public int KhuyenMaiTour { get; set; }
+        public decimal KhuyenMaiTour { get; set; }
 
         [Required]
         public string MoTaTour { get; set; }
@@ -32,12 +32,15 @@ namespace ViewModel.Request.Tour
         public DateTime NgayKetThuc { get; set; }
 
         [Required]
-        public string GiaTour { get; set; }
+        public decimal GiaTour { get; set; }
 
         [Required]
         public string LichTrinhNgay { get; set; }
 
         [Required]
         public string ChiTietLichTrinh { get; set; }
+
+        [Required]
+        public string DiaDiem { get; set; }
     }
 }

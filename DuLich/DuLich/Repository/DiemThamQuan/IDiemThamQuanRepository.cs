@@ -12,6 +12,8 @@ namespace DuLich.Repository.DiemThamQuan
 
         Task<List<ViewModel.Models.DiemThamQuan>> GetDanhSachDiemThamQuan();
 
+        Task<List<ViewModel.Models.DiemThamQuan>> GetDanhSachDiemThamQuanByChuDichVu(int idChuDichVu);
+
         Task<List<ViewModel.Models.DiemThamQuan>> TimKiemDiemThamQuan(TimKiemDiemThamQuanRequest request);
 
         Task<ViewModel.Models.DiemThamQuan> GetChiTietDiemThamQuan(int id);

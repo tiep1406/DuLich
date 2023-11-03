@@ -1,10 +1,12 @@
 ﻿using DuLich.Repository.DBContext;
+using DuLich.Service;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using ViewModel.Models;
 using ViewModel.ModelsView;
 using ViewModel.Request.NguoiDung;
 
@@ -14,17 +16,19 @@ namespace DuLich.Repository.NguoiDung
     {
         private readonly AppDBContext _context;
         private readonly IConfiguration _configuration;
+        private readonly IUploadService _uploadService;
 
-        public NguoiDungRepository(AppDBContext context, IConfiguration configuration)
+        public NguoiDungRepository(AppDBContext context, IConfiguration configuration, IUploadService uploadService)
         {
             _context = context;
             _configuration = configuration;
+            _uploadService = uploadService;
         }
 
         public async Task DangKy(DangKyRequest request)
         {
             var nd = await _context.NguoiDungs.Where(x => x.Email == request.Email).FirstOrDefaultAsync();
-            if(nd != null)
+            if (nd != null)
                 throw new InvalidDataException("Email đã tồn tại");
             var nguoiDung = new ViewModel.Models.NguoiDung()
             {
@@ -81,7 +85,10 @@ namespace DuLich.Repository.NguoiDung
         public async Task<List<ViewModel.Models.NguoiDung>> GetDanhSachNguoiDung()
         {
             var nguoiDungs = await _context.NguoiDungs.ToListAsync();
-
+            foreach (var item in nguoiDungs)
+            {
+                item.AnhDaiDien = _uploadService.GetFullPath(item.AnhDaiDien);
+            }
             return nguoiDungs;
         }
 
@@ -89,7 +96,7 @@ namespace DuLich.Repository.NguoiDung
         {
             var nguoiDung = await _context.NguoiDungs.FindAsync(id)
                 ?? throw new KeyNotFoundException("Không tìm thấy người dùng");
-
+            nguoiDung.AnhDaiDien = _uploadService.GetFullPath(nguoiDung.AnhDaiDien);
             return nguoiDung;
         }
 
@@ -102,6 +109,10 @@ namespace DuLich.Repository.NguoiDung
             nguoiDung.CCCD = request.CCCD;
             nguoiDung.Email = request.Email;
             nguoiDung.GioiTinh = request.GioiTinh;
+            if (request.AnhDaiDien != null)
+            {
+                nguoiDung.AnhDaiDien = await _uploadService.SaveFile(request.AnhDaiDien);
+            }
             if (!string.IsNullOrEmpty(request.MatKhau))
                 nguoiDung.MatKhau = request.MatKhau;
             nguoiDung.NoiO = request.NoiO;

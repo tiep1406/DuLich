@@ -12,15 +12,13 @@ namespace ViewModel.Request.DiemThamQuan
         public string TenDiaDiem { get; set; }
 
         [Required]
-        public int Gia { get; set; }
+        public decimal Gia { get; set; }
 
         [Required]
         public string DiaDiem { get; set; }
 
-        [Required]
         public IFormFile AnhDaiDien { get; set; }
 
-        [Required]
         public IFormFile AnhChiTiet { get; set; }
 
         [Required]

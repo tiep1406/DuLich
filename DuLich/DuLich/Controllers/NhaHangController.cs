@@ -1,66 +1,80 @@
 ﻿using DemoCrud.Responsitory;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ViewModel.ModelsView;
+using ViewModel.Request.NhaHang;
 
 namespace DuLich.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class NhaHangController : ControllerBase
     {
-        private INhaHangRepositoty _NhaHangRepositoty;
+        private readonly INhaHangRepository _repository;
 
-        public NhaHangController(INhaHangRepositoty nhaHangRepositoty)
+        public NhaHangController(INhaHangRepository repository)
         {
-            _NhaHangRepositoty = nhaHangRepositoty;
+            _repository = repository;
         }
 
         [HttpGet]
-        [Route("GetNhaHang/{id}")]
-        public async Task<IActionResult> GetNhaHang(int id)
+        [AllowAnonymous]
+        public async Task<IActionResult> GetDanhSachNhaHang()
         {
-            var ds = await _NhaHangRepositoty.GetNhaHang(id);
-            return Ok(ds);
+            var dtqs = await _repository.GetAll();
+
+            return Ok(dtqs);
         }
 
-        [HttpGet]
-        [Route("GetAll")]
-        public IActionResult GetAll()
+        [HttpGet("owner/{id}")]
+        public async Task<IActionResult> GetDanhSachNhaHangByChuDichVu([FromRoute] int id)
         {
-            var ds = _NhaHangRepositoty.GetAll();
-            return Ok(ds);
+            var dtqs = await _repository.GetByOwner(id);
+
+            return Ok(dtqs);
+        }
+
+        [HttpGet("search")]
+        [AllowAnonymous]
+        public async Task<IActionResult> TimKiemNhaHang([FromQuery] TimKiemNhaHangRequest request)
+        {
+            var dtqs = await _repository.Search(request);
+
+            return Ok(dtqs);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> XoaNhaHang([FromRoute] int id)
+        {
+            await _repository.Delete(id);
+
+            return NoContent();
         }
 
         [HttpPost]
-        [Route("add")]
-        public IActionResult Add(NhaHangVM nhaHangVM)
+        public async Task<IActionResult> ThemNhaHang([FromForm] NhaHangVM request)
         {
-            var ds = _NhaHangRepositoty.Add(nhaHangVM);
-            return Ok(ds);
-        }
+            await _repository.Add(request);
 
-        [HttpPost]
-        [Route("datnhahang")]
-        public IActionResult datnhahang(DatNhaHangVM nhaHangVM)
-        {
-            var ds = _NhaHangRepositoty.DatNhaHang(nhaHangVM);
-            return Ok(ds);
+            return NoContent();
         }
 
         [HttpPut]
-        [Route("Update")]
-        public IActionResult Update(NhaHangVM nhaHangVM)
+        public async Task<IActionResult> ChinhSuaThongTinNhaHang([FromForm] NhaHangVM request)
         {
-            _NhaHangRepositoty.Update(nhaHangVM);
-            return Ok();
+            await _repository.Update(request);
+
+            return NoContent();
         }
 
-        [HttpDelete]
-        [Route("Delete")]
-        public IActionResult Delete(int id)
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetChiTietNhaHang([FromRoute] int id)
         {
-            _NhaHangRepositoty.Delete(id);
-            return Ok();
+            var dtq = await _repository.GetNhaHang(id);
+
+            return Ok(dtq);
         }
     }
 }

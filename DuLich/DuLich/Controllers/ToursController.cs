@@ -24,7 +24,7 @@ namespace DuLich.Controllers
         {
             var tours = await _repository.GetDanhSachTour();
 
-            return Ok(new { statusCode = StatusCodes.Status200OK, data = tours });
+            return Ok(tours);
         }
 
         [HttpGet("{id}")]
@@ -33,7 +33,7 @@ namespace DuLich.Controllers
         {
             var tour = await _repository.GetChiTietTour(id);
 
-            return Ok(new { statusCode = StatusCodes.Status200OK, data = tour });
+            return Ok(tour);
         }
 
         [HttpGet("search")]
@@ -42,52 +42,47 @@ namespace DuLich.Controllers
         {
             var tours = await _repository.TimKiemTour(request);
 
-            return Ok(new { statusCode = StatusCodes.Status200OK, data = tours });
+            return Ok(tours);
         }
 
         [HttpGet("user/{id}")]
-        [Authorize(Roles = "0, 1, 2, 3")]
         public async Task<IActionResult> GetDanhSachTourByNguoiDung([FromRoute] int id)
         {
             var tours = await _repository.GetDanhSachTourByNguoiDung(id);
 
-            return Ok(new { statusCode = StatusCodes.Status200OK, data = tours });
+            return Ok(tours);
         }
 
         [HttpGet("owner/{id}")]
-        [Authorize(Roles = "0, 1, 2")]
         public async Task<IActionResult> GetDanhSachTourByChuDichVu([FromRoute] int id)
         {
             var tours = await _repository.GetDanhSachTourByChuDichVu(id);
 
-            return Ok(new { statusCode = StatusCodes.Status200OK, data = tours });
+            return Ok(tours);
         }
 
         [HttpPost]
-        [Authorize(Roles = "0, 1, 2")]
         public async Task<IActionResult> ThemTour([FromForm] ThemTourRequest request)
         {
             await _repository.ThemTour(request);
 
-            return Ok(new { statusCode = StatusCodes.Status201Created, message = "Thêm tour thành công" });
+            return NoContent();
         }
 
         [HttpPut]
-        [Authorize(Roles = "0, 1, 2")]
         public async Task<IActionResult> ChinhSuaThongTinTour([FromForm] ChinhSuaTourRequest request)
         {
             await _repository.ChinhSuaTour(request);
 
-            return Ok(new { statusCode = StatusCodes.Status204NoContent, message = "Chỉnh sửa tour thành công" });
+            return NoContent();
         }
 
         [HttpPost("order")]
-        [Authorize(Roles = "0, 1, 2, 3")]
         public async Task<IActionResult> DatTour([FromBody] DatTourRequest request)
         {
             await _repository.DatTour(request);
 
-            return Ok(new { statusCode = StatusCodes.Status201Created, message = "Đặt tour thành công" });
+            return NoContent();
         }
     }
 }

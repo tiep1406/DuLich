@@ -329,6 +329,9 @@ namespace DuLich.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
+                    b.Property<string>("AnhDaiDien")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("CCCD")
                         .HasColumnType("nvarchar(max)");
 
@@ -364,6 +367,7 @@ namespace DuLich.Migrations
                         new
                         {
                             Id = 1,
+                            AnhDaiDien = "default-avatar.jpg",
                             CCCD = "123456789",
                             Email = "admin@admin.com",
                             GioiTinh = 1,
@@ -426,14 +430,14 @@ namespace DuLich.Migrations
                     b.Property<int>("ChuTour")
                         .HasColumnType("int");
 
-                    b.Property<string>("GiaTour")
-                        .HasColumnType("nvarchar(max)");
+                    b.Property<decimal>("GiaTour")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("HinhAnhTour")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("KhuyenMaiTour")
-                        .HasColumnType("int");
+                    b.Property<decimal>("KhuyenMaiTour")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<int>("LuotDanhGia")
                         .HasColumnType("int");
@@ -472,14 +476,14 @@ namespace DuLich.Migrations
                     b.Property<int>("ChuTour")
                         .HasColumnType("int");
 
+                    b.Property<string>("DiaDiem")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("LichTrinhNgay")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("MaTour")
                         .HasColumnType("int");
-
-                    b.Property<string>("TenTour")
-                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
 

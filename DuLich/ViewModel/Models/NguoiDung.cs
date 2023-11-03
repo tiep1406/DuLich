@@ -11,6 +11,7 @@
         public string NoiO { get; set; }
         public int GioiTinh { get; set; }
         public string CCCD { get; set; }
+        public string AnhDaiDien { get; set; }
         public List<DatKhachSan> DatKhachSans { get; set; }
         public List<DatNhaHang> DatNhaHangs { get; set; }
         public List<DatTour> DatTours { get; set; }

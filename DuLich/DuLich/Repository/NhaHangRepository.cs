@@ -4,13 +4,15 @@ using Microsoft.EntityFrameworkCore;
 using System.Data;
 using ViewModel.Models;
 using ViewModel.ModelsView;
+using ViewModel.Request.NhaHang;
 
 namespace DemoCrud.Responsitory
 {
-    public class NhaHangRepository : INhaHangRepositoty
+    public class NhaHangRepository : INhaHangRepository
     {
         private AppDBContext _DBContext;
         private readonly IUploadService _uploadService;
+
         public NhaHangRepository(AppDBContext dBContext, IUploadService uploadService)
         {
             _DBContext = dBContext;
@@ -19,20 +21,25 @@ namespace DemoCrud.Responsitory
 
         public async Task<List<NhaHang>> GetAll()
         {
-            var ds = await _DBContext.NhaHangs.Select(t => t).ToListAsync();
+            var ds = await _DBContext.NhaHangs.ToListAsync();
+
+            foreach (var d in ds)
+            {
+                d.AnhDaiDien = _uploadService.GetFullPath(d.AnhDaiDien);
+            }
+
             return ds;
         }
 
         public async Task<NhaHang> GetNhaHang(int id)
         {
             var ds = await _DBContext.NhaHangs.FindAsync(id);
+            ds.AnhDaiDien = _uploadService.GetFullPath(ds.AnhDaiDien);
             return ds;
         }
 
-        public async Task<NhaHang> Add(NhaHangVM nhaHang)
+        public async Task Add(NhaHangVM nhaHang)
         {
-            var user = _DBContext.NguoiDungs.FirstOrDefaultAsync(x => x.Id == nhaHang.ChuDichVu)
-                ?? throw new KeyNotFoundException("Không tìm thấy người dùng tương ứng");
             NhaHang user1 = new NhaHang
             {
                 ChuDichVu = nhaHang.ChuDichVu,
@@ -41,7 +48,7 @@ namespace DemoCrud.Responsitory
                 TenNhaHang = nhaHang.TenNhaHang,
                 ChiTietNhaHang = nhaHang.ChiTietNhaHang,
                 MoTaNhaHang = nhaHang.MoTaNhaHang,
-                DanhGia = nhaHang.DanhGia
+                DanhGia = 0
             };
             if (nhaHang.AnhDaiDien != null)
             {
@@ -49,24 +56,22 @@ namespace DemoCrud.Responsitory
             }
             await _DBContext.NhaHangs.AddAsync(user1);
             await _DBContext.SaveChangesAsync();
-            return user1;
         }
 
-        public void Delete(int id)
+        public async Task Delete(int id)
         {
             var nhaHang = _DBContext.NhaHangs.SingleOrDefault(lo => lo.Id == id);
             if (nhaHang != null)
             {
                 _DBContext.Remove(nhaHang);
-                _DBContext.SaveChanges();
+                await _DBContext.SaveChangesAsync();
             }
         }
 
-        public async void Update(NhaHangVM nhaHang)
+        public async Task Update(NhaHangVM nhaHang)
         {
-            var _nhahang = _DBContext.NhaHangs.SingleOrDefault(lo => lo.Id == nhaHang.IdNH);
-            var user = _DBContext.NguoiDungs.FirstOrDefaultAsync(x => x.Id == nhaHang.ChuDichVu)
-                ?? throw new KeyNotFoundException("Không tìm thấy người dùng tương ứng");
+            var _nhahang = await _DBContext.NhaHangs.FirstOrDefaultAsync(lo => lo.Id == nhaHang.IdNH);
+
             if (nhaHang != null)
             {
                 _nhahang.ChuDichVu = nhaHang.ChuDichVu;
@@ -75,7 +80,7 @@ namespace DemoCrud.Responsitory
                 _nhahang.TenNhaHang = nhaHang.TenNhaHang;
                 _nhahang.ChiTietNhaHang = nhaHang.ChiTietNhaHang;
                 _nhahang.MoTaNhaHang = nhaHang.MoTaNhaHang;
-                _nhahang.DanhGia = nhaHang.DanhGia;
+                _nhahang.DanhGia = 0;
                 string anh = "";
                 if (nhaHang.AnhDaiDien != null)
                 {
@@ -83,11 +88,11 @@ namespace DemoCrud.Responsitory
                     _nhahang.AnhDaiDien = await _uploadService.SaveFile(nhaHang.AnhDaiDien);
                 }
                 _DBContext.NhaHangs.Update(_nhahang);
-                _DBContext.SaveChanges();
+                await _DBContext.SaveChangesAsync();
             }
         }
 
-        public async Task<DatNhaHang> DatNhaHang(DatNhaHangVM datNhaHang)
+        public async Task DatNhaHang(DatNhaHangVM datNhaHang)
         {
             DatNhaHang dat = new DatNhaHang
             {
@@ -98,7 +103,30 @@ namespace DemoCrud.Responsitory
             };
             await _DBContext.DatNhaHangs.AddAsync(dat);
             await _DBContext.SaveChangesAsync();
-            return dat;
+        }
+
+        public async Task<List<NhaHang>> GetByOwner(int id)
+        {
+            var ds = await _DBContext.NhaHangs.Where(x => x.ChuDichVu == id).ToListAsync();
+
+            foreach (var d in ds)
+            {
+                d.AnhDaiDien = _uploadService.GetFullPath(d.AnhDaiDien);
+            }
+
+            return ds;
+        }
+
+        public async Task<List<NhaHang>> Search(TimKiemNhaHangRequest request)
+        {
+            var ds = await _DBContext.NhaHangs.Where(x => x.TenNhaHang.Contains(request.Key)).ToListAsync();
+
+            foreach (var d in ds)
+            {
+                d.AnhDaiDien = _uploadService.GetFullPath(d.AnhDaiDien);
+            }
+
+            return ds;
         }
     }
 }
