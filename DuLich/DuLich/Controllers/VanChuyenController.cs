@@ -1,66 +1,80 @@
 ﻿using DemoCrud.Responsitory;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ViewModel.ModelsView;
+using ViewModel.Request.VanChuyen;
 
 namespace DuLich.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [Authorize]
     public class VanChuyenController : ControllerBase
     {
-        private IVanChuyenRepositoty _VanChuyenRepositoty;
+        private readonly IVanChuyenRepository _repository;
 
-        public VanChuyenController(IVanChuyenRepositoty VanChuyenRepositoty)
+        public VanChuyenController(IVanChuyenRepository repository)
         {
-            _VanChuyenRepositoty = VanChuyenRepositoty;
+            _repository = repository;
         }
 
         [HttpGet]
-        [Route("GetVanChuyen/{id}")]
-        public IActionResult GetVanChuyen(int id)
+        [AllowAnonymous]
+        public async Task<IActionResult> GetDanhSachVanChuyen()
         {
-            var ds = _VanChuyenRepositoty.GetVanChuyen(id);
-            return Ok(ds);
+            var dtqs = await _repository.GetAll();
+
+            return Ok(dtqs);
         }
 
-        [HttpGet]
-        [Route("GetAll")]
-        public IActionResult GetAll()
+        [HttpGet("owner/{id}")]
+        public async Task<IActionResult> GetDanhSachVanChuyenByChuDichVu([FromRoute] int id)
         {
-            var ds = _VanChuyenRepositoty.GetAll();
-            return Ok(ds);
+            var dtqs = await _repository.GetByOwner(id);
+
+            return Ok(dtqs);
+        }
+
+        [HttpGet("search")]
+        [AllowAnonymous]
+        public async Task<IActionResult> TimKiemVanChuyen([FromBody] TimKiemVanChuyenRequest request)
+        {
+            var dtqs = await _repository.Search(request);
+
+            return Ok(dtqs);
+        }
+
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> XoaVanChuyen([FromRoute] int id)
+        {
+            await _repository.Delete(id);
+
+            return NoContent();
         }
 
         [HttpPost]
-        [Route("add")]
-        public IActionResult Add(VanChuyenVM VanChuyenVM)
+        public async Task<IActionResult> ThemVanChuyen([FromForm] VanChuyenVM request)
         {
-            var ds = _VanChuyenRepositoty.Add(VanChuyenVM);
-            return Ok(ds);
-        }
+            await _repository.Add(request);
 
-        [HttpPost]
-        [Route("datVanChuyen")]
-        public IActionResult datVanChuyen(DatVanChuyenVM VanChuyenVM)
-        {
-            var ds = _VanChuyenRepositoty.DatVanChuyen(VanChuyenVM);
-            return Ok(ds);
+            return NoContent();
         }
 
         [HttpPut]
-        [Route("Update")]
-        public IActionResult Update(VanChuyenVM VanChuyenVM)
+        public async Task<IActionResult> ChinhSuaThongTinVanChuyen([FromForm] VanChuyenVM request)
         {
-            _VanChuyenRepositoty.Update(VanChuyenVM);
-            return Ok();
+            await _repository.Update(request);
+
+            return NoContent();
         }
 
-        [HttpDelete]
-        [Route("Delete")]
-        public IActionResult Delete(int id)
+        [HttpGet("{id}")]
+        [AllowAnonymous]
+        public async Task<IActionResult> GetChiTietVanChuyen([FromRoute] int id)
         {
-            _VanChuyenRepositoty.Delete(id);
-            return Ok();
+            var dtq = await _repository.GetVanChuyen(id);
+
+            return Ok(dtq);
         }
     }
 }

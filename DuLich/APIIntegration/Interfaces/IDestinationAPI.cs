@@ -22,7 +22,7 @@ namespace APIIntegration.Interfaces
         Task<List<DiemThamQuan>> GetDiemThamQuanByOwner([Path("id")] int id, [Header("Authorization")] string authorization);
 
         [Get("travelDestinations/search")]
-        Task<List<DiemThamQuan>> SearchDiemThamQuan([Query] TimKiemDiemThamQuanRequest request);
+        Task<List<DiemThamQuan>> SearchDiemThamQuan([Body] TimKiemDiemThamQuanRequest request);
 
         [Post("travelDestinations")]
         Task CreateDiemThamQuan([Body] HttpContent content, [Header("Authorization")] string authorization);

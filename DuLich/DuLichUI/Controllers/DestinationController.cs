@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ViewModel.Models;
 using ViewModel.Request.DiemThamQuan;
+using ViewModel.Request.NhaHang;
 
 namespace DuLichUI.Controllers
 {
@@ -34,6 +35,27 @@ namespace DuLichUI.Controllers
             }
         }
 
+        [AllowAnonymous]
+        public async Task<IActionResult> Detail(int id)
+        {
+            var tour = await _destinationAPI.GetById(id);
+            ViewData["dtqs"] = await _destinationAPI.GetAll();
+            return View(tour);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> List()
+        {
+            var dtqs = await _destinationAPI.GetAll();
+            return View(dtqs);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Search([FromQuery] TimKiemDiemThamQuanRequest request)
+        {
+            var dtqs = await _destinationAPI.SearchDiemThamQuan(request);
+            return View("List", dtqs);
+        }
         public async Task<IActionResult> Create()
         {
             var temp = HttpContext.Session.GetString("User");
@@ -55,6 +77,10 @@ namespace DuLichUI.Controllers
         [HttpPost]
         public async Task<IActionResult> EditDiemThamQuan([FromForm] ChinhSuaDiemThamQuanRequest request)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", request);
+            }
             await _destinationAPI.EditDiemThamQuan(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
             return RedirectToAction("Index");

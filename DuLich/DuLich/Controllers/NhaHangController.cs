@@ -37,7 +37,7 @@ namespace DuLich.Controllers
 
         [HttpGet("search")]
         [AllowAnonymous]
-        public async Task<IActionResult> TimKiemNhaHang([FromQuery] TimKiemNhaHangRequest request)
+        public async Task<IActionResult> TimKiemNhaHang([FromBody] TimKiemNhaHangRequest request)
         {
             var dtqs = await _repository.Search(request);
 

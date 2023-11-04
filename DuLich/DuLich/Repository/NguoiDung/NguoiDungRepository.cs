@@ -40,7 +40,8 @@ namespace DuLich.Repository.NguoiDung
                 NoiO = request.NoiO,
                 MatKhau = request.MatKhau,
                 PhanQuyen = 3,
-                TrangThai = 1
+                TrangThai = 1,
+                AnhDaiDien = "default-avatar.jpg"
             };
 
             await _context.NguoiDungs.AddAsync(nguoiDung);
@@ -74,8 +75,8 @@ namespace DuLich.Repository.NguoiDung
 
         public async Task<AuthResponse> DangNhap(DangNhapRequest request)
         {
-            var nguoiDung = await _context.NguoiDungs.FirstOrDefaultAsync(x => x.Email == request.Email
-            && x.MatKhau == request.Password)
+            var nguoiDung = await _context.NguoiDungs.Where(x => x.Email == request.Email
+            && x.MatKhau == request.Password).FirstOrDefaultAsync()
                 ?? throw new Exception("Email hoặc mật khẩu không chính xác");
             var token = await CreateJWT(nguoiDung.Id);
 

@@ -41,7 +41,7 @@ builder.Services
     .AddScoped<INguoiDungRepository, NguoiDungRepository>()
     .AddScoped<ITourRepository, TourRepository>()
     .AddScoped<IDiemThamQuanRepository, DiemThamQuanRepository>()
-    .AddScoped<IVanChuyenRepositoty, VanChuyenRepository>()
+    .AddScoped<IVanChuyenRepository, VanChuyenRepository>()
     .AddScoped<IKhachSanRepository, KhachSanRepository>()
     .AddScoped<INhaHangRepository, NhaHangRepository>();
 

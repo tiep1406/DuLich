@@ -19,7 +19,7 @@ namespace APIIntegration.Interfaces
         Task<Tour> GetById([Path("id")] int id);
 
         [Get("tours/search")]
-        Task<List<Tour>> SearchTour([Query] TimKiemTourRequest request);
+        Task<List<Tour>> SearchTour([Body] TimKiemTourRequest request);
 
         [Get("tours/user/{id}")]
         Task<List<Tour>> GetTourByUser([Path("id")] int id, [Header("Authorization")] string authorization);

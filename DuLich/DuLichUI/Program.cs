@@ -14,6 +14,7 @@ builder.Services.AddHttpClient("example")
     .UseWithRestEaseClient<IDestinationAPI>()
     .UseWithRestEaseClient<IRestaurantAPI>()
     .UseWithRestEaseClient<IHotelAPI>()
+    .UseWithRestEaseClient<IDeliveryAPI>()
     .UseWithRestEaseClient<IUserAPI>();
 
 builder.Services

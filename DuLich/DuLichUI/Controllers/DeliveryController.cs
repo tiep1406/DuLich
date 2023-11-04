@@ -1,22 +1,21 @@
 ﻿using APIIntegration.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using RestEase.Implementation;
-using System.Linq.Expressions;
+using Microsoft.Win32;
 using ViewModel.Models;
-using ViewModel.Request.Tour;
+using ViewModel.ModelsView;
 
 namespace DuLichUI.Controllers
 {
     [Authorize]
-    public class TourController : Controller
+    public class DeliveryController : Controller
     {
-        private ITourAPI _tourAPI;
+        private IDeliveryAPI _deliveryAPI;
         private IUserAPI _userAPI;
 
-        public TourController(ITourAPI tourAPI, IUserAPI userAPI)
+        public DeliveryController(IDeliveryAPI deliveryAPI, IUserAPI userAPI)
         {
-            _tourAPI = tourAPI;
+            _deliveryAPI = deliveryAPI;
             _userAPI = userAPI;
         }
 
@@ -25,38 +24,24 @@ namespace DuLichUI.Controllers
             try
             {
                 var id = HttpContext.Session.GetString("UserId");
-                var tours = await _tourAPI.GetTourByOwner(int.Parse(id), "Bearer " + HttpContext.Session.GetString("BearerToken"));
-                ViewData["tours"] = tours;
+                var deliverys = await _deliveryAPI.GetVanChuyenByOwner(int.Parse(id), "Bearer " + HttpContext.Session.GetString("BearerToken"));
+                ViewData["deliverys"] = deliverys;
                 return View();
             }
             catch
             {
-                ViewData["tours"] = new List<Tour>();
+                ViewData["deliverys"] = new List<VanChuyen>();
                 return View();
             }
-        }
-
-        [AllowAnonymous]
-        public async Task<IActionResult> Detail(int id)
-        {
-            var tour = await _tourAPI.GetById(id);
-            ViewData["tours"] = await _tourAPI.GetAll();
-            return View(tour);
         }
 
         [AllowAnonymous]
         public async Task<IActionResult> List()
         {
-            var tours = await _tourAPI.GetAll();
-            return View(tours);
+            var deliverys = await _deliveryAPI.GetAll();
+            return View(deliverys);
         }
 
-        [AllowAnonymous]
-        public async Task<IActionResult> Search([FromQuery]TimKiemTourRequest request)
-        {
-            var tours = await _tourAPI.SearchTour(request);
-            return View("List", tours);
-        }
         public async Task<IActionResult> Create()
         {
             var temp = HttpContext.Session.GetString("User");
@@ -66,29 +51,35 @@ namespace DuLichUI.Controllers
                 var x = await _userAPI.GetById(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
                 ViewData["user"] = x;
             }
-            return View(new ThemTourRequest());
+            return View(new VanChuyenVM());
         }
 
         public async Task<IActionResult> Edit(int id)
         {
-            var tour = await _tourAPI.GetById(id);
-            return View(tour);
+            var delivery = await _deliveryAPI.GetById(id);
+            return View(delivery);
+        }
+
+        public async Task<IActionResult> Delete(int id)
+        {
+            var delivery = await _deliveryAPI.Delete(id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+            return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditTour([FromForm] ChinhSuaTourRequest request)
+        public async Task<IActionResult> EditVanChuyen([FromForm] VanChuyenVM request)
         {
             if (!ModelState.IsValid)
             {
                 return View("Edit", request);
             }
-            await _tourAPI.EditTour(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+            await _deliveryAPI.EditVanChuyen(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
             return RedirectToAction("Index");
         }
 
         [HttpPost]
-        public async Task<IActionResult> CreateTour([FromForm] ThemTourRequest request)
+        public async Task<IActionResult> CreateVanChuyen([FromForm] VanChuyenVM request)
         {
             if (!ModelState.IsValid)
             {
@@ -101,7 +92,7 @@ namespace DuLichUI.Controllers
                 }
                 return View("Create", request);
             }
-            await _tourAPI.CreateTour(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+            await _deliveryAPI.CreateVanChuyen(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
             return RedirectToAction("Index");
         }

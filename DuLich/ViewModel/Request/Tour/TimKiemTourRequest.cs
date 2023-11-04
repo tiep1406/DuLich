@@ -2,6 +2,12 @@
 {
     public class TimKiemTourRequest
     {
-        public string Key { get; set; }
+        private string _key;
+
+        public string Key
+        {
+            get => _key;
+            set => _key = value?.ToLower();
+        }
     }
 }

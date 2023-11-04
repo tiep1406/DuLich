@@ -18,7 +18,7 @@ namespace APIIntegration.Interfaces
         Task<List<NhaHang>> GetNhaHangByOwner([Path("id")] int id, [Header("Authorization")] string authorization);
 
         [Get("nhahang/search")]
-        Task<List<NhaHang>> SearchNhaHang([Query] TimKiemNhaHangRequest request);
+        Task<List<NhaHang>> SearchNhaHang([Body] TimKiemNhaHangRequest request);
 
         [Post("nhahang")]
         Task CreateNhaHang([Body] HttpContent content, [Header("Authorization")] string authorization);

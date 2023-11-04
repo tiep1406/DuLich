@@ -1,0 +1,130 @@
+﻿@using ViewModel.Models;
+@model List<VanChuyen>;
+@{
+    ViewData["Title"] = "Danh sách vận chuyển";
+}
+<nav class="breadcrumb-nav d-flex align-items-center" aria-label="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a class="under" href="/">Home</a></li>
+            <li class="breadcrumb-item"><a class="under" href="/destination/list">Vận chuyển</a></li>
+        </ol>
+    </div>
+</nav>
+<div class="page-content">
+    <div class="container">
+        <div class="row">
+            <aside class="sidebar col-lg-3 order-1 order-lg-0">
+                <div class="sidebar__content js-sticky-top">
+                    <div class="sidebar-filter modal card fade" id="sidebarFilter" tabindex="-1" role="dialog">
+                        <button class="btn-toggle btn btn-light" type="button" data-dismiss="modal"><span class="icon-bar"></span></button>
+                        <div class="modal-header bg-white">
+                            <h4 class="modal-title">Lọc</h4>
+                        </div>
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <ul class="sidebar-filter__list">
+                                        <li class="sidebar-filter__item">
+                                            <h5 class="sidebar-filter__title"><a class="sidebar-filter__toggle d-flex justify-content-between align-items-center" href="#price" data-toggle="collapse" role="button"><span>Giá</span><i class="fa fa-angle-down"></i></a></h5>
+                                            <div class="collapse show" id="price">
+                                                <div class="sidebar-filter__content">
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input class="custom-control-input" type="checkbox" /><span class="custom-control-label pointer">50000 - 99000 VND</span>
+                                                    </label>
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input class="custom-control-input" type="checkbox" /><span class="custom-control-label pointer">100000 - 149000 VND</span>
+                                                    </label>
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input class="custom-control-input" type="checkbox" /><span class="custom-control-label pointer">150000 - 199000 VND</span>
+                                                    </label>
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input class="custom-control-input" type="checkbox" /><span class="custom-control-label pointer">200000 VND +</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <div class="col-lg-9 category-content">
+                <nav class="sortbar navbar shadow-sm d-flex align-items-stretch">
+                    <div class="sortbar__title d-flex align-items-stretch">
+                        <button class="navbar-brand d-flex align-items-center pointer js-toggle-sidebar" data-target="#sidebarFilter" data-toggle="modal" type="button"><i class="d-lg-none icon icon-filter"></i><span class="ml-2 d-none d-lg-inline">Sắp xếp:</span></button>
+                    </div>
+                    <div class="sortbar__sort js-sorting d-flex align-items-stretch"><a class="nav-link" href="#">Giá</a></div>
+                    <div class="sortbar__grid d-flex align-items-stretch ml-md-auto"><a class="nav-link active js-toggle-grid" href="#" data-grid="grid" data-cols="col-12 col-sm-6 col-xl-4 d-flex"><i class="icon icon-grid"></i></a><a class="nav-link js-toggle-grid" href="#" data-grid="list" data-cols="col-12 d-flex"><i class="icon icon-list-mb"></i></a></div>
+                </nav>
+                <div class="category-content__items row pad-lg-20">
+                    @foreach(var item in Model)
+                    {
+                        <div class="list-flight-item col-12">
+                            <div class="flight-card card">
+                                <div class="row align-items-center flex-md-nowrap">
+                                    <div class="flight-card__row col-12 col-md text-center px-md-0">
+                                        <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
+                                            <div class="list-group-item">
+                                                <div class="row d-md-inline-flex flex-md-column">
+                                                    <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1" src="@item.AnhDaiDien" alt="#" /></span></div>
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="row d-md-inline-flex flex-md-column text-md-right">
+                                                    <div class="title col-5 col-md-12">@item.ThoiGianBatDau.ToShortDateString()</div>
+                                                    <div class="title col-5 col-md-12">@item.ThoiGianBatDau.ToShortTimeString()</div>
+                                                    <div class="col-7 col-md-12 text-center">@item.DiaChiDi</div>
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="row d-md-inline-flex flex-md-column">
+                                                    <div class="title col-5 col-md-12">Tài xế</div>
+                                                    <div class="col-7 col-md-12 text-center">@item.TaiXe</div>
+                                                </div>
+                                            </div>
+                                            <div class="list-group-item">
+                                                <div class="row d-md-inline-flex flex-md-column text-md-right">
+                                                    <div class="title col-5 col-md-12">@item.ThoiGianKetThuc.ToShortDateString()</div>
+                                                    <div class="title col-5 col-md-12">@item.ThoiGianKetThuc.ToShortTimeString()</div>
+                                                    <div class="col-7 col-md-12 text-center">@item.DiaChiDung</div>
+                                                </div>
+                                            </div>
+                                            @{
+                                                DateTime startTime = item.ThoiGianBatDau;
+                                                DateTime endTime = item.ThoiGianKetThuc;
+                                                TimeSpan span = endTime.Subtract(startTime);
+                                                var strDate = $"{span.Days}d. {span.Hours}h. {span.Minutes}m.";
+                                            }
+                                            <div class="list-group-item">
+                                                <div class="row d-md-inline-flex flex-md-column">
+                                                    <div class="title col-5 col-md-12">Dự kiến</div>
+                                                    <div class="col-7 col-md-12 ml-auto text-nowrap">@strDate</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="flight-card__total list-group list-group-flush col-12 col-md-auto">
+                                        <div class="list-group-item text-center p-md-0">
+                                            <div class="row justify-content-center align-items-center flex-md-column">
+                                                <div class="col-5 col-md-12 mb-md-3">
+                                                    <div class="total text-nowrap" style="font-size: 13px;">@item.Gia VND</div>
+                                                </div>
+                                                <div class="col-7 col-md-12">
+                                                    <a class="btn btn-secondary btn--round" href="#" role="button">book now</a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary btn-nav btn-nav--up js-scroll-up" type="button"><i class="fa fa-angle-up"></i></button>
+</div>

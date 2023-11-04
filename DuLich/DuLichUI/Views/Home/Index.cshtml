@@ -3,6 +3,7 @@
     ViewData["Title"] = "Home Page";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var tours = (List<Tour>)ViewData["tours"];
+    var destinations = (List<DiemThamQuan>)ViewData["destinations"];
 }
 
 <section class="intro d-flex flex-column load">
@@ -23,98 +24,67 @@
         <div class="container">
             <div class="search-hotels shadow-sm">
             <ul class="search-hotels__tabs nav nav-tabs" role="tablist">
-                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tabHotel" role="tab" aria-controls="tabHotel" aria-selected="false"><span class="d-none d-md-block">Khách sạn</span><i class="icon icon-building d-md-none mx-1 text-secondary"></i></a>
+                <li class="nav-item"><a class="nav-link active" data-toggle="tab" href="#tabHotel" role="tab" aria-controls="tabHotel" aria-selected="false"><span class="d-none d-md-block">Tour du lịch</span><i class="icon icon-building d-md-none mx-1 text-secondary"></i></a>
                 </li>
-                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tabFlight" role="tab" aria-controls="tabFlight" aria-selected="true"><span class="d-none d-md-block">Chuyến đi</span><i class="icon icon-airplane d-md-none mx-1 text-secondary"></i></a>
+                <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tabFlight" role="tab" aria-controls="tabFlight" aria-selected="true"><span class="d-none d-md-block">Điểm tham quan</span><i class="icon icon-airplane d-md-none mx-1 text-secondary"></i></a>
                 </li>
                 <li class="nav-item"><a class="nav-link" data-toggle="tab" href="#tabFlightHotel" role="tab" aria-controls="tabFlightHotel" aria-selected="true"><span class="d-none d-md-block">Nhà hàng</span><i class="icon icon-airplane d-md-none mx-1 text-secondary"></i><i class="icon icon-building d-md-none mx-1 text-secondary"></i></a>
                 </li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane active show" id="tabHotel" role="tabpanel">
-                    <form class="search-hotels__form" action="#" method="GET" data-toggle="validator">
+                    <form class="search-hotels__form" asp-action="Search" asp-controller="Tour" method="GET" data-toggle="validator">
                         <div class="row">
                             <div class="form-group col-12 col-md-12 col-lg-12 col-xl-12">
-                                <label class="label-text">Nhập tên</label>
+                                <label class="label-text">Nhập tên tour</label>
                                 <div class="d-flex">
                                     <span class="select-local d-flex p-2">
                                         <i class="icon icon-label mr-2 text-secondary"></i>
-                                        <input style="width:100%"/>
+                                        <input name="key" style="width:100%"/>
                                     </span>
                                 </div>
                             </div>
                             <div class="form-group col-12 col-xl-2 d-flex">
-                                <button class="btn btn-secondary btn--round align-self-center" type="submit">Search
+                                <button class="btn btn-secondary btn--round align-self-center" type="submit">Tìm kiếm
                                 </button>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="tab-pane" id="tabFlight" role="tabpanel">
-                <form class="search-hotels__form" action="#" method="POST">
-                    <div class="row">
-                    <div class="col-12 col-xl-6">
-                        <div class="row">
-                        <div class="form-group col-12 col-sm-6 border-0">
-                            <label class="label-text">Điểm đi</label>
-                            <div class="d-flex">
-                                 <span class="select-local d-flex p-2">
-                                    <i class="icon icon-label mr-2 text-secondary"></i>
-                                    <input style="width:100%" />
-                                </span>
-                            </div>
-                        </div>
-                        <div class="form-group col-12 col-sm-6 border-0">
-                            <label class="label-text">Điểm đến</label>
-                            <div class="d-flex">
-                                 <span class="select-local d-flex p-2">
-                                    <i class="icon icon-label mr-2 text-secondary"></i>
-                                    <input style="width:100%" />
-                                </span>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-12 col-sm-7 col-md-6 col-xl-4 d-flex flex-wrap justify-content-center">
-                        <div class="form-group-date text-nowrap text-center">
-                            <div class="d-inline-block">
-                                <label class="label-text">Ngày bắt đầu</label>
-                                <div class="input-date-group position-relative"><i class="mr-2 icon icon-calendar text-secondary"></i>
-                                <input class="form-control js-input-date hidden " id="flyingDate1" type="text" name="departing" required="required"/>
-                                <label class="form-control date" for="flyingDate1"></label>
-                                </div>
-                            </div><i class="bullet mx-4"></i>
-                            <div class="d-inline-block">
-                                <label class="label-text">Ngày kết thúc</label>
-                                <div class="input-date-group position-relative"><i class="mr-2 icon icon-calendar text-secondary"></i>
-                                <input class="form-control js-input-date hidden " id="flyingDateTo1" type="text" name="returning" required="required"/>
-                                <label class="form-control date" for="flyingDateTo1"></label>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group col-12 col-md-3 col-xl-12 d-flex">
-                        <button class="btn btn-secondary align-self-center" type="submit">Search
-                        </button>
-                    </div>
-                    </div>
-                </form>
-                </div>
-                <div class="tab-pane" id="tabFlightHotel" role="tabpanel">
-                    <form class="search-hotels__form" action="#" method="GET" data-toggle="validator">
+                            <form class="search-hotels__form" asp-action="Search" asp-controller="Destination"  method="GET">
                         <div class="row">
                             <div class="form-group col-12 col-md-12 col-lg-12 col-xl-12">
-                                <label class="label-text">Nhập tên</label>
+                                <label class="label-text">Nhập tên điểm tham quan</label>
                                 <div class="d-flex">
                                     <span class="select-local d-flex p-2">
                                         <i class="icon icon-label mr-2 text-secondary"></i>
-                                        <input style="width:100%" />
+                                                <input name="key" style="width:100%" />
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="form-group col-12 col-xl-2 d-flex">
+                                <button class="btn btn-secondary btn--round align-self-center" type="submit">Tìm kiếm
+                                </button>
+                            </div>
+                        </div>
+                </form>
+                </div>
+                <div class="tab-pane" id="tabFlightHotel" role="tabpanel">
+                    <form class="search-hotels__form"  asp-action="Search" asp-controller="Restaurant" method="GET" data-toggle="validator">
+                        <div class="row">
+                            <div class="form-group col-12 col-md-12 col-lg-12 col-xl-12">
+                                <label class="label-text">Nhập tên nhà hàng</label>
+                                <div class="d-flex">
+                                    <span class="select-local d-flex p-2">
+                                        <i class="icon icon-label mr-2 text-secondary"></i>
+                                        <input name="key" style="width:100%" />
                                     </span>
                                 </div>
                             </div>
                             <div class="form-group col-12 col-xl-2 d-flex">
                                 <button class="btn btn-secondary btn--round align-self-center" type="submit">
-                                    Search
+                                    Tìm kiếm
                                 </button>
                             </div>
                         </div>
@@ -147,7 +117,7 @@
                                 </div>
                             </div>
                             <div class="card-hover">
-                                <h3 class="h3 text-uppercase">@tour.TenTour</h3><a class="btn btn-light btn--round card-hover__view" href="category.html">VIEW</a>
+                                <h3 class="h3 text-uppercase">@tour.TenTour</h3><a class="btn btn-light btn--round card-hover__view" href="/tour/detail/@tour.Id">VIEW</a>
                             </div>
                         </div>
                     </div>
@@ -167,272 +137,102 @@
         <div class="row">
         <div class="col-12 text-center">
             <div class="section-header">
-            <h2 class="h2">Popular destinations around the world</h2>
+            <h2 class="h2">Các địa điểm tham quan du lịch</h2>
             <div class="section-header__stars mb-3"><i class="fa fa-star"></i><i class="fa fa-star center"></i><i class="fa fa-star"></i></div>
-            <p class="fz-norm mb-0"><em>The best choice of hotels we have</em></p>
+            <p class="fz-norm mb-0"><em>Sự lựa chọn tốt nhất dành cho bạn</em></p>
             </div>
         </div>
         </div>
         <div class="row">
-            <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
-                <div class="card card-hotel w-100 mb-2">
-                <div class="card-hotel__img"><img class="img-cover" src="img/hotels/item-7.jpg" alt="#"/>
-                </div>
-                <div class="card-price"><span class="mr-1">from</span><span class="count text-secondary">300$</span></div>
-                <div class="card-hotel__bottom">
-                    <h4 class="h4 mb-1">Saint Peterburg</h4>
-                    <div class="card-hotel__local d-flex align-items-center"><i class="icon icon-label text-secondary mr-1"></i>
-                    <ul class="d-inline-flex flex-wrap">
-                        <li class="mr-4">Russia</li>
-                        <li class="amout">1234
-                        Hotels
-                        </li>
-                    </ul>
+            @foreach (var item in destinations)
+            {
+                <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
+                    <div class="card card-hotel w-100 mb-2">
+                        <div class="card-hotel__img">
+                            <img class="img-cover" src="@item.AnhDaiDien" alt="#" />
+                        </div>
+                        <div class="card-price px-2"><span class="count text-secondary">@item.Gia VND</span></div>
+                        <div class="card-hotel__bottom">
+                            <h4 class="h4 mb-1">@item.TenDiaDiem</h4>
+                            <div class="card-hotel__local d-flex align-items-center">
+                                <i class="icon icon-label text-secondary mr-1"></i>
+                                <ul class="d-inline-flex flex-wrap">
+                                    <li class="mr-4">@item.DiaDiem</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="card-hover">
+                            <h3 class="h3 text-uppercase">@item.TenDiaDiem</h3><a class="btn btn-light btn--round card-hover__view" href="/destination/detail/@item.Id">Chi tiết</a>
+                        </div>
                     </div>
                 </div>
-                <div class="card-hover">
-                    <h3 class="h3 text-uppercase">Saint Peterburg</h3><a class="btn btn-light btn--round card-hover__view" href="category.html">VIEW</a>
-                </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
-                <div class="card card-hotel w-100 mb-2">
-                <div class="card-hotel__img"><img class="img-cover" src="img/hotels/item-8.jpg" alt="#"/>
-                </div>
-                <div class="card-price"><span class="mr-1">from</span><span class="count text-secondary">300$</span></div>
-                <div class="card-hotel__bottom">
-                    <h4 class="h4 mb-1">Milan</h4>
-                    <div class="card-hotel__local d-flex align-items-center"><i class="icon icon-label text-secondary mr-1"></i>
-                    <ul class="d-inline-flex flex-wrap">
-                        <li class="mr-4">Italy</li>
-                        <li class="amout">953
-                        Hotels
-                        </li>
-                    </ul>
-                    </div>
-                </div>
-                <div class="card-hover">
-                    <h3 class="h3 text-uppercase">Milan</h3><a class="btn btn-light btn--round card-hover__view" href="category.html">VIEW</a>
-                </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
-                <div class="card card-hotel w-100 mb-2">
-                <div class="card-hotel__img"><img class="img-cover" src="img/hotels/item-9.jpg" alt="#"/>
-                </div>
-                <div class="card-price"><span class="mr-1">from</span><span class="count text-secondary">300$</span></div>
-                <div class="card-hotel__bottom">
-                    <h4 class="h4 mb-1">Barselona</h4>
-                    <div class="card-hotel__local d-flex align-items-center"><i class="icon icon-label text-secondary mr-1"></i>
-                    <ul class="d-inline-flex flex-wrap">
-                        <li class="mr-4">Spain</li>
-                        <li class="amout">1234
-                        Hotels
-                        </li>
-                    </ul>
-                    </div>
-                </div>
-                <div class="card-hover">
-                    <h3 class="h3 text-uppercase">Barselona</h3><a class="btn btn-light btn--round card-hover__view" href="category.html">VIEW</a>
-                </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
-                <div class="card card-hotel w-100 mb-2">
-                <div class="card-hotel__img"><img class="img-cover" src="img/hotels/item-10.jpg" alt="#"/>
-                </div>
-                <div class="card-price"><span class="mr-1">from</span><span class="count text-secondary">300$</span></div>
-                <div class="card-hotel__bottom">
-                    <h4 class="h4 mb-1">Rio de Janeiro</h4>
-                    <div class="card-hotel__local d-flex align-items-center"><i class="icon icon-label text-secondary mr-1"></i>
-                    <ul class="d-inline-flex flex-wrap">
-                        <li class="mr-4">Brazil</li>
-                        <li class="amout">1976
-                        Hotels
-                        </li>
-                    </ul>
-                    </div>
-                </div>
-                <div class="card-hover">
-                    <h3 class="h3 text-uppercase">Rio de Janeiro</h3><a class="btn btn-light btn--round card-hover__view" href="category.html">VIEW</a>
-                </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
-                <div class="card card-hotel w-100 mb-2">
-                <div class="card-hotel__img"><img class="img-cover" src="img/hotels/item-11.jpg" alt="#"/>
-                </div>
-                <div class="card-price"><span class="mr-1">from</span><span class="count text-secondary">300$</span></div>
-                <div class="card-hotel__bottom">
-                    <h4 class="h4 mb-1">Paris</h4>
-                    <div class="card-hotel__local d-flex align-items-center"><i class="icon icon-label text-secondary mr-1"></i>
-                    <ul class="d-inline-flex flex-wrap">
-                        <li class="mr-4">England</li>
-                        <li class="amout">953
-                        Hotels
-                        </li>
-                    </ul>
-                    </div>
-                </div>
-                <div class="card-hover">
-                    <h3 class="h3 text-uppercase">Paris</h3><a class="btn btn-light btn--round card-hover__view" href="category.html">VIEW</a>
-                </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
-                <div class="card card-hotel w-100 mb-2">
-                <div class="card-hotel__img"><img class="img-cover" src="img/hotels/item-12.jpg" alt="#"/>
-                </div>
-                <div class="card-price"><span class="mr-1">from</span><span class="count text-secondary">300$</span></div>
-                <div class="card-hotel__bottom">
-                    <h4 class="h4 mb-1">Barselona</h4>
-                    <div class="card-hotel__local d-flex align-items-center"><i class="icon icon-label text-secondary mr-1"></i>
-                    <ul class="d-inline-flex flex-wrap">
-                        <li class="mr-4">France</li>
-                        <li class="amout">1976
-                        Hotels
-                        </li>
-                    </ul>
-                    </div>
-                </div>
-                <div class="card-hover">
-                    <h3 class="h3 text-uppercase">Barselona</h3><a class="btn btn-light btn--round card-hover__view" href="category.html">VIEW</a>
-                </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
-                <div class="card card-hotel w-100 mb-2">
-                <div class="card-hotel__img"><img class="img-cover" src="img/hotels/item-13.jpg" alt="#"/>
-                </div>
-                <div class="card-price"><span class="mr-1">from</span><span class="count text-secondary">300$</span></div>
-                <div class="card-hotel__bottom">
-                    <h4 class="h4 mb-1">Amsterdam</h4>
-                    <div class="card-hotel__local d-flex align-items-center"><i class="icon icon-label text-secondary mr-1"></i>
-                    <ul class="d-inline-flex flex-wrap">
-                        <li class="mr-4">Netherlands</li>
-                        <li class="amout">1976
-                        Hotels
-                        </li>
-                    </ul>
-                    </div>
-                </div>
-                <div class="card-hover">
-                    <h3 class="h3 text-uppercase">Amsterdam</h3><a class="btn btn-light btn--round card-hover__view" href="category.html">VIEW</a>
-                </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
-                <div class="card card-hotel w-100 mb-2">
-                <div class="card-hotel__img"><img class="img-cover" src="img/hotels/item-14.jpg" alt="#"/>
-                </div>
-                <div class="card-price"><span class="mr-1">from</span><span class="count text-secondary">300$</span></div>
-                <div class="card-hotel__bottom">
-                    <h4 class="h4 mb-1">Berlin</h4>
-                    <div class="card-hotel__local d-flex align-items-center"><i class="icon icon-label text-secondary mr-1"></i>
-                    <ul class="d-inline-flex flex-wrap">
-                        <li class="mr-4">Germany</li>
-                        <li class="amout">953
-                        Hotels
-                        </li>
-                    </ul>
-                    </div>
-                </div>
-                <div class="card-hover">
-                    <h3 class="h3 text-uppercase">Berlin</h3><a class="btn btn-light btn--round card-hover__view" href="category.html">VIEW</a>
-                </div>
-                </div>
-            </div>
-            <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
-                <div class="card card-hotel w-100 mb-2">
-                <div class="card-hotel__img"><img class="img-cover" src="img/hotels/item-15.jpg" alt="#"/>
-                </div>
-                <div class="card-price"><span class="mr-1">from</span><span class="count text-secondary">300$</span></div>
-                <div class="card-hotel__bottom">
-                    <h4 class="h4 mb-1">Budapest</h4>
-                    <div class="card-hotel__local d-flex align-items-center"><i class="icon icon-label text-secondary mr-1"></i>
-                    <ul class="d-inline-flex flex-wrap">
-                        <li class="mr-4">Hungary</li>
-                        <li class="amout">1976
-                        Hotels
-                        </li>
-                    </ul>
-                    </div>
-                </div>
-                <div class="card-hover">
-                    <h3 class="h3 text-uppercase">Budapest</h3><a class="btn btn-light btn--round card-hover__view" href="category.html">VIEW</a>
-                </div>
-                </div>
-            </div>
-            <div class="col-12 page-section__more text-center">
-                <button class="btn btn-secondary btn--round btn-load" type="button">Show more<i class="fa fa-spin"></i>
-                </button>
-            </div>
+            }
         </div>
         <div class="row">
         <div class="col-12 text-center">
             <div class="section-header">
-            <h2 class="h2">The opportunities we provide</h2>
+            <h2 class="h2">Chúng tôi cung cấp nhiều lựa chọn</h2>
             <div class="section-header__stars mb-3"><i class="fa fa-star"></i><i class="fa fa-star center"></i><i class="fa fa-star"></i></div>
-            <p class="fz-norm mb-0"><em>Explore the features and benefits of our service</em></p>
+            <p class="fz-norm mb-0"><em>Khám phá nhiều tính năng và lợi ích</em></p>
             </div>
         </div>
         <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
             <div class="card card-service w-100 mb-2">
             <div class="card-header">
-                <h4 class="h4">Handpicked Hotels</h4>
+                <h4 class="h4">Khách sạn được lựa chọn cẩn thận</h4>
             </div>
             <div class="card-body">
-                <p>All hotels on our website are tested according to various criteria. You can be sure of your choice.</p>
-            </div>
-            </div>
-        </div>
-        <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
-            <div class="card card-service w-100 mb-2">
-            <div class="card-header">
-                <h4 class="h4">Detailed Descriptions</h4>
-            </div>
-            <div class="card-body">
-                <p>In order for you to have the most complete idea about the hotel, we try to collect the most complete and detailed description.</p>
+                        <p>Tất cả các khách sạn trên trang web của chúng tôi đều được kiểm tra theo nhiều tiêu chí khác nhau. Bạn có thể chắc chắn về sự lựa chọn của mình.</p>
             </div>
             </div>
         </div>
         <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
             <div class="card card-service w-100 mb-2">
             <div class="card-header">
-                <h4 class="h4">Best Price Guarantee</h4>
+                <h4 class="h4">Mô tả chi tiết</h4>
             </div>
             <div class="card-body">
-                <p>We offer the best hotels at the best prices. If you find the same room category on the same dates cheaper elsewhere, we will refund the difference. </p>
+                <p>Để bạn có cái nhìn đầy đủ nhất về khách sạn, chúng tôi cố gắng thu thập những mô tả đầy đủ và chi tiết nhất.</p>
             </div>
             </div>
         </div>
         <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
             <div class="card card-service w-100 mb-2">
             <div class="card-header">
-                <h4 class="h4">Secure Booking</h4>
+                <h4 class="h4">Giá tốt nhất</h4>
             </div>
             <div class="card-body">
-                <p>Book hotels with us easily and safely. All data on your credit card is encrypted and secure. You can be calm for your means.</p>
+                <p>Chúng tôi cung cấp các khách sạn tốt nhất với giá tốt nhất. Nếu bạn thấy cùng loại phòng trong cùng ngày có giá rẻ hơn ở nơi khác, chúng tôi sẽ hoàn lại số tiền chênh lệch. </p>
             </div>
             </div>
         </div>
         <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
             <div class="card card-service w-100 mb-2">
             <div class="card-header">
-                <h4 class="h4">Better service</h4>
+                <h4 class="h4">Booking an toàn</h4>
             </div>
             <div class="card-body">
-                <p>Our specialists visit various hotels to personally assess their quality and provide you with a detailed review.</p>
+                <p>Đặt khách sạn với chúng tôi một cách dễ dàng và an toàn. Tất cả dữ liệu trên thẻ tín dụng của bạn đều được mã hóa và bảo mật. Bạn có thể bình tĩnh cho phương tiện của bạn.</p>
             </div>
             </div>
         </div>
         <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
             <div class="card card-service w-100 mb-2">
             <div class="card-header">
-                <h4 class="h4">Any Questions?</h4>
+                <h4 class="h4">Dịch vụ tốt hơn</h4>
             </div>
             <div class="card-body">
-                <p>Call us at 8-800-2000-6000 and we will answer your questions, help you find a hotel and make a reservation. Working 24/7</p>
+                        <p>Các chuyên gia của chúng tôi ghé thăm nhiều khách sạn khác nhau để đích thân đánh giá chất lượng của họ và cung cấp cho bạn đánh giá chi tiết.</p>
+            </div>
+            </div>
+        </div>
+        <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
+            <div class="card card-service w-100 mb-2">
+            <div class="card-header">
+                <h4 class="h4">Câu hỏi thêm cho chúng tôi?</h4>
+            </div>
+            <div class="card-body">
+                <p>Hãy gọi cho chúng tôi theo số 8-800-2000-6000 và chúng tôi sẽ trả lời các câu hỏi của bạn, giúp bạn tìm khách sạn và đặt phòng. Làm việc 24/7</p>
             </div>
             </div>
         </div>

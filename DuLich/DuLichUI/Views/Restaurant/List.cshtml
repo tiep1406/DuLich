@@ -1,0 +1,116 @@
+﻿@using ViewModel.Models;
+@model List<NhaHang>;
+@{
+    ViewData["Title"] = "Danh sách nhà hàng";
+}
+<nav class="breadcrumb-nav d-flex align-items-center" aria-label="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a class="under" href="/">Home</a></li>
+            <li class="breadcrumb-item"><a class="under" href="/restaurant/list">Nhà hàng</a></li>
+        </ol>
+    </div>
+</nav>
+<div class="page-content">
+    <div class="container">
+        <div class="row">
+            <aside class="sidebar col-lg-3 order-1 order-lg-0">
+                <div class="sidebar__content js-sticky-top">
+                    <div class="sidebar-filter modal card fade" id="sidebarFilter" tabindex="-1" role="dialog">
+                        <button class="btn-toggle btn btn-light" type="button" data-dismiss="modal"><span class="icon-bar"></span></button>
+                        <div class="modal-header bg-white">
+                            <h4 class="modal-title">Lọc</h4>
+                        </div>
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-body">
+                                    <ul class="sidebar-filter__list">
+                                        <li class="sidebar-filter__item">
+                                            <h5 class="sidebar-filter__title"><a class="sidebar-filter__toggle d-flex justify-content-between align-items-center" href="#price" data-toggle="collapse" role="button"><span>Giá</span><i class="fa fa-angle-down"></i></a></h5>
+                                            <div class="collapse show" id="price">
+                                                <div class="sidebar-filter__content">
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input class="custom-control-input" type="checkbox" /><span class="custom-control-label pointer">50000 - 99000 VND</span>
+                                                    </label>
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input class="custom-control-input" type="checkbox" /><span class="custom-control-label pointer">100000 - 149000 VND</span>
+                                                    </label>
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input class="custom-control-input" type="checkbox" /><span class="custom-control-label pointer">150000 - 199000 VND</span>
+                                                    </label>
+                                                    <label class="custom-control custom-checkbox">
+                                                        <input class="custom-control-input" type="checkbox" /><span class="custom-control-label pointer">200000 VND +</span>
+                                                    </label>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </aside>
+            <div class="col-lg-9 category-content">
+                <nav class="sortbar navbar shadow-sm d-flex align-items-stretch">
+                    <div class="sortbar__title d-flex align-items-stretch">
+                        <button class="navbar-brand d-flex align-items-center pointer js-toggle-sidebar" data-target="#sidebarFilter" data-toggle="modal" type="button"><i class="d-lg-none icon icon-filter"></i><span class="ml-2 d-none d-lg-inline">Sắp xếp:</span></button>
+                    </div>
+                    <div class="sortbar__sort js-sorting d-flex align-items-stretch"><a class="nav-link" href="#">Độ nổi tiếng</a><a class="nav-link" href="#">Giá</a><a class="nav-link" href="#">Đánh giá</a><a class="nav-link d-flex d-md-none align-items-center" href="#"><span class="mr-2">Đánh giá</span><i class="icon icon-sort-duble"></i></a></div>
+                    <div class="sortbar__grid d-flex align-items-stretch ml-md-auto"><a class="nav-link active js-toggle-grid" href="#" data-grid="grid" data-cols="col-12 col-sm-6 col-xl-4 d-flex"><i class="icon icon-grid"></i></a><a class="nav-link js-toggle-grid" href="#" data-grid="list" data-cols="col-12 d-flex"><i class="icon icon-list-mb"></i></a></div>
+                </nav>
+                <div class="category-content__items row pad-lg-20">
+                    @foreach(var item in Model)
+                    {
+                        <div class="col-12 col-sm-6 col-xl-4 d-flex">
+                            <div class="product bg-white js-grid-item">
+                                <div class="product__special bg-primary text-white">
+                                    Ưu đãi
+                                </div><a class="product__img-top d-block" href="/restaurant/detail/@item?.Id"><img class="img-fluid" src="@item?.AnhDaiDien" alt="#" /></a>
+                                <div class="product__body">
+                                    <h4 class="product__title"><a href="/restaurant/detail/@item?.Id">@item?.TenNhaHang</a></h4>
+                                    <div class="product__rating mb-2">
+                                        <div class="rating">
+                                            <select class="js-rating-stat" data-current-rating="@item?.DanhGia">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <ul class="product__stat d-flex flex-wrap justify-content-between align-items-center">
+                                        <li class="mr-3"><span>@item?.DiaChi</span></li>
+                                        <li class="d-inline-flex align-items-center"><i class="icon icon-thumbs-up mr-1"></i><span>@(item.DanhGia * 2)/10</span></li>
+                                    </ul>
+                                    <hr />
+                                    <ul class="product__price d-flex justify-content-between align-items-center">
+                                        <li class="mr-2"><span>Giá</span></li>
+                                        <li>
+                                            <span class="cost">@item.Gia VND</span>
+                                        </li>
+                                    </ul>
+                                    <hr />
+                                    <div class="product__desc">
+                                        <p>@item.MoTaNhaHang</p><a class="product__link-more" href="/restaurant/detail/@item?.Id">Xem thêm</a>
+                                    </div>
+                                </div>
+                                <hr class="d-none d-sm-block" />
+                                <div class="product__footer">
+                                    <ul class="product__price d-flex justify-content-between align-items-center">
+                                        <li class="mr-2"><span>Giá</span></li>
+                                        <li>
+                                            <span class="cost">@item?.Gia VND</span>
+                                        </li>
+                                    </ul><a class="product__btn-book btn btn-secondary btn--round" href="booking-traveler.html">book now</a>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    </div>
+    <button class="btn btn-primary btn-nav btn-nav--up js-scroll-up" type="button"><i class="fa fa-angle-up"></i></button>
+</div>

@@ -17,20 +17,22 @@ namespace DuLichUI.Controllers
         private readonly IAuthAPI _authAPI;
         private readonly IUserAPI _userAPI;
         private readonly ITourAPI _tourAPI;
+        private readonly IDestinationAPI _destinationAPI;
         private readonly IConfiguration _configuration;
 
-        public HomeController(IAuthAPI authAPI, IConfiguration configuration, IUserAPI userAPI, ITourAPI tourAPI)
+        public HomeController(IAuthAPI authAPI, IConfiguration configuration, IUserAPI userAPI, ITourAPI tourAPI, IDestinationAPI destinationAPI)
         {
             _authAPI = authAPI;
             _configuration = configuration;
             _userAPI = userAPI;
             _tourAPI = tourAPI;
+            _destinationAPI = destinationAPI;
         }
 
         public async Task<IActionResult> Index()
         {
-            var tours = await _tourAPI.GetAll();
-            ViewData["tours"] = tours;
+            ViewData["tours"] = await _tourAPI.GetAll();
+            ViewData["destinations"] = await _destinationAPI.GetAll();
             return View();
         }
 

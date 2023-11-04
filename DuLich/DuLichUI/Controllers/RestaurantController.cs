@@ -3,6 +3,8 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ViewModel.Models;
 using ViewModel.ModelsView;
+using ViewModel.Request.NhaHang;
+using ViewModel.Request.Tour;
 
 namespace DuLichUI.Controllers
 {
@@ -34,6 +36,27 @@ namespace DuLichUI.Controllers
             }
         }
 
+        [AllowAnonymous]
+        public async Task<IActionResult> Detail(int id)
+        {
+            var hotel = await _restaurantAPI.GetById(id);
+            ViewData["nhahangs"] = await _restaurantAPI.GetAll();
+            return View(hotel);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> List()
+        {
+            var hotels = await _restaurantAPI.GetAll();
+            return View(hotels);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> Search([FromQuery] TimKiemNhaHangRequest request)
+        {
+            var restaurants = await _restaurantAPI.SearchNhaHang(request);
+            return View("List", restaurants);
+        }
         public async Task<IActionResult> Create()
         {
             var temp = HttpContext.Session.GetString("User");
@@ -55,6 +78,10 @@ namespace DuLichUI.Controllers
         [HttpPost]
         public async Task<IActionResult> EditNhaHang([FromForm] NhaHangVM request)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", request);
+            }
             await _restaurantAPI.EditNhaHang(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
             return RedirectToAction("Index");

@@ -119,7 +119,8 @@ namespace DemoCrud.Responsitory
 
         public async Task<List<NhaHang>> Search(TimKiemNhaHangRequest request)
         {
-            var ds = await _DBContext.NhaHangs.Where(x => x.TenNhaHang.Contains(request.Key)).ToListAsync();
+            var ds = await _DBContext.NhaHangs.Where(x => x.TenNhaHang.ToLower().Contains(request.Key)
+            || x.MoTaNhaHang.ToLower().Contains(request.Key)).ToListAsync();
 
             foreach (var d in ds)
             {

@@ -17,7 +17,7 @@ namespace APIIntegration.Interfaces
         Task<List<KhachSan>> GetKhachSanByOwner([Path("id")] int id, [Header("Authorization")] string authorization);
 
         [Get("khachsan/search")]
-        Task<List<KhachSan>> SearchKhachSan([Query] TimKiemKhachSanRequest request);
+        Task<List<KhachSan>> SearchKhachSan([Body] TimKiemKhachSanRequest request);
 
         [Delete("khachsan/{id}")]
         Task<KhachSan> Delete([Path("id")] int id, [Header("Authorization")] string authorization);

@@ -38,7 +38,7 @@ namespace DuLich.Controllers
 
         [HttpGet("search")]
         [AllowAnonymous]
-        public async Task<IActionResult> TimKiemTour([FromQuery] TimKiemTourRequest request)
+        public async Task<IActionResult> TimKiemTour([FromBody] TimKiemTourRequest request)
         {
             var tours = await _repository.TimKiemTour(request);
 

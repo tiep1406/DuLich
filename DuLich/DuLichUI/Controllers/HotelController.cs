@@ -52,6 +52,21 @@ namespace DuLichUI.Controllers
             return View(hotel);
         }
 
+        [AllowAnonymous]
+        public async Task<IActionResult> Detail(int id)
+        {
+            var hotel = await _hotelAPI.GetById(id);
+            ViewData["khachsans"] = await _hotelAPI.GetAll();
+            return View(hotel);
+        }
+
+        [AllowAnonymous]
+        public async Task<IActionResult> List()
+        {
+            var hotels = await _hotelAPI.GetAll();
+            return View(hotels);
+        }
+
         public async Task<IActionResult> Delete(int id)
         {
             var hotel = await _hotelAPI.Delete(id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
@@ -61,6 +76,10 @@ namespace DuLichUI.Controllers
         [HttpPost]
         public async Task<IActionResult> EditKhachSan([FromForm] KhachSanVM request)
         {
+            if (!ModelState.IsValid)
+            {
+                return View("Edit", request);
+            }
             await _hotelAPI.EditKhachSan(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
             return RedirectToAction("Index");

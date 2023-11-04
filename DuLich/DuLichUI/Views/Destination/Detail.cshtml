@@ -1,0 +1,319 @@
+﻿@using ViewModel.Models;
+@model DiemThamQuan;
+@{
+    ViewData["Title"] = "Chi tiết";
+    var dtqs = (List<DiemThamQuan>)ViewData["dtqs"];
+}
+
+<nav class="breadcrumb-nav d-flex align-items-center" aria-label="breadcrumb">
+    <div class="container">
+        <ol class="breadcrumb">
+        </ol>
+    </div>
+</nav>
+<div class="page-content">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12" id="barba-wrapper">
+                <div class="barba-container">
+                    <nav class="hotel-nav">
+                        <ul class="hotel-nav__menu nav nav-tabs" role="tablist">
+                            <li class="nav-item d-flex col-12 col-sm p-0">
+                                <a class="nav-link active" data-toggle="tab" href="#hotel" role="tab" aria-controls="hotel" aria-selected="false"><span>Thông tin</span></a>
+                            </li>
+                            <li class="nav-item d-flex col-12 col-sm p-0">
+                                <a class="nav-link" data-toggle="tab" href="#hotelReviews" role="tab" aria-controls="hotelReviews" aria-selected="true"><span>Đánh giá</span></a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="tab-content">
+                        <div class="tab-pane active show" id="hotel" role="tabpanel">
+                            <section>
+                                <h3 class="fw-md mb-1">@Model.TenDiaDiem</h3>
+                                <ul class="hotel-title mb-3">
+                                    <li class="stars mb-2">
+                                        <div class="rating">
+                                            <select class="js-rating-stat" data-current-rating="@Model?.DiemThamQuanCT.DanhGia">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                                <option value="5">5</option>
+                                            </select>
+                                        </div>
+                                    </li>
+                                    <li class="d-flex">
+                                        <div class="media-object"><i class="icon icon-label mr-2 text-primary"></i></div>
+                                        <div class="local"><span>@Model.DiaDiem</span></div>
+                                    </li>
+                                </ul>
+                                <div class="hotel-gallery">
+                                    <div class="hotel-gallery__carousel swiper-container js-hotel-carousel">
+                                        <div class="swiper-wrapper">
+                                            <div class="swiper-slide">
+                                                <img class="img-fluid img-cover" src="@Model?.AnhDaiDien" alt="#" />
+                                            </div>
+                                            <div class="swiper-slide">
+                                                <img class="img-fluid img-cover" src="@Model?.DiemThamQuanCT.AnhChiTiet" alt="#" />
+                                            </div>
+                                        </div>
+                                        <div class="hotel-gallery__controls"><a class="hotel-gallery__arrow shadow-sm js-prev" role="button"><i class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 44 44"><path d="M22.119 44.237C9.922 44.237 0 34.315 0 22.119S9.922.001 22.119.001s22.119 9.922 22.119 22.118-9.924 22.118-22.119 22.118zm0-42.736C10.75 1.501 1.5 10.75 1.5 22.119c0 11.368 9.25 20.618 20.619 20.618s20.619-9.25 20.619-20.618c0-11.369-9.25-20.618-20.619-20.618z" /><path d="M24.667 29.884a.74.74 0 0 1-.53-.22l-7.328-7.334a.752.752 0 0 1 0-1.061l7.328-7.333a.75.75 0 1 1 1.061 1.061L18.4 21.8l6.798 6.805a.752.752 0 0 1 0 1.061.75.75 0 0 1-.531.218z" /></svg></i></a><a class="hotel-gallery__arrow shadow-sm js-next" role="button"><i class="icon"><svg xmlns="http://www.w3.org/2000/svg" viewbox="0 0 44 44"><path d="M22.118 44.236C9.922 44.236 0 34.314 0 22.118S9.922 0 22.118 0s22.118 9.922 22.118 22.118-9.922 22.118-22.118 22.118zm0-42.736C10.75 1.5 1.5 10.749 1.5 22.118c0 11.368 9.25 20.618 20.618 20.618 11.37 0 20.618-9.25 20.618-20.618 0-11.369-9.248-20.618-20.618-20.618z" /><path d="M19.341 29.884a.75.75 0 0 1-.53-1.281l6.796-6.804-6.796-6.803a.75.75 0 1 1 1.061-1.061l7.325 7.333a.75.75 0 0 1 0 1.061l-7.325 7.333a.742.742 0 0 1-.531.222z" /></svg></i></a></div>
+
+                                        <div class="hotel-gallery__thumbs swiper-container js-hotel-carousel-thumbs">
+                                            <div class="swiper-wrapper">
+                                                <div class="swiper-slide"><a class="hotel-gallery__thumb js-gallery-link" href="#"><img class="img-cover" src="@Model?.AnhDaiDien" alt="#" /></a></div>
+                                                <div class="swiper-slide"><a class="hotel-gallery__thumb js-gallery-link" href="#"><img class="img-cover" src="@Model?.DiemThamQuanCT.AnhChiTiet" alt="#" /></a></div>
+                                                
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <hr>
+                                <div class="row">
+                                    <div class="col-12 col-md-8 d-flex">
+                                        <div class="hotel__intro hotel-card w-100">
+                                            <section class="pb-4">
+                                                <h5 class="d-flex align-items-center text-primary mb-3"><i class="icon icon-badge mr-2"></i>Best destination</h5>
+                                                <p>@Model?.DiemThamQuanCT.MoTaDichVu</p>
+                                            </section>
+                                            <section>
+                                                <h5>Dịch vụ</h5>
+                                                <ul class="hotel-facilities d-flex flex-wrap flex-column flex-md-row">
+                                                    <li class="mr-2"><i class="align-middle icon text-secondary icon-24-hours mr-2"></i><span class="align-middle mr-2">Hỗ trợ 24h</span><i class="bullet d-none d-md-inline-block"></i></li>
+                                                    <li class="mr-2"><i class="align-middle icon text-secondary icon-food mr-2"></i><span class="align-middle mr-2">Đồ ăn và thức uống</span><i class="bullet d-none d-md-inline-block"></i></li>
+                                                    <li class="mr-2"><i class="align-middle icon text-secondary icon-parking mr-2"></i><span class="align-middle mr-2">Miễn phí giữ xe</span><i class="bullet d-none d-md-inline-block"></i></li>
+                                                </ul>
+                                            </section>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 col-md-4 d-flex">
+                                        <div class="hotel-stats hotel-card w-100">
+                                            <div class="row justify-content-center">
+                                                <a class="btn btn-secondary btn--round btn-block" href="#" role="button">book now</a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hotel-card hotel-items">
+                                    <div class="cart-header">
+                                        <h4 class="card-title">Có thể bạn quan tâm</h4>
+                                        <hr>
+                                    </div>
+                                    <div class="row">
+                                        <div class="col-12 col-md-12 order-1 order-md-0">
+                                            @foreach (var item in dtqs)
+                                            {
+                                                <div class="hotel-package mb-4">
+                                                    <div class="hotel-package__row row mb-4">
+                                                        <div class="col-6 pr-md-1"><a class="hotel-package__img d-block" href="#"><img class="img-fluid" src="@item?.AnhDaiDien" alt="#" /></a></div>
+                                                        <div class="col-6">
+                                                            <a href="/destination/detail/@item?.Id" class="hotel-package__title d-inline-block">@item?.TenDiaDiem</a>
+                                                            <ul class="hotel-package__props">
+                                                                <li class="mb-2 price">
+                                                                    <span class="title mr-2">Giá:</span><i class="hint" data-title="?"></i><span class="cost fw-bold">@item?.Gia VND</span>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                    <hr class="hr-bottom my-0">
+                                                </div>
+                                            }
+                                        </div>
+                                    </div>
+                                </div>
+                            </section>
+                        </div>
+                        <div class="tab-pane" id="hotelReviews" role="tabpanel">
+                            <section>
+                                <h3 class="fw-md">Guest reviews</h3>
+                                <hr class="mb-4">
+                                <div class="hotel-card hotel-review">
+                                    <div class="row">
+                                        <div class="hotel-review__total col-12 col-sm-4">
+                                            <ul class="total d-flex mb-1">
+                                                <li class="total__item">8,2</li>
+                                                <li class="total__item">10</li>
+                                            </ul>
+                                            <p class="review">
+                                                Based on  <span class="reviews">9803</span>
+                                                reviews
+                                            </p>
+                                            <hr>
+                                            <p>Guest reviews are written by our customers after their stay at Hotel Ravena</p>
+                                        </div>
+                                        <div class="hotel-review__progress col-12 col-sm-8 js-point-progress">
+                                            <div class="item pr-3">
+                                                <div class="mb-1">Comfort</div>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="progress progress--lg">
+                                                        <div class="progress-bar bg-secondary" role="progressbar" style="width: 0%" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100">
+                                                        </div>
+                                                    </div><span class="fw-bold">8.2</span>
+                                                </div>
+                                            </div>
+                                            <div class="item pr-3">
+                                                <div class="mb-1">Facilities</div>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="progress progress--lg">
+                                                        <div class="progress-bar bg-secondary" role="progressbar" style="width: 0%" aria-valuenow="93" aria-valuemin="0" aria-valuemax="100">
+                                                        </div>
+                                                    </div><span class="fw-bold">9.3</span>
+                                                </div>
+                                            </div>
+                                            <div class="item pr-3">
+                                                <div class="mb-1">Staff</div>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="progress progress--lg">
+                                                        <div class="progress-bar bg-secondary" role="progressbar" style="width: 0%" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100">
+                                                        </div>
+                                                    </div><span class="fw-bold">7.6</span>
+                                                </div>
+                                            </div>
+                                            <div class="item pr-3">
+                                                <div class="mb-1">Food</div>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="progress progress--lg">
+                                                        <div class="progress-bar bg-secondary" role="progressbar" style="width: 0%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
+                                                        </div>
+                                                    </div><span class="fw-bold">8.5</span>
+                                                </div>
+                                            </div>
+                                            <div class="item pr-3">
+                                                <div class="mb-1">Price-quality ratio</div>
+                                                <div class="d-flex align-items-center">
+                                                    <div class="progress progress--lg">
+                                                        <div class="progress-bar bg-secondary" role="progressbar" style="width: 0%" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100">
+                                                        </div>
+                                                    </div><span class="fw-bold">8.2</span>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="hotel-card hotel-guests">
+                                    <ul class="hotel-guests__list">
+                                        <li class="comment">
+                                            <div class="row flex-sm-nowrap">
+                                                <div class="comment__left col-12 col-sm-5 col-md-4 mb-4">
+                                                    <div class="d-flex align-items-center w-100">
+                                                        <div class="comment__avatar rounded-circle">
+                                                            <img class="img-fluid rounded-circle" src="/img/avatar-2.jpg" alt="#" />
+                                                        </div>
+                                                        <div class="comment__right">
+                                                            <div class="comment__name mb-0">Jessica</div>
+                                                            <ul class="d-flex align-items-center">
+                                                                <li class="comment__flag mr-2">
+                                                                    <img src="/img/en.png" alt="#" />
+                                                                </li>
+                                                                <li class="comment__country fz-xs">USA</li>
+                                                            </ul>
+                                                            <ul class="comment__like d-flex align-items-baseline fz-xs">
+                                                                <li><i class="icon icon-like-up"></i><span>17</span></li>
+                                                                <li><i class="icon icon-like-down"></i><span>2</span></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="comment__content col-12 col-sm-7 col-md-8">
+                                                    <div class="pr-3">
+                                                        <div class="comment__meta mb-3">
+                                                            <ul class="row justify-content-sm-between align-items-baseline">
+                                                                <li class="comment__level d-flex align-items-center mb-2">
+                                                                    <div class="badge bg-primary">9.0</div>
+                                                                    <h4 class="level m-0">Excellent</h4>
+                                                                </li>
+                                                                <li class="comment__date mb-2">
+                                                                    <span>Review Date:</span>
+                                                                    <time datetime="2017-07-18">July 18, 2017</time>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="comment__desc">
+                                                            <div class="d-flex">
+                                                                <div class="media-object"><i class="icon icon-plus-inside text-success"></i></div>
+                                                                <div class="content">
+                                                                    <p>Excellent breakfast, freshly brewed coffee - specially prepared by the waiter at you. A good big hotel, beautiful design, clean, comfortable parking free at the bottom, spacious rooms.</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex">
+                                                                <div class="media-object"><i class="icon icon-minus-inside text-danger"></i></div>
+                                                                <div class="content">
+                                                                    <p>Far from the center, there is no dressing gown or taprock, or shampoo.</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                    <div class="comment__alert alert d-flex bg-primary-light">
+                                                        <div class="media-object pr-3"><i class="icon icon-comments"></i></div>
+                                                        <div class="alert__content">
+                                                            <h4 class="mb-1">Ravena Hotel responded to this review</h4>
+                                                            <p>Dear Jessica, thank you for taking the time to leave a feedback about your stay at the Raven Hotel. Glad you liked it. We will certainly take into account your comments to make arrivals at the hotel even more comfortable.</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                        <li class="comment">
+                                            <div class="row flex-sm-nowrap">
+                                                <div class="comment__left col-12 col-sm-5 col-md-4 mb-4">
+                                                    <div class="d-flex align-items-center w-100">
+                                                        <div class="comment__avatar rounded-circle">
+                                                            <img class="img-fluid rounded-circle" src="/img/avatar-1.jpg" alt="#" />
+                                                        </div>
+                                                        <div class="comment__right">
+                                                            <div class="comment__name mb-0">Roman</div>
+                                                            <ul class="d-flex align-items-center">
+                                                                <li class="comment__flag mr-2">
+                                                                    <img src="/img/ru.png" alt="#" />
+                                                                </li>
+                                                                <li class="comment__country fz-xs">Russia</li>
+                                                            </ul>
+                                                            <ul class="comment__like d-flex align-items-baseline fz-xs">
+                                                                <li><i class="icon icon-like-up"></i><span>17</span></li>
+                                                                <li><i class="icon icon-like-down"></i><span>2</span></li>
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="comment__content col-12 col-sm-7 col-md-8">
+                                                    <div class="pr-3">
+                                                        <div class="comment__meta mb-3">
+                                                            <ul class="row justify-content-sm-between align-items-baseline">
+                                                                <li class="comment__level d-flex align-items-center mb-2">
+                                                                    <div class="badge bg-primary">9.2</div>
+                                                                    <h4 class="level m-0">Excellent</h4>
+                                                                </li>
+                                                                <li class="comment__date mb-2">
+                                                                    <span>Review Date:</span>
+                                                                    <time datetime="2017-05-15">May 15, 2017</time>
+                                                                </li>
+                                                            </ul>
+                                                        </div>
+                                                        <div class="comment__desc">
+                                                            <div class="d-flex">
+                                                                <div class="media-object"><i class="icon icon-plus-inside text-success"></i></div>
+                                                                <div class="content">
+                                                                    <p>For breakfast buffet, a comfortable place for breakfast, with a large load, the staff does not have time to clean from the tables, but this will make you wait literally minutes 2. The rooms are nice, the staff is polite. And the price-quality really fit.</p>
+                                                                </div>
+                                                            </div>
+                                                            <div class="d-flex">
+                                                                <div class="media-object"><i class="icon icon-minus-inside text-danger"></i></div>
+                                                                <div class="content">
+                                                                    <p>Cold in the rooms, when the heating was switched on, but the room was heated only in the middle of the night.</p>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </section>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
