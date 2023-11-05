@@ -5,12 +5,10 @@ namespace ViewModel.Models
     public class BinhLuanNhaHang : BaseEntity
     {
         [ForeignKey("NhaHang")]
-        public int IdNhaHang { get; set; }
+        public int? IdNhaHang { get; set; }
 
         [ForeignKey("NguoiDung")]
-        public int IdNguoiDung { get; set; }
-
-        public int ChuDichVu { get; set; }
+        public int? IdNguoiDung { get; set; }
 
         public string NoiDung { get; set; }
         public DateTime ThoiGian { get; set; }

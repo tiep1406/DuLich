@@ -1,0 +1,156 @@
+﻿@using ViewModel.Models;
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Đơn hàng";
+    List<DatTour> tours = (List<DatTour>)ViewData["tours"];
+    List<DatVanChuyen> deliverys = (List<DatVanChuyen>)ViewData["deliverys"];
+    List<DatNhaHang> restaurants = (List<DatNhaHang>)ViewData["restaurants"];
+    List<DatKhachSan> hotels = (List<DatKhachSan>)ViewData["hotels"];
+}
+<div class="container-xxl px-5 mt-4">
+    <!-- Account page navigation-->
+    <nav class="nav nav-borders">
+        <a class="nav-link" href="/user">Profile</a>
+        <a class="nav-link active ms-0">Đơn hàng</a>
+        <a class="nav-link" href="/tour">Quản lý tour</a>
+        <a class="nav-link" href="/destination">Quản lý điểm tham quan</a>
+        <a class="nav-link" href="/restaurant">Quản lý nhà hàng</a>
+        <a class="nav-link" href="/hotel">Quản lý khách sạn</a>
+        <a class="nav-link" href="/delivery">Quản lý vận chuyển</a>
+    </nav>
+    <hr class="mt-0 mb-4">
+    <div class="mt-4 mb-4">
+        <h4>Tour đã đặt</h4>
+        <table id="dataTableTour" class="table table-bordered  dataTable">
+            <thead>
+                <tr class="text-center">
+                    <th style="text-align: center; width: 5%">Mã tour</th>
+                    <th style="text-align: center; width: 20%">Tên tour </th>
+                    <th style="text-align: center; width: 5%">Số ngày </th>
+                    <th style="text-align: center; width: 10%">Giá tour</th>
+                    <th style="text-align: center; width: 10%">Ngày đặt </th>
+                    <th style="text-align: center; width: 15%">Ngày bắt đầu </th>
+                    <th style="text-align: center; width: 15%">Ngày kết thúc </th>
+                    <th style="text-align: center; width: 15%">Thao tác </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var tour in tours)
+                {
+                    <tr>
+                        <td class="text-center">@tour.Id</td>
+                        <td class="text-center">@tour.Tour.TenTour</td>
+                        <td class="text-center">@tour.Tour.SoNgay</td>
+                        <td class="text-center">@tour.Tour.GiaTour</td>
+                        <td class="text-center">@tour.NgayDat.ToString()</td>
+                        <td class="text-center">@tour.Tour.NgayBatDau.ToString()</td>
+                        <td class="text-center">@tour.Tour.NgayKetThuc.ToString()</td>
+                        <td class="text-center">
+                            <a href="/tour/detail/@tour.Tour.Id" class="btn btn-success">Chi tiết</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-4 mb-4">
+        <h4>Nhà hàng đã đặt</h4>
+        <table id="dataTableHotel" class="table table-bordered  dataTable">
+            <thead>
+                <tr class="text-center">
+                    <th style="text-align: center; width: 5%">Mã</th>
+                    <th style="text-align: center; width: 20%">Tên nhà hàng </th>
+                    <th style="text-align: center; width: 5%">Địa chỉ </th>
+                    <th style="text-align: center; width: 10%">Giá</th>
+                    <th style="text-align: center; width: 10%">Ngày đặt </th>
+                    <th style="text-align: center; width: 10%">Ngày nhận </th>
+                    <th style="text-align: center; width: 10%">Ngày trả </th>
+                    <th style="text-align: center; width: 15%">Thao tác </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var restaurant in restaurants)
+                {
+                    <tr>
+                        <td class="text-center">@restaurant.Id</td>
+                        <td class="text-center">@restaurant.NhaHang.TenNhaHang</td>
+                        <td class="text-center">@restaurant.NhaHang.DiaChi</td>
+                        <td class="text-center">@restaurant.NhaHang.Gia</td>
+                        <td class="text-center">@restaurant.NgayDat.ToString()</td>
+                        <td class="text-center">@restaurant.NgayNhan.ToString()</td>
+                        <td class="text-center">@restaurant.NgayTra.ToString()</td>
+                        <td class="text-center">
+                            <a href="/restaurant/detail/@restaurant.NhaHang.Id" class="btn btn-success">Chi tiết</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-4 mb-4">
+        <h4>Khách sạn đã đặt</h4>
+        <table id="dataTableTour" class="table table-bordered  dataTable">
+            <thead>
+                <tr class="text-center">
+                    <th style="text-align: center; width: 5%">Mã</th>
+                    <th style="text-align: center; width: 20%">Tên khách sạn </th>
+                    <th style="text-align: center; width: 5%">Địa chỉ </th>
+                    <th style="text-align: center; width: 10%">Giá</th>
+                    <th style="text-align: center; width: 10%">Ngày đặt </th>
+                    <th style="text-align: center; width: 10%">Ngày nhận </th>
+                    <th style="text-align: center; width: 10%">Ngày trả </th>
+                    <th style="text-align: center; width: 10%">Thao tác </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var hotel in hotels)
+                {
+                    <tr>
+                        <td class="text-center">@hotel.Id</td>
+                        <td class="text-center">@hotel.KhachSan.TenKhachSan</td>
+                        <td class="text-center">@hotel.KhachSan.DiaChi</td>
+                        <td class="text-center">@hotel.KhachSan.Gia</td>
+                        <td class="text-center">@hotel.NgayDat.ToString()</td>
+                        <td class="text-center">@hotel.NgayNhan.ToString()</td>
+                        <td class="text-center">@hotel.NgayTra.ToString()</td>
+                        <td class="text-center">
+                            <a href="/hotel/detail/@hotel.KhachSan.Id" class="btn btn-success">Chi tiết</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="mt-4 mb-4">
+        <h4>Vận chuyển đã đặt</h4>
+        <table id="dataTableTour" class="table table-bordered  dataTable">
+            <thead>
+                <tr class="text-center">
+                    <th style="text-align: center; width: 5%">Mã</th>
+                    <th style="text-align: center; width: 15%">Địa điểm đi</th>
+                    <th style="text-align: center; width: 15%">Địa điểm dừng </th>
+                    <th style="text-align: center; width: 15%">Giá</th>
+                    <th style="text-align: center; width: 10%">Tài xế</th>
+                    <th style="text-align: center; width: 10%">Thời gian đi</th>
+                    <th style="text-align: center; width: 10%">Thời gian đến</th>
+                    <th style="text-align: center; width: 10%">Ngày đặt </th>
+                </tr>
+            </thead>
+            <tbody>
+                @foreach (var delivery in deliverys)
+                {
+                    <tr>
+                        <td class="text-center">@delivery.Id</td>
+                        <td class="text-center">@delivery.VanChuyen.DiaChiDi</td>
+                        <td class="text-center">@delivery.VanChuyen.DiaChiDung</td>
+                        <td class="text-center">@delivery.VanChuyen.Gia</td>
+                        <td class="text-center">@delivery.VanChuyen.TaiXe</td>
+                        <td class="text-center">@delivery.VanChuyen.ThoiGianBatDau</td>
+                        <td class="text-center">@delivery.VanChuyen.ThoiGianKetThuc</td>
+                        <td class="text-center">@delivery.NgayDat.ToString()</td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
+</div>

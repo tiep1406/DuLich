@@ -31,7 +31,7 @@ namespace DemoCrud.Responsitory
 
         public async Task<KhachSan> GetKhachSan(int id)
         {
-            var ds = await _DBContext.KhachSans.FindAsync(id);
+            var ds = await _DBContext.KhachSans.Include(x => x.NguoiDung).Where(x => x.Id == id).FirstOrDefaultAsync();
             ds.AnhDaiDien = _uploadService.GetFullPath(ds.AnhDaiDien);
             return ds;
         }
@@ -96,7 +96,8 @@ namespace DemoCrud.Responsitory
             {
                 IdNguoiDung = datKhachSan.IdNguoiDungs,
                 IdKhachSan = datKhachSan.IdKhachSans,
-                NgayDat = datKhachSan.NgayDat,
+                NgayDat = DateTime.Now,
+                NgayNhan = datKhachSan.NgayNhan,
                 NgayTra = datKhachSan.NgayTra,
             };
             await _DBContext.DatKhachSans.AddAsync(dat);
@@ -121,6 +122,11 @@ namespace DemoCrud.Responsitory
                 d.AnhDaiDien = _uploadService.GetFullPath(d.AnhDaiDien);
             }
             return ds;
+        }
+
+        public async Task<List<DatKhachSan>> GetKhachSanByNguoiDung(int id)
+        {
+            return await _DBContext.DatKhachSans.Include(x => x.KhachSan).Where(x => x.IdNguoiDung == id).ToListAsync();
         }
     }
 }

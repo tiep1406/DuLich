@@ -16,6 +16,9 @@ namespace APIIntegration.Interfaces
         [Get("vanchuyen/owner/{id}")]
         Task<List<VanChuyen>> GetVanChuyenByOwner([Path("id")] int id, [Header("Authorization")] string authorization);
 
+        [Get("vanchuyen/user/{id}")]
+        Task<List<DatVanChuyen>> GetVanChuyenOrder([Path("id")] int id, [Header("Authorization")] string authorization);
+
         [Get("vanchuyen/search")]
         Task<List<VanChuyen>> SearchVanChuyen([Body] TimKiemVanChuyenRequest request);
 
@@ -27,6 +30,9 @@ namespace APIIntegration.Interfaces
 
         [Put("vanchuyen")]
         Task EditVanChuyen([Body] HttpContent content, [Header("Authorization")] string authorization);
+
+        [Post("vanchuyen/order")]
+        Task DatVanChuyen([Body] DatVanChuyenVM content, [Header("Authorization")] string authorization);
     }
 
     public static class DeliveryAPIExtensions

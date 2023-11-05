@@ -3,13 +3,13 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.7.34202.233
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DuLich", "DuLich\DuLich.csproj", "{D31F1A65-8940-4B97-9430-12FDBCC3AFCD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DuLichUI", "DuLichUI\DuLichUI.csproj", "{1A6FF8DA-BA2E-4C08-B988-48DA8D13CF34}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DuLichUI", "DuLichUI\DuLichUI.csproj", "{1A6FF8DA-BA2E-4C08-B988-48DA8D13CF34}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ViewModel", "ViewModel\ViewModel.csproj", "{6746D413-E665-419A-AC5F-D118E10A1914}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ViewModel", "ViewModel\ViewModel.csproj", "{6746D413-E665-419A-AC5F-D118E10A1914}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "APIIntegration", "APIIntegration\APIIntegration.csproj", "{86D0B6D6-ED5D-45ED-A219-D255E907292D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "APIIntegration", "APIIntegration\APIIntegration.csproj", "{86D0B6D6-ED5D-45ED-A219-D255E907292D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DuLich", "DuLich\DuLich.csproj", "{FFAC6198-AE6E-479C-8BF2-8BDA904A7EAC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{D31F1A65-8940-4B97-9430-12FDBCC3AFCD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{D31F1A65-8940-4B97-9430-12FDBCC3AFCD}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{D31F1A65-8940-4B97-9430-12FDBCC3AFCD}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{D31F1A65-8940-4B97-9430-12FDBCC3AFCD}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1A6FF8DA-BA2E-4C08-B988-48DA8D13CF34}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1A6FF8DA-BA2E-4C08-B988-48DA8D13CF34}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1A6FF8DA-BA2E-4C08-B988-48DA8D13CF34}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -33,6 +29,10 @@ Global
 		{86D0B6D6-ED5D-45ED-A219-D255E907292D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{86D0B6D6-ED5D-45ED-A219-D255E907292D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{86D0B6D6-ED5D-45ED-A219-D255E907292D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{FFAC6198-AE6E-479C-8BF2-8BDA904A7EAC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{FFAC6198-AE6E-479C-8BF2-8BDA904A7EAC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{FFAC6198-AE6E-479C-8BF2-8BDA904A7EAC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{FFAC6198-AE6E-479C-8BF2-8BDA904A7EAC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

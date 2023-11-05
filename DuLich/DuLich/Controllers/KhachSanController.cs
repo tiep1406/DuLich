@@ -52,6 +52,14 @@ namespace DuLich.Controllers
             return NoContent();
         }
 
+        [HttpPost("order")]
+        public async Task<IActionResult> DatKhachSan([FromBody] DatKhachSanVM request)
+        {
+            await _repository.DatKhachSan(request);
+
+            return NoContent();
+        }
+
         [HttpPost]
         public async Task<IActionResult> ThemKhachSan([FromForm] KhachSanVM request)
         {
@@ -75,6 +83,14 @@ namespace DuLich.Controllers
             var dtq = await _repository.GetKhachSan(id);
 
             return Ok(dtq);
+        }
+
+        [HttpGet("user/{id}")]
+        public async Task<IActionResult> GetDanhSachKhachSanByNguoiDung([FromRoute] int id)
+        {
+            var tours = await _repository.GetKhachSanByNguoiDung(id);
+
+            return Ok(tours);
         }
     }
 }

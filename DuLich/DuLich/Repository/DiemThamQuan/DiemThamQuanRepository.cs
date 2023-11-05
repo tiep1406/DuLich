@@ -59,6 +59,7 @@ namespace DuLich.Repository.DiemThamQuan
         {
             var dtq = await _context.DiemThamQuans
                 .Include(x => x.DiemThamQuanCT)
+                .Include(x => x.NguoiDung)
                 .FirstOrDefaultAsync(x => x.Id == id)
                 ?? throw new KeyNotFoundException("Không tìm thấy điểm tham quan tương ứng");
 

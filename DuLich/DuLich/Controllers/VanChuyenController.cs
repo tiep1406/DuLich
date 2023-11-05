@@ -60,6 +60,14 @@ namespace DuLich.Controllers
             return NoContent();
         }
 
+        [HttpPost("order")]
+        public async Task<IActionResult> DatVanChuyen([FromBody] DatVanChuyenVM request)
+        {
+            await _repository.DatVanChuyen(request);
+
+            return NoContent();
+        }
+
         [HttpPut]
         public async Task<IActionResult> ChinhSuaThongTinVanChuyen([FromForm] VanChuyenVM request)
         {
@@ -75,6 +83,14 @@ namespace DuLich.Controllers
             var dtq = await _repository.GetVanChuyen(id);
 
             return Ok(dtq);
+        }
+
+        [HttpGet("user/{id}")]
+        public async Task<IActionResult> GetDanhSachVanChuyenByNguoiDung([FromRoute] int id)
+        {
+            var tours = await _repository.GetVanChuyenByNguoiDung(id);
+
+            return Ok(tours);
         }
     }
 }

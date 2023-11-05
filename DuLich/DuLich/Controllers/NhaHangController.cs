@@ -60,6 +60,14 @@ namespace DuLich.Controllers
             return NoContent();
         }
 
+        [HttpPost("order")]
+        public async Task<IActionResult> DatNhaHang([FromBody] DatNhaHangVM request)
+        {
+            await _repository.DatNhaHang(request);
+
+            return NoContent();
+        }
+
         [HttpPut]
         public async Task<IActionResult> ChinhSuaThongTinNhaHang([FromForm] NhaHangVM request)
         {
@@ -75,6 +83,14 @@ namespace DuLich.Controllers
             var dtq = await _repository.GetNhaHang(id);
 
             return Ok(dtq);
+        }
+
+        [HttpGet("user/{id}")]
+        public async Task<IActionResult> GetDanhSachNhaHangByNguoiDung([FromRoute] int id)
+        {
+            var tours = await _repository.GetNhaHangByNguoiDung(id);
+
+            return Ok(tours);
         }
     }
 }

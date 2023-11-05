@@ -73,6 +73,7 @@ namespace DuLich.Repository.Tour
         {
             var tour = await _context.Tours
                 .Include(x => x.TourCT)
+                .Include(x => x.NguoiDung)
                 .FirstOrDefaultAsync(x => x.Id == id)
                 ?? throw new KeyNotFoundException("Không tìm thấy tour tương ứng");
             tour.HinhAnhTour = _uploadService.GetFullPath(tour.HinhAnhTour);
@@ -153,7 +154,7 @@ namespace DuLich.Repository.Tour
             return tours;
         }
 
-        public async Task<List<ViewModel.Models.Tour>> GetDanhSachTourByNguoiDung(int id)
+        public async Task<List<ViewModel.Models.DatTour>> GetDanhSachTourByNguoiDung(int id)
         {
             var tours = await _context.DatTours
                 .Include(x => x.Tour)
@@ -161,13 +162,11 @@ namespace DuLich.Repository.Tour
                 .Where(x => x.IdNguoiDung == id)
                 .ToListAsync();
 
-            var resp = new List<ViewModel.Models.Tour>();
             foreach (var tour in tours)
             {
                 tour.Tour.HinhAnhTour = _uploadService.GetFullPath(tour.Tour.HinhAnhTour);
-                resp.Add(tour.Tour);
             }
-            return resp;
+            return tours;
         }
 
         public async Task XoaTour(int id)

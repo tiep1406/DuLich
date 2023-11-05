@@ -44,6 +44,32 @@ namespace DuLichUI.Controllers
             return View(tour);
         }
 
+        public async Task<IActionResult> Booking(int id)
+        {
+            var tour = await _tourAPI.GetById(id);
+            var temp = HttpContext.Session.GetString("User");
+            if (temp != null)
+            {
+                var user = Newtonsoft.Json.JsonConvert.DeserializeObject<NguoiDung>(temp);
+                var x = await _userAPI.GetById(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+                ViewData["user"] = x;
+            }
+            return View(tour);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBooking([FromForm] DatTourRequest request)
+        {
+            var temp = HttpContext.Session.GetString("User");
+            if (temp != null)
+            {
+                var user = Newtonsoft.Json.JsonConvert.DeserializeObject<NguoiDung>(temp);
+                request.IdNguoiDung = user.Id;
+            }
+            await _tourAPI.DatTour(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+            return Redirect("/tour/list?order=true");
+        }
+
         [AllowAnonymous]
         public async Task<IActionResult> List()
         {
@@ -52,11 +78,12 @@ namespace DuLichUI.Controllers
         }
 
         [AllowAnonymous]
-        public async Task<IActionResult> Search([FromQuery]TimKiemTourRequest request)
+        public async Task<IActionResult> Search([FromQuery] TimKiemTourRequest request)
         {
             var tours = await _tourAPI.SearchTour(request);
             return View("List", tours);
         }
+
         public async Task<IActionResult> Create()
         {
             var temp = HttpContext.Session.GetString("User");

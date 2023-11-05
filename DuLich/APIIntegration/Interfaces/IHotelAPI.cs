@@ -16,6 +16,9 @@ namespace APIIntegration.Interfaces
         [Get("khachsan/owner/{id}")]
         Task<List<KhachSan>> GetKhachSanByOwner([Path("id")] int id, [Header("Authorization")] string authorization);
 
+        [Get("khachsan/user/{id}")]
+        Task<List<DatKhachSan>> GetKhachSanOrder([Path("id")] int id, [Header("Authorization")] string authorization);
+
         [Get("khachsan/search")]
         Task<List<KhachSan>> SearchKhachSan([Body] TimKiemKhachSanRequest request);
 
@@ -27,6 +30,9 @@ namespace APIIntegration.Interfaces
 
         [Put("khachsan")]
         Task EditKhachSan([Body] HttpContent content, [Header("Authorization")] string authorization);
+
+        [Post("khachsan/order")]
+        Task DatKhachSan([Body] DatKhachSanVM request, [Header("Authorization")] string authorization);
     }
 
     public static class HotelAPIExtensions

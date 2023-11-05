@@ -22,5 +22,7 @@ namespace DemoCrud.Responsitory
         Task<List<VanChuyen>> Search(TimKiemVanChuyenRequest request);
 
         Task<List<VanChuyen>> GetByOwner(int id);
+
+        Task<List<ViewModel.Models.DatVanChuyen>> GetVanChuyenByNguoiDung(int id);
     }
 }

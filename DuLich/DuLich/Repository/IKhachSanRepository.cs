@@ -21,5 +21,7 @@ namespace DemoCrud.Responsitory
         Task<List<KhachSan>> Search(TimKiemKhachSanRequest request);
 
         Task<List<KhachSan>> GetByOwner(int id);
+
+        Task<List<ViewModel.Models.DatKhachSan>> GetKhachSanByNguoiDung(int id);
     }
 }

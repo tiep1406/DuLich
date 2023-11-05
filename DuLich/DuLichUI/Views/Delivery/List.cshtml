@@ -69,14 +69,15 @@
                                         <div class="list-group list-group-flush flex-nowrap flex-md-row m-0">
                                             <div class="list-group-item">
                                                 <div class="row d-md-inline-flex flex-md-column">
-                                                    <div class="title col-5 col-md-12"><span><img class="img-fluid mb-md-1" src="@item.AnhDaiDien" alt="#" /></span></div>
+                                                    <div class="title col-5 col-md-12"><span><img style="width: 50px;" class="img-fluid mb-md-1" src="@item.AnhDaiDien" alt="#" /></span></div>
+                                                    <p>@item?.DiaChiDi - @item?.DiaChiDung</p>
                                                 </div>
                                             </div>
                                             <div class="list-group-item">
                                                 <div class="row d-md-inline-flex flex-md-column text-md-right">
                                                     <div class="title col-5 col-md-12">@item.ThoiGianBatDau.ToShortDateString()</div>
                                                     <div class="title col-5 col-md-12">@item.ThoiGianBatDau.ToShortTimeString()</div>
-                                                    <div class="col-7 col-md-12 text-center">@item.DiaChiDi</div>
+                                                    <div class="col-7 col-md-12 text-center">@item.ChiTietDiemDi</div>
                                                 </div>
                                             </div>
                                             <div class="list-group-item">
@@ -89,7 +90,7 @@
                                                 <div class="row d-md-inline-flex flex-md-column text-md-right">
                                                     <div class="title col-5 col-md-12">@item.ThoiGianKetThuc.ToShortDateString()</div>
                                                     <div class="title col-5 col-md-12">@item.ThoiGianKetThuc.ToShortTimeString()</div>
-                                                    <div class="col-7 col-md-12 text-center">@item.DiaChiDung</div>
+                                                    <div class="col-7 col-md-12 text-center">@item.ChiTietDiemDung</div>
                                                 </div>
                                             </div>
                                             @{
@@ -113,7 +114,7 @@
                                                     <div class="total text-nowrap" style="font-size: 13px;">@item.Gia VND</div>
                                                 </div>
                                                 <div class="col-7 col-md-12">
-                                                    <a class="btn btn-secondary btn--round" href="#" role="button">book now</a>
+                                                    <a class="btn btn-secondary btn--round" href="/delivery/booking/@item?.Id" role="button">book now</a>
                                                 </div>
                                             </div>
                                         </div>

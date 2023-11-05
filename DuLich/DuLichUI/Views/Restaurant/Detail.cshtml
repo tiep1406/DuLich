@@ -74,6 +74,7 @@
                                                     <li class="mr-2"><i class="align-middle icon text-secondary icon-freezer mr-2"></i><span class="align-middle mr-2">Điều hoà</span><i class="bullet d-none d-md-inline-block"></i></li>
                                                     <li class="mr-2"><i class="align-middle icon text-secondary icon-food mr-2"></i><span class="align-middle mr-2">Đồ ăn và thức uống</span><i class="bullet d-none d-md-inline-block"></i></li>
                                                     <li class="mr-2"><i class="align-middle icon text-secondary icon-parking mr-2"></i><span class="align-middle mr-2">Miễn phí giữ xe</span><i class="bullet d-none d-md-inline-block"></i></li>
+                                                    <li class="mr-2"><i class="align-middle icon text-secondary icon-parking mr-2"></i><span class="align-middle mr-2">Chủ dịch vụ: @Model?.NguoiDung?.HoTen</span><i class="bullet d-none d-md-inline-block"></i></li>
                                                 </ul>
                                             </section>
                                         </div>
@@ -81,7 +82,7 @@
                                     <div class="col-12 col-md-4 d-flex">
                                         <div class="hotel-stats hotel-card w-100">
                                             <div class="row justify-content-center">
-                                                <a class="btn btn-secondary btn--round btn-block" href="#" role="button">book now</a>
+                                                <a class="btn btn-secondary btn--round btn-block" href="/restaurant/booking/@Model.Id" role="button">book now</a>
                                             </div>
                                         </div>
                                     </div>

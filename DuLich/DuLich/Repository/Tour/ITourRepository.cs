@@ -16,7 +16,7 @@ namespace DuLich.Repository.Tour
 
         Task<List<ViewModel.Models.Tour>> GetDanhSachTourByChuDichVu(int id);
 
-        Task<List<ViewModel.Models.Tour>> GetDanhSachTourByNguoiDung(int id);
+        Task<List<ViewModel.Models.DatTour>> GetDanhSachTourByNguoiDung(int id);
 
         Task<List<ViewModel.Models.Tour>> TimKiemTour(TimKiemTourRequest request);
 

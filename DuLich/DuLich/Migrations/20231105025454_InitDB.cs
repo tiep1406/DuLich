@@ -10,43 +10,6 @@ namespace DuLich.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "DiemThamQuans",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ChuDichVu = table.Column<int>(type: "int", nullable: false),
-                    TenDiaDiem = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Gia = table.Column<int>(type: "int", nullable: false),
-                    DiaDiem = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AnhDaiDien = table.Column<string>(type: "nvarchar(max)", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_DiemThamQuans", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
-                name: "KhachSans",
-                columns: table => new
-                {
-                    Id = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    ChuDichVu = table.Column<int>(type: "int", nullable: false),
-                    DiaChi = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Gia = table.Column<int>(type: "int", nullable: false),
-                    TenKhachSan = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    AnhDaiDien = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ChiTietKhachSan = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    MoTaKhachSan = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    DanhGia = table.Column<int>(type: "int", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_KhachSans", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "NguoiDungs",
                 columns: table => new
                 {
@@ -69,7 +32,30 @@ namespace DuLich.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "NhaHangs",
+                name: "DiemThamQuans",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ChuDichVu = table.Column<int>(type: "int", nullable: false),
+                    TenDiaDiem = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gia = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
+                    DiaDiem = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AnhDaiDien = table.Column<string>(type: "nvarchar(max)", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_DiemThamQuans", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_DiemThamQuans_NguoiDungs_ChuDichVu",
+                        column: x => x.ChuDichVu,
+                        principalTable: "NguoiDungs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "KhachSans",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
@@ -77,6 +63,32 @@ namespace DuLich.Migrations
                     ChuDichVu = table.Column<int>(type: "int", nullable: false),
                     DiaChi = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     Gia = table.Column<int>(type: "int", nullable: false),
+                    TenKhachSan = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    AnhDaiDien = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ChiTietKhachSan = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    MoTaKhachSan = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    DanhGia = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_KhachSans", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_KhachSans_NguoiDungs_ChuDichVu",
+                        column: x => x.ChuDichVu,
+                        principalTable: "NguoiDungs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "NhaHangs",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    ChuDichVu = table.Column<int>(type: "int", nullable: false),
+                    DiaChi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gia = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     TenNhaHang = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     AnhDaiDien = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ChiTietNhaHang = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -86,6 +98,12 @@ namespace DuLich.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_NhaHangs", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_NhaHangs_NguoiDungs_ChuDichVu",
+                        column: x => x.ChuDichVu,
+                        principalTable: "NguoiDungs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -109,6 +127,12 @@ namespace DuLich.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tours", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Tours_NguoiDungs_ChuTour",
+                        column: x => x.ChuTour,
+                        principalTable: "NguoiDungs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -119,10 +143,11 @@ namespace DuLich.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     ChuDichVu = table.Column<int>(type: "int", nullable: false),
                     DiaChiDung = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Gia = table.Column<int>(type: "int", nullable: false),
-                    ThoiGian = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    DiaChiDi = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Gia = table.Column<decimal>(type: "decimal(18,2)", nullable: false),
                     AnhDaiDien = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ChiTietDiemDung = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ChiTietDiemDi = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ThoiGianBatDau = table.Column<DateTime>(type: "datetime2", nullable: false),
                     ThoiGianKetThuc = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TaiXe = table.Column<string>(type: "nvarchar(max)", nullable: true)
@@ -130,6 +155,12 @@ namespace DuLich.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_VanChuyens", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_VanChuyens_NguoiDungs_ChuDichVu",
+                        column: x => x.ChuDichVu,
+                        principalTable: "NguoiDungs",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -160,9 +191,8 @@ namespace DuLich.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdKhachSan = table.Column<int>(type: "int", nullable: false),
-                    IdNguoiDung = table.Column<int>(type: "int", nullable: false),
-                    ChuDichVu = table.Column<int>(type: "int", nullable: false),
+                    IdKhachSan = table.Column<int>(type: "int", nullable: true),
+                    IdNguoiDung = table.Column<int>(type: "int", nullable: true),
                     NoiDung = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ThoiGian = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -173,14 +203,12 @@ namespace DuLich.Migrations
                         name: "FK_BinhLuanKhachSan_KhachSans_IdKhachSan",
                         column: x => x.IdKhachSan,
                         principalTable: "KhachSans",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_BinhLuanKhachSan_NguoiDungs_IdNguoiDung",
                         column: x => x.IdNguoiDung,
                         principalTable: "NguoiDungs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -189,9 +217,10 @@ namespace DuLich.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdNguoiDung = table.Column<int>(type: "int", nullable: false),
-                    IdKhachSan = table.Column<int>(type: "int", nullable: false),
+                    IdNguoiDung = table.Column<int>(type: "int", nullable: true),
+                    IdKhachSan = table.Column<int>(type: "int", nullable: true),
                     NgayDat = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NgayNhan = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NgayTra = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -201,14 +230,12 @@ namespace DuLich.Migrations
                         name: "FK_DatKhachSans_KhachSans_IdKhachSan",
                         column: x => x.IdKhachSan,
                         principalTable: "KhachSans",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_DatKhachSans_NguoiDungs_IdNguoiDung",
                         column: x => x.IdNguoiDung,
                         principalTable: "NguoiDungs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -217,9 +244,8 @@ namespace DuLich.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdNhaHang = table.Column<int>(type: "int", nullable: false),
-                    IdNguoiDung = table.Column<int>(type: "int", nullable: false),
-                    ChuDichVu = table.Column<int>(type: "int", nullable: false),
+                    IdNhaHang = table.Column<int>(type: "int", nullable: true),
+                    IdNguoiDung = table.Column<int>(type: "int", nullable: true),
                     NoiDung = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ThoiGian = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -230,14 +256,12 @@ namespace DuLich.Migrations
                         name: "FK_BinhLuanNhaHang_NguoiDungs_IdNguoiDung",
                         column: x => x.IdNguoiDung,
                         principalTable: "NguoiDungs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_BinhLuanNhaHang_NhaHangs_IdNhaHang",
                         column: x => x.IdNhaHang,
                         principalTable: "NhaHangs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -246,9 +270,10 @@ namespace DuLich.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdNguoiDung = table.Column<int>(type: "int", nullable: false),
-                    IdNhaHang = table.Column<int>(type: "int", nullable: false),
+                    IdNguoiDung = table.Column<int>(type: "int", nullable: true),
+                    IdNhaHang = table.Column<int>(type: "int", nullable: true),
                     NgayDat = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    NgayNhan = table.Column<DateTime>(type: "datetime2", nullable: false),
                     NgayTra = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -258,14 +283,12 @@ namespace DuLich.Migrations
                         name: "FK_DatNhaHangs_NguoiDungs_IdNguoiDung",
                         column: x => x.IdNguoiDung,
                         principalTable: "NguoiDungs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_DatNhaHangs_NhaHangs_IdNhaHang",
                         column: x => x.IdNhaHang,
                         principalTable: "NhaHangs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -274,8 +297,8 @@ namespace DuLich.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdNguoiDung = table.Column<int>(type: "int", nullable: false),
-                    IdTour = table.Column<int>(type: "int", nullable: false),
+                    IdNguoiDung = table.Column<int>(type: "int", nullable: true),
+                    IdTour = table.Column<int>(type: "int", nullable: true),
                     NgayDat = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -285,14 +308,12 @@ namespace DuLich.Migrations
                         name: "FK_DatTours_NguoiDungs_IdNguoiDung",
                         column: x => x.IdNguoiDung,
                         principalTable: "NguoiDungs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_DatTours_Tours_IdTour",
                         column: x => x.IdTour,
                         principalTable: "Tours",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -324,9 +345,8 @@ namespace DuLich.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdVanChuyen = table.Column<int>(type: "int", nullable: false),
-                    IdNguoiDung = table.Column<int>(type: "int", nullable: false),
-                    ChuDichVu = table.Column<int>(type: "int", nullable: false),
+                    IdVanChuyen = table.Column<int>(type: "int", nullable: true),
+                    IdNguoiDung = table.Column<int>(type: "int", nullable: true),
                     NoiDung = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ThoiGian = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
@@ -337,14 +357,12 @@ namespace DuLich.Migrations
                         name: "FK_BinhLuanVanChuyen_NguoiDungs_IdNguoiDung",
                         column: x => x.IdNguoiDung,
                         principalTable: "NguoiDungs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_BinhLuanVanChuyen_VanChuyens_IdVanChuyen",
                         column: x => x.IdVanChuyen,
                         principalTable: "VanChuyens",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -353,8 +371,8 @@ namespace DuLich.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    IdNguoiDung = table.Column<int>(type: "int", nullable: false),
-                    IdVanChuyen = table.Column<int>(type: "int", nullable: false),
+                    IdNguoiDung = table.Column<int>(type: "int", nullable: true),
+                    IdVanChuyen = table.Column<int>(type: "int", nullable: true),
                     NgayDat = table.Column<DateTime>(type: "datetime2", nullable: false)
                 },
                 constraints: table =>
@@ -364,20 +382,18 @@ namespace DuLich.Migrations
                         name: "FK_DatVanChuyens_NguoiDungs_IdNguoiDung",
                         column: x => x.IdNguoiDung,
                         principalTable: "NguoiDungs",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                     table.ForeignKey(
                         name: "FK_DatVanChuyens_VanChuyens_IdVanChuyen",
                         column: x => x.IdVanChuyen,
                         principalTable: "VanChuyens",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.InsertData(
                 table: "NguoiDungs",
                 columns: new[] { "Id", "AnhDaiDien", "CCCD", "Email", "GioiTinh", "HoTen", "MatKhau", "NoiO", "PhanQuyen", "Sdt", "TrangThai" },
-                values: new object[] { 1, "default-avatar.jpg", "123456789", "admin@admin.com", 1, null, "admin", "Ha Noi", 0, "0123456789", 1 });
+                values: new object[] { 1, "default-avatar.jpg", "123456789", "admin@admin.com", 1, "Admin", "admin1", "Ha Noi", 0, "0123456789", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BinhLuanKhachSan_IdKhachSan",
@@ -456,10 +472,35 @@ namespace DuLich.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
+                name: "IX_DiemThamQuans_ChuDichVu",
+                table: "DiemThamQuans",
+                column: "ChuDichVu");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_KhachSans_ChuDichVu",
+                table: "KhachSans",
+                column: "ChuDichVu");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_NhaHangs_ChuDichVu",
+                table: "NhaHangs",
+                column: "ChuDichVu");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TourCTs_MaTour",
                 table: "TourCTs",
                 column: "MaTour",
                 unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Tours_ChuTour",
+                table: "Tours",
+                column: "ChuTour");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_VanChuyens_ChuDichVu",
+                table: "VanChuyens",
+                column: "ChuDichVu");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -498,9 +539,6 @@ namespace DuLich.Migrations
                 name: "NhaHangs");
 
             migrationBuilder.DropTable(
-                name: "NguoiDungs");
-
-            migrationBuilder.DropTable(
                 name: "VanChuyens");
 
             migrationBuilder.DropTable(
@@ -508,6 +546,9 @@ namespace DuLich.Migrations
 
             migrationBuilder.DropTable(
                 name: "Tours");
+
+            migrationBuilder.DropTable(
+                name: "NguoiDungs");
         }
     }
 }

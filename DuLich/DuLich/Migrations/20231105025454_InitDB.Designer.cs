@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DuLich.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20231103114937_InitDB")]
+    [Migration("20231105025454_InitDB")]
     partial class InitDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -32,13 +32,10 @@ namespace DuLich.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ChuDichVu")
+                    b.Property<int?>("IdKhachSan")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdKhachSan")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdNguoiDung")
+                    b.Property<int?>("IdNguoiDung")
                         .HasColumnType("int");
 
                     b.Property<string>("NoiDung")
@@ -64,13 +61,10 @@ namespace DuLich.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ChuDichVu")
+                    b.Property<int?>("IdNguoiDung")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdNguoiDung")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdNhaHang")
+                    b.Property<int?>("IdNhaHang")
                         .HasColumnType("int");
 
                     b.Property<string>("NoiDung")
@@ -96,13 +90,10 @@ namespace DuLich.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("ChuDichVu")
+                    b.Property<int?>("IdNguoiDung")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdNguoiDung")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdVanChuyen")
+                    b.Property<int?>("IdVanChuyen")
                         .HasColumnType("int");
 
                     b.Property<string>("NoiDung")
@@ -128,13 +119,16 @@ namespace DuLich.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("IdKhachSan")
+                    b.Property<int?>("IdKhachSan")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdNguoiDung")
+                    b.Property<int?>("IdNguoiDung")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("NgayDat")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("NgayNhan")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("NgayTra")
@@ -157,13 +151,16 @@ namespace DuLich.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("IdNguoiDung")
+                    b.Property<int?>("IdNguoiDung")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdNhaHang")
+                    b.Property<int?>("IdNhaHang")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("NgayDat")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("NgayNhan")
                         .HasColumnType("datetime2");
 
                     b.Property<DateTime>("NgayTra")
@@ -186,10 +183,10 @@ namespace DuLich.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("IdNguoiDung")
+                    b.Property<int?>("IdNguoiDung")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdTour")
+                    b.Property<int?>("IdTour")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("NgayDat")
@@ -212,10 +209,10 @@ namespace DuLich.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
 
-                    b.Property<int>("IdNguoiDung")
+                    b.Property<int?>("IdNguoiDung")
                         .HasColumnType("int");
 
-                    b.Property<int>("IdVanChuyen")
+                    b.Property<int?>("IdVanChuyen")
                         .HasColumnType("int");
 
                     b.Property<DateTime>("NgayDat")
@@ -247,13 +244,15 @@ namespace DuLich.Migrations
                     b.Property<string>("DiaDiem")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Gia")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Gia")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("TenDiaDiem")
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ChuDichVu");
 
                     b.ToTable("DiemThamQuans");
                 });
@@ -320,6 +319,8 @@ namespace DuLich.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ChuDichVu");
+
                     b.ToTable("KhachSans");
                 });
 
@@ -373,7 +374,8 @@ namespace DuLich.Migrations
                             CCCD = "123456789",
                             Email = "admin@admin.com",
                             GioiTinh = 1,
-                            MatKhau = "admin",
+                            HoTen = "Admin",
+                            MatKhau = "admin1",
                             NoiO = "Ha Noi",
                             PhanQuyen = 0,
                             Sdt = "0123456789",
@@ -404,8 +406,8 @@ namespace DuLich.Migrations
                     b.Property<string>("DiaChi")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Gia")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Gia")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("MoTaNhaHang")
                         .HasColumnType("nvarchar(max)");
@@ -414,6 +416,8 @@ namespace DuLich.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("ChuDichVu");
 
                     b.ToTable("NhaHangs");
                 });
@@ -461,6 +465,8 @@ namespace DuLich.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ChuTour");
+
                     b.ToTable("Tours");
                 });
 
@@ -506,23 +512,26 @@ namespace DuLich.Migrations
                     b.Property<string>("AnhDaiDien")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ChiTietDiemDi")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("ChiTietDiemDung")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("ChuDichVu")
                         .HasColumnType("int");
 
+                    b.Property<string>("DiaChiDi")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("DiaChiDung")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<int>("Gia")
-                        .HasColumnType("int");
+                    b.Property<decimal>("Gia")
+                        .HasColumnType("decimal(18,2)");
 
                     b.Property<string>("TaiXe")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ThoiGian")
-                        .HasColumnType("datetime2");
 
                     b.Property<DateTime>("ThoiGianBatDau")
                         .HasColumnType("datetime2");
@@ -532,6 +541,8 @@ namespace DuLich.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("ChuDichVu");
+
                     b.ToTable("VanChuyens");
                 });
 
@@ -539,15 +550,11 @@ namespace DuLich.Migrations
                 {
                     b.HasOne("ViewModel.Models.KhachSan", "KhachSan")
                         .WithMany("BinhLuanKhachSans")
-                        .HasForeignKey("IdKhachSan")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdKhachSan");
 
                     b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
                         .WithMany("BinhLuanKhachSans")
-                        .HasForeignKey("IdNguoiDung")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdNguoiDung");
 
                     b.Navigation("KhachSan");
 
@@ -558,15 +565,11 @@ namespace DuLich.Migrations
                 {
                     b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
                         .WithMany("BinhLuanNhaHangs")
-                        .HasForeignKey("IdNguoiDung")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdNguoiDung");
 
                     b.HasOne("ViewModel.Models.NhaHang", "NhaHang")
                         .WithMany("BinhLuanNhaHangs")
-                        .HasForeignKey("IdNhaHang")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdNhaHang");
 
                     b.Navigation("NguoiDung");
 
@@ -577,15 +580,11 @@ namespace DuLich.Migrations
                 {
                     b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
                         .WithMany("BinhLuanVanChuyens")
-                        .HasForeignKey("IdNguoiDung")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdNguoiDung");
 
                     b.HasOne("ViewModel.Models.VanChuyen", "VanChuyen")
                         .WithMany("BinhLuanVanChuyens")
-                        .HasForeignKey("IdVanChuyen")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdVanChuyen");
 
                     b.Navigation("NguoiDung");
 
@@ -596,15 +595,11 @@ namespace DuLich.Migrations
                 {
                     b.HasOne("ViewModel.Models.KhachSan", "KhachSan")
                         .WithMany("DatKhachSans")
-                        .HasForeignKey("IdKhachSan")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdKhachSan");
 
                     b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
                         .WithMany("DatKhachSans")
-                        .HasForeignKey("IdNguoiDung")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdNguoiDung");
 
                     b.Navigation("KhachSan");
 
@@ -615,15 +610,11 @@ namespace DuLich.Migrations
                 {
                     b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
                         .WithMany("DatNhaHangs")
-                        .HasForeignKey("IdNguoiDung")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdNguoiDung");
 
                     b.HasOne("ViewModel.Models.NhaHang", "NhaHang")
                         .WithMany("DatNhaHangs")
-                        .HasForeignKey("IdNhaHang")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdNhaHang");
 
                     b.Navigation("NguoiDung");
 
@@ -634,15 +625,11 @@ namespace DuLich.Migrations
                 {
                     b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
                         .WithMany("DatTours")
-                        .HasForeignKey("IdNguoiDung")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdNguoiDung");
 
                     b.HasOne("ViewModel.Models.Tour", "Tour")
                         .WithMany("DatTours")
-                        .HasForeignKey("IdTour")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdTour");
 
                     b.Navigation("NguoiDung");
 
@@ -653,19 +640,26 @@ namespace DuLich.Migrations
                 {
                     b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
                         .WithMany("DatVanChuyens")
-                        .HasForeignKey("IdNguoiDung")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdNguoiDung");
 
                     b.HasOne("ViewModel.Models.VanChuyen", "VanChuyen")
                         .WithMany("DatVanChuyens")
-                        .HasForeignKey("IdVanChuyen")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdVanChuyen");
 
                     b.Navigation("NguoiDung");
 
                     b.Navigation("VanChuyen");
+                });
+
+            modelBuilder.Entity("ViewModel.Models.DiemThamQuan", b =>
+                {
+                    b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
+                        .WithMany()
+                        .HasForeignKey("ChuDichVu")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NguoiDung");
                 });
 
             modelBuilder.Entity("ViewModel.Models.DiemThamQuanCT", b =>
@@ -679,6 +673,39 @@ namespace DuLich.Migrations
                     b.Navigation("DiemThamQuan");
                 });
 
+            modelBuilder.Entity("ViewModel.Models.KhachSan", b =>
+                {
+                    b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
+                        .WithMany()
+                        .HasForeignKey("ChuDichVu")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NguoiDung");
+                });
+
+            modelBuilder.Entity("ViewModel.Models.NhaHang", b =>
+                {
+                    b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
+                        .WithMany()
+                        .HasForeignKey("ChuDichVu")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NguoiDung");
+                });
+
+            modelBuilder.Entity("ViewModel.Models.Tour", b =>
+                {
+                    b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
+                        .WithMany()
+                        .HasForeignKey("ChuTour")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NguoiDung");
+                });
+
             modelBuilder.Entity("ViewModel.Models.TourCT", b =>
                 {
                     b.HasOne("ViewModel.Models.Tour", "Tour")
@@ -688,6 +715,17 @@ namespace DuLich.Migrations
                         .IsRequired();
 
                     b.Navigation("Tour");
+                });
+
+            modelBuilder.Entity("ViewModel.Models.VanChuyen", b =>
+                {
+                    b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
+                        .WithMany()
+                        .HasForeignKey("ChuDichVu")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("NguoiDung");
                 });
 
             modelBuilder.Entity("ViewModel.Models.DiemThamQuan", b =>

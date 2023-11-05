@@ -31,7 +31,7 @@ namespace DemoCrud.Responsitory
 
         public async Task<VanChuyen> GetVanChuyen(int id)
         {
-            var ds = await _DBContext.VanChuyens.FindAsync(id);
+            var ds = await _DBContext.VanChuyens.Include(x => x.NguoiDung).Where(x => x.Id == id).FirstOrDefaultAsync();
             ds.AnhDaiDien = _uploadService.GetFullPath(ds.AnhDaiDien);
             return ds;
         }
@@ -100,6 +100,7 @@ namespace DemoCrud.Responsitory
             {
                 IdNguoiDung = datVanChuyen.IdNguoiDungs,
                 IdVanChuyen = datVanChuyen.IdVanChuyens,
+                NgayDat = DateTime.Now,
             };
             await _DBContext.DatVanChuyens.AddAsync(dat);
             await _DBContext.SaveChangesAsync();
@@ -123,6 +124,11 @@ namespace DemoCrud.Responsitory
                 d.AnhDaiDien = _uploadService.GetFullPath(d.AnhDaiDien);
             }
             return ds;
+        }
+
+        public async Task<List<DatVanChuyen>> GetVanChuyenByNguoiDung(int id)
+        {
+            return await _DBContext.DatVanChuyens.Include(x => x.VanChuyen).Where(x => x.IdNguoiDung == id).ToListAsync();
         }
     }
 }

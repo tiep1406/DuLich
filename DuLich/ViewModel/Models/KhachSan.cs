@@ -1,10 +1,14 @@
-﻿using ViewModel.Models;
+﻿using System.ComponentModel.DataAnnotations.Schema;
+using ViewModel.Models;
 
 namespace ViewModel.Models
 {
     public class KhachSan : BaseEntity
     {
+        [ForeignKey("NguoiDung")]
         public int ChuDichVu { get; set; }
+
+        public NguoiDung NguoiDung { get; set; }
         public string DiaChi { get; set; }
         public int Gia { get; set; }
         public string TenKhachSan { get; set; }

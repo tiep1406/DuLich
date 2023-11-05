@@ -1,11 +1,5 @@
 ﻿using RestEase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using ViewModel.Models;
-using ViewModel.Request.NguoiDung;
 using ViewModel.Request.Tour;
 
 namespace APIIntegration.Interfaces
@@ -22,7 +16,7 @@ namespace APIIntegration.Interfaces
         Task<List<Tour>> SearchTour([Body] TimKiemTourRequest request);
 
         [Get("tours/user/{id}")]
-        Task<List<Tour>> GetTourByUser([Path("id")] int id, [Header("Authorization")] string authorization);
+        Task<List<DatTour>> GetTourByUser([Path("id")] int id, [Header("Authorization")] string authorization);
 
         [Get("tours/owner/{id}")]
         Task<List<Tour>> GetTourByOwner([Path("id")] int id, [Header("Authorization")] string authorization);
@@ -33,7 +27,7 @@ namespace APIIntegration.Interfaces
         [Put("tours")]
         Task EditTour([Body] HttpContent content, [Header("Authorization")] string authorization);
 
-        [Put("tours")]
+        [Post("tours/order")]
         Task DatTour([Body] DatTourRequest request, [Header("Authorization")] string authorization);
     }
 

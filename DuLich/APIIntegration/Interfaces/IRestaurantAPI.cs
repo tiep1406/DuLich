@@ -17,6 +17,9 @@ namespace APIIntegration.Interfaces
         [Get("nhahang/owner/{id}")]
         Task<List<NhaHang>> GetNhaHangByOwner([Path("id")] int id, [Header("Authorization")] string authorization);
 
+        [Get("nhahang/user/{id}")]
+        Task<List<DatNhaHang>> GetNhaHangOrder([Path("id")] int id, [Header("Authorization")] string authorization);
+
         [Get("nhahang/search")]
         Task<List<NhaHang>> SearchNhaHang([Body] TimKiemNhaHangRequest request);
 
@@ -25,6 +28,9 @@ namespace APIIntegration.Interfaces
 
         [Put("nhahang")]
         Task EditNhaHang([Body] HttpContent content, [Header("Authorization")] string authorization);
+
+        [Post("nhahang/order")]
+        Task DatNhaHang([Body] DatNhaHangVM request, [Header("Authorization")] string authorization);
     }
 
     public static class RestaurantAPIExtensions

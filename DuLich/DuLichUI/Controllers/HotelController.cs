@@ -34,6 +34,33 @@ namespace DuLichUI.Controllers
             }
         }
 
+        public async Task<IActionResult> Booking(int id)
+        {
+            var tour = await _hotelAPI.GetById(id);
+            var temp = HttpContext.Session.GetString("User");
+            if (temp != null)
+            {
+                var user = Newtonsoft.Json.JsonConvert.DeserializeObject<NguoiDung>(temp);
+                var x = await _userAPI.GetById(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+                ViewData["user"] = x;
+            }
+            return View(tour);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBooking([FromForm] DatKhachSanVM request)
+        {
+            var temp = HttpContext.Session.GetString("User");
+            if (temp != null)
+            {
+                var user = Newtonsoft.Json.JsonConvert.DeserializeObject<NguoiDung>(temp);
+                request.IdNguoiDungs = user.Id;
+            }
+            await _hotelAPI.DatKhachSan(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+
+            return Redirect("/hotel/list?order=true");
+        }
+
         public async Task<IActionResult> Create()
         {
             var temp = HttpContext.Session.GetString("User");

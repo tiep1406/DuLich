@@ -51,12 +51,40 @@ namespace DuLichUI.Controllers
             return View(hotels);
         }
 
+        public async Task<IActionResult> Booking(int id)
+        {
+            var tour = await _restaurantAPI.GetById(id);
+            var temp = HttpContext.Session.GetString("User");
+            if (temp != null)
+            {
+                var user = Newtonsoft.Json.JsonConvert.DeserializeObject<NguoiDung>(temp);
+                var x = await _userAPI.GetById(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+                ViewData["user"] = x;
+            }
+            return View(tour);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBooking([FromForm] DatNhaHangVM request)
+        {
+            var temp = HttpContext.Session.GetString("User");
+            if (temp != null)
+            {
+                var user = Newtonsoft.Json.JsonConvert.DeserializeObject<NguoiDung>(temp);
+                request.IdNguoiDungs = user.Id;
+            }
+            await _restaurantAPI.DatNhaHang(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+
+            return Redirect("/restaurant/list?order=true");
+        }
+
         [AllowAnonymous]
         public async Task<IActionResult> Search([FromQuery] TimKiemNhaHangRequest request)
         {
             var restaurants = await _restaurantAPI.SearchNhaHang(request);
             return View("List", restaurants);
         }
+
         public async Task<IActionResult> Create()
         {
             var temp = HttpContext.Session.GetString("User");

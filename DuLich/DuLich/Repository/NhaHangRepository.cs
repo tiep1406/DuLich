@@ -33,7 +33,7 @@ namespace DemoCrud.Responsitory
 
         public async Task<NhaHang> GetNhaHang(int id)
         {
-            var ds = await _DBContext.NhaHangs.FindAsync(id);
+            var ds = await _DBContext.NhaHangs.Include(x => x.NguoiDung).Where(x => x.Id == id).FirstOrDefaultAsync();
             ds.AnhDaiDien = _uploadService.GetFullPath(ds.AnhDaiDien);
             return ds;
         }
@@ -98,8 +98,9 @@ namespace DemoCrud.Responsitory
             {
                 IdNguoiDung = datNhaHang.IdNguoiDungs,
                 IdNhaHang = datNhaHang.IdNhaHangs,
-                NgayDat = datNhaHang.NgayDat,
+                NgayNhan = datNhaHang.NgayNhan,
                 NgayTra = datNhaHang.NgayTra,
+                NgayDat = DateTime.Now
             };
             await _DBContext.DatNhaHangs.AddAsync(dat);
             await _DBContext.SaveChangesAsync();
@@ -128,6 +129,11 @@ namespace DemoCrud.Responsitory
             }
 
             return ds;
+        }
+
+        public async Task<List<DatNhaHang>> GetNhaHangByNguoiDung(int id)
+        {
+            return await _DBContext.DatNhaHangs.Include(x => x.NhaHang).Where(x => x.IdNguoiDung == id).ToListAsync();
         }
     }
 }

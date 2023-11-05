@@ -6,10 +6,10 @@ namespace ViewModel.Models
     public class DatTour : BaseEntity
     {
         [ForeignKey("NguoiDung")]
-        public int IdNguoiDung { get; set; }
+        public int? IdNguoiDung { get; set; }
 
         [ForeignKey("Tour")]
-        public int IdTour { get; set; }
+        public int? IdTour { get; set; }
 
         public DateTime NgayDat { get; set; }
 

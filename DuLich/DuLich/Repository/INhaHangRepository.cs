@@ -22,5 +22,7 @@ namespace DemoCrud.Responsitory
         Task Add(NhaHangVM nhaHang);
 
         Task DatNhaHang(DatNhaHangVM datNhaHang);
+
+        Task<List<ViewModel.Models.DatNhaHang>> GetNhaHangByNguoiDung(int id);
     }
 }
