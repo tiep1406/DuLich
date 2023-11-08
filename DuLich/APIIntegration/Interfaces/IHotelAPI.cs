@@ -33,6 +33,9 @@ namespace APIIntegration.Interfaces
 
         [Post("khachsan/order")]
         Task DatKhachSan([Body] DatKhachSanVM request, [Header("Authorization")] string authorization);
+
+        [Put("khachsan/toggle/{id}")]
+        Task Toggle([Path("id")] int id, [Header("Authorization")] string authorization);
     }
 
     public static class HotelAPIExtensions

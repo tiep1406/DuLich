@@ -62,6 +62,8 @@
                 <div class="category-content__items row pad-lg-20">
                     @foreach(var item in Model)
                     {
+                        if (!item.TrangThai) continue;
+
                         <div class="list-flight-item col-12">
                             <div class="flight-card card">
                                 <div class="row align-items-center flex-md-nowrap">

@@ -21,7 +21,7 @@ namespace DemoCrud.Responsitory
 
         public async Task<List<VanChuyen>> GetAll()
         {
-            var ds = await _DBContext.VanChuyens.ToListAsync();
+            var ds = await _DBContext.VanChuyens.Include(x => x.NguoiDung).ToListAsync();
             foreach (var d in ds)
             {
                 d.AnhDaiDien = _uploadService.GetFullPath(d.AnhDaiDien);
@@ -108,7 +108,7 @@ namespace DemoCrud.Responsitory
 
         public async Task<List<VanChuyen>> Search(TimKiemVanChuyenRequest request)
         {
-            var ds = await _DBContext.VanChuyens.Where(x => x.DiaChiDi.ToLower().Contains(request.Key)).ToListAsync();
+            var ds = await _DBContext.VanChuyens.Where(x => x.DiaChiDi.ToLower().Contains(request.Key) && x.TrangThai == true).ToListAsync();
             foreach (var d in ds)
             {
                 d.AnhDaiDien = _uploadService.GetFullPath(d.AnhDaiDien);
@@ -118,7 +118,12 @@ namespace DemoCrud.Responsitory
 
         public async Task<List<VanChuyen>> GetByOwner(int id)
         {
-            var ds = await _DBContext.VanChuyens.Where(x => x.ChuDichVu == id).ToListAsync();
+            var ds = await _DBContext.VanChuyens
+                .Include(x => x.DatVanChuyens)
+                .ThenInclude(x => x.NguoiDung)
+                //.Include(x => x.DatVanChuyens)
+                //.ThenInclude(x => x.VanChuyen)
+                .Where(x => x.ChuDichVu == id).ToListAsync();
             foreach (var d in ds)
             {
                 d.AnhDaiDien = _uploadService.GetFullPath(d.AnhDaiDien);
@@ -129,6 +134,17 @@ namespace DemoCrud.Responsitory
         public async Task<List<DatVanChuyen>> GetVanChuyenByNguoiDung(int id)
         {
             return await _DBContext.DatVanChuyens.Include(x => x.VanChuyen).Where(x => x.IdNguoiDung == id).ToListAsync();
+        }
+
+        public async Task Toggle(int id)
+        {
+            var vanchuyen = _DBContext.VanChuyens.SingleOrDefault(lo => lo.Id == id);
+            if (vanchuyen != null)
+            {
+                vanchuyen.TrangThai = !vanchuyen.TrangThai;
+                _DBContext.Update(vanchuyen);
+                await _DBContext.SaveChangesAsync();
+            }
         }
     }
 }

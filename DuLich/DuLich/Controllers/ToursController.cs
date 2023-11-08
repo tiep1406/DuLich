@@ -27,6 +27,14 @@ namespace DuLich.Controllers
             return Ok(tours);
         }
 
+        [HttpPut("toggle/{id}")]
+        public async Task<IActionResult> Toggle([FromRoute] int id)
+        {
+            await _repository.Toggle(id);
+
+            return NoContent();
+        }
+
         [HttpGet("{id}")]
         [AllowAnonymous]
         public async Task<IActionResult> GetChiTietTour([FromRoute] int id)

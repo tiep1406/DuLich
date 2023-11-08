@@ -21,7 +21,7 @@ namespace DemoCrud.Responsitory
 
         public async Task<List<NhaHang>> GetAll()
         {
-            var ds = await _DBContext.NhaHangs.ToListAsync();
+            var ds = await _DBContext.NhaHangs.Include(x => x.NguoiDung).ToListAsync();
 
             foreach (var d in ds)
             {
@@ -108,7 +108,12 @@ namespace DemoCrud.Responsitory
 
         public async Task<List<NhaHang>> GetByOwner(int id)
         {
-            var ds = await _DBContext.NhaHangs.Where(x => x.ChuDichVu == id).ToListAsync();
+            var ds = await _DBContext.NhaHangs
+                .Include(x => x.DatNhaHangs)
+                .ThenInclude(x => x.NguoiDung)
+                //.Include(x => x.DatNhaHangs)
+                //.ThenInclude(x => x.NhaHang)
+                .Where(x => x.ChuDichVu == id).ToListAsync();
 
             foreach (var d in ds)
             {
@@ -120,8 +125,8 @@ namespace DemoCrud.Responsitory
 
         public async Task<List<NhaHang>> Search(TimKiemNhaHangRequest request)
         {
-            var ds = await _DBContext.NhaHangs.Where(x => x.TenNhaHang.ToLower().Contains(request.Key)
-            || x.MoTaNhaHang.ToLower().Contains(request.Key)).ToListAsync();
+            var ds = await _DBContext.NhaHangs.Where(x => (x.TenNhaHang.ToLower().Contains(request.Key)
+            || x.MoTaNhaHang.ToLower().Contains(request.Key)) && x.TrangThai == true).ToListAsync();
 
             foreach (var d in ds)
             {
@@ -134,6 +139,17 @@ namespace DemoCrud.Responsitory
         public async Task<List<DatNhaHang>> GetNhaHangByNguoiDung(int id)
         {
             return await _DBContext.DatNhaHangs.Include(x => x.NhaHang).Where(x => x.IdNguoiDung == id).ToListAsync();
+        }
+
+        public async Task Toggle(int id)
+        {
+            var nhahang = _DBContext.NhaHangs.SingleOrDefault(lo => lo.Id == id);
+            if (nhahang != null)
+            {
+                nhahang.TrangThai = !nhahang.TrangThai;
+                _DBContext.Update(nhahang);
+                await _DBContext.SaveChangesAsync();
+            }
         }
     }
 }

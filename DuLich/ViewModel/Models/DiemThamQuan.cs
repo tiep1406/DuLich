@@ -13,6 +13,7 @@ namespace ViewModel.Models
         public decimal Gia { get; set; }
         public string DiaDiem { get; set; }
         public string AnhDaiDien { get; set; }
+        public bool TrangThai { get; set; } = true;
         public DiemThamQuanCT DiemThamQuanCT { get; set; }
     }
 }

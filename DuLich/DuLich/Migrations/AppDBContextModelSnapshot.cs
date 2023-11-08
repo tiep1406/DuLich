@@ -248,6 +248,9 @@ namespace DuLich.Migrations
                     b.Property<string>("TenDiaDiem")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("TrangThai")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ChuDichVu");
@@ -314,6 +317,9 @@ namespace DuLich.Migrations
 
                     b.Property<string>("TenKhachSan")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TrangThai")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -413,6 +419,9 @@ namespace DuLich.Migrations
                     b.Property<string>("TenNhaHang")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<bool>("TrangThai")
+                        .HasColumnType("bit");
+
                     b.HasKey("Id");
 
                     b.HasIndex("ChuDichVu");
@@ -460,6 +469,9 @@ namespace DuLich.Migrations
 
                     b.Property<string>("TenTour")
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<bool>("TrangThai")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 
@@ -536,6 +548,9 @@ namespace DuLich.Migrations
 
                     b.Property<DateTime>("ThoiGianKetThuc")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("TrangThai")
+                        .HasColumnType("bit");
 
                     b.HasKey("Id");
 

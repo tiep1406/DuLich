@@ -36,7 +36,11 @@ namespace DuLichUI.Controllers
 
         public async Task<IActionResult> Booking(int id)
         {
-            var tour = await _hotelAPI.GetById(id);
+            var hotel = await _hotelAPI.GetById(id);
+            if (!hotel.TrangThai)
+            {
+                return Redirect("/hotel/list");
+            }
             var temp = HttpContext.Session.GetString("User");
             if (temp != null)
             {
@@ -44,12 +48,17 @@ namespace DuLichUI.Controllers
                 var x = await _userAPI.GetById(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
                 ViewData["user"] = x;
             }
-            return View(tour);
+            return View(hotel);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateBooking([FromForm] DatKhachSanVM request)
         {
+            var hotel = await _hotelAPI.GetById(request.IdKhachSans);
+            if (!hotel.TrangThai)
+            {
+                return Redirect("/hotel/list?order=false");
+            }
             var temp = HttpContext.Session.GetString("User");
             if (temp != null)
             {
@@ -83,6 +92,10 @@ namespace DuLichUI.Controllers
         public async Task<IActionResult> Detail(int id)
         {
             var hotel = await _hotelAPI.GetById(id);
+            if (!hotel.TrangThai)
+            {
+                return Redirect("/hotel/list");
+            }
             ViewData["khachsans"] = await _hotelAPI.GetAll();
             return View(hotel);
         }
@@ -97,7 +110,7 @@ namespace DuLichUI.Controllers
         public async Task<IActionResult> Delete(int id)
         {
             var hotel = await _hotelAPI.Delete(id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
-            return RedirectToAction("Index");
+            return Redirect("/hotel");
         }
 
         [HttpPost]
@@ -109,7 +122,7 @@ namespace DuLichUI.Controllers
             }
             await _hotelAPI.EditKhachSan(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
-            return RedirectToAction("Index");
+            return Redirect("/hotel");
         }
 
         [HttpPost]
@@ -128,7 +141,7 @@ namespace DuLichUI.Controllers
             }
             await _hotelAPI.CreateKhachSan(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
-            return RedirectToAction("Index");
+            return Redirect("/hotel");
         }
     }
 }

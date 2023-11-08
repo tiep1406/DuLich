@@ -100,6 +100,7 @@
             <div class="swiper-wrapper">
                 @foreach(var tour in tours)
                 {
+                    if (!tour.TrangThai) continue;
                     <div class="swiper-slide">
                         <div class="card-intro d-block" style="background-image: url(@tour.HinhAnhTour);">
                             <div class="card-price px-2"><span class="count text-secondary">@tour.GiaTour VND</span></div>
@@ -146,6 +147,7 @@
         <div class="row">
             @foreach (var item in destinations)
             {
+                if (!item.TrangThai) continue;
                 <div class="col-12 col-sm-6 col-lg-4 d-flex mb-4">
                     <div class="card card-hotel w-100 mb-2">
                         <div class="card-hotel__img">

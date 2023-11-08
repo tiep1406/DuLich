@@ -21,7 +21,7 @@ namespace DemoCrud.Responsitory
 
         public async Task<List<KhachSan>> GetAll()
         {
-            var ds = await _DBContext.KhachSans.Select(t => t).ToListAsync();
+            var ds = await _DBContext.KhachSans.Include(x => x.NguoiDung).ToListAsync();
             foreach (var d in ds)
             {
                 d.AnhDaiDien = _uploadService.GetFullPath(d.AnhDaiDien);
@@ -106,7 +106,7 @@ namespace DemoCrud.Responsitory
 
         public async Task<List<KhachSan>> Search(TimKiemKhachSanRequest request)
         {
-            var ds = await _DBContext.KhachSans.Where(x => x.TenKhachSan.Contains(request.Key)).ToListAsync();
+            var ds = await _DBContext.KhachSans.Where(x => x.TenKhachSan.Contains(request.Key) && x.TrangThai == true).ToListAsync();
             foreach (var d in ds)
             {
                 d.AnhDaiDien = _uploadService.GetFullPath(d.AnhDaiDien);
@@ -116,7 +116,12 @@ namespace DemoCrud.Responsitory
 
         public async Task<List<KhachSan>> GetByOwner(int id)
         {
-            var ds = await _DBContext.KhachSans.Where(x => x.ChuDichVu == id).ToListAsync();
+            var ds = await _DBContext.KhachSans
+                .Include(x => x.DatKhachSans)
+                .ThenInclude(x => x.NguoiDung)
+                //.Include(x => x.DatKhachSans)
+                //.ThenInclude(x => x.KhachSan)
+                .Where(x => x.ChuDichVu == id).ToListAsync();
             foreach (var d in ds)
             {
                 d.AnhDaiDien = _uploadService.GetFullPath(d.AnhDaiDien);
@@ -127,6 +132,17 @@ namespace DemoCrud.Responsitory
         public async Task<List<DatKhachSan>> GetKhachSanByNguoiDung(int id)
         {
             return await _DBContext.DatKhachSans.Include(x => x.KhachSan).Where(x => x.IdNguoiDung == id).ToListAsync();
+        }
+
+        public async Task Toggle(int id)
+        {
+            var KhachSan = _DBContext.KhachSans.SingleOrDefault(lo => lo.Id == id);
+            if (KhachSan != null)
+            {
+                KhachSan.TrangThai = !KhachSan.TrangThai;
+                _DBContext.Update(KhachSan);
+                await _DBContext.SaveChangesAsync();
+            }
         }
     }
 }

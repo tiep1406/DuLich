@@ -29,6 +29,9 @@ namespace APIIntegration.Interfaces
 
         [Post("tours/order")]
         Task DatTour([Body] DatTourRequest request, [Header("Authorization")] string authorization);
+
+        [Put("tours/toggle/{id}")]
+        Task Toggle([Path("id")] int id, [Header("Authorization")] string authorization);
     }
 
     public static class TourAPIExtensions

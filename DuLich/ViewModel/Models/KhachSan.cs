@@ -16,6 +16,7 @@ namespace ViewModel.Models
         public string ChiTietKhachSan { get; set; }
         public string MoTaKhachSan { get; set; }
         public int DanhGia { get; set; }
+        public bool TrangThai { get; set; } = true;
         public List<DatKhachSan> DatKhachSans { get; set; }
         public List<BinhLuanKhachSan> BinhLuanKhachSans { get; set; }
     }

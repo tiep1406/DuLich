@@ -1,0 +1,59 @@
+﻿@using ViewModel.Models;
+@model List<DiemThamQuan>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Danh sách điểm tham quan";
+}
+
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Điểm tham quan du lịch</h1>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách điểm tham quan</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered display nowrap" id="dataTable" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Ảnh</th>
+                        <th>Ảnh chi tiết</th>
+                        <th>Chủ dịch vụ</th>
+                        <th>Tên địa điểm</th>
+                        <th>Địa điểm</th>
+                        <th>Giá</th>
+                        <th>Mô tả dịch vụ</th>
+                        <th>Đánh giá</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var destination in Model)
+                    {
+                        var temp = destination.TrangThai;
+                        var text = temp ? "Ẩn" : "Hiện";
+                        var cls = temp ? "btn btn-danger" : "btn btn-success";
+                        <tr>
+                            <td>@destination.Id</td>
+                            <td><img src="@destination.AnhDaiDien" alt="Avatar" width="100" height="100" /></td>
+                            <td><img src="@destination.DiemThamQuanCT.AnhChiTiet" alt="Avatar" width="100" height="100" /></td>
+                            <td>@destination.NguoiDung.HoTen</td>
+                            <td>@destination.TenDiaDiem</td>
+                            <td>@destination.DiaDiem</td>
+                            <td>@destination.Gia</td>
+                            <td>@destination.DiemThamQuanCT.MoTaDichVu</td>
+                            <td>@destination.DiemThamQuanCT.DanhGia</td>
+                            <td>
+                                <a href="/admin/destination/toggle/@destination.Id" class="btn @cls">@text</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

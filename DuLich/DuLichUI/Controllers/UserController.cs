@@ -1,7 +1,6 @@
 ﻿using APIIntegration.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Reflection;
 using ViewModel.Models;
 using ViewModel.Request.NguoiDung;
 
@@ -47,6 +46,63 @@ namespace DuLichUI.Controllers
                 ViewData["hotels"] = await _hotelAPI.GetKhachSanOrder(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
                 ViewData["restaurants"] = await _restaurantAPI.GetNhaHangOrder(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
                 ViewData["deliverys"] = await _deliveryAPI.GetVanChuyenOrder(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+            }
+            return View();
+        }
+
+        public async Task<IActionResult> GuestOrder()
+        {
+            var temp = HttpContext.Session.GetString("User");
+            if (temp != null)
+            {
+                var user = Newtonsoft.Json.JsonConvert.DeserializeObject<NguoiDung>(temp);
+                var tours = (await _tourAPI.GetTourByOwner(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken")));
+                var orderTours = new List<DatTour>();
+                tours.ForEach(x =>
+                {
+                    x.DatTours.ForEach(y =>
+                    {
+                        y.Tour = x;
+                    });
+                    orderTours.AddRange(x.DatTours);
+                });
+                ViewData["tours"] = orderTours;
+
+                var hotels = (await _hotelAPI.GetKhachSanByOwner(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken")));
+                var orderHotels = new List<DatKhachSan>();
+                hotels.ForEach(x =>
+                {
+                    x.DatKhachSans.ForEach(y =>
+                    {
+                        y.KhachSan = x;
+                    });
+                    orderHotels.AddRange(x.DatKhachSans);
+                });
+                ViewData["hotels"] = orderHotels;
+
+                var restaurants = (await _restaurantAPI.GetNhaHangByOwner(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken")));
+                var orderRestaurants = new List<DatNhaHang>();
+                restaurants.ForEach(x =>
+                {
+                    x.DatNhaHangs.ForEach(y =>
+                    {
+                        y.NhaHang = x;
+                    });
+                    orderRestaurants.AddRange(x.DatNhaHangs);
+                });
+                ViewData["restaurants"] = orderRestaurants;
+
+                var deliverys = (await _deliveryAPI.GetVanChuyenByOwner(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken")));
+                var orderDeliverys = new List<DatVanChuyen>();
+                deliverys.ForEach(x =>
+                {
+                    x.DatVanChuyens.ForEach(y =>
+                    {
+                        y.VanChuyen = x;
+                    });
+                    orderDeliverys.AddRange(x.DatVanChuyens);
+                });
+                ViewData["deliverys"] = orderDeliverys;
             }
             return View();
         }

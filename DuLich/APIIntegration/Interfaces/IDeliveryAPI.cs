@@ -31,6 +31,9 @@ namespace APIIntegration.Interfaces
         [Put("vanchuyen")]
         Task EditVanChuyen([Body] HttpContent content, [Header("Authorization")] string authorization);
 
+        [Put("vanchuyen/toggle/{id}")]
+        Task Toggle([Path("id")] int id, [Header("Authorization")] string authorization);
+
         [Post("vanchuyen/order")]
         Task DatVanChuyen([Body] DatVanChuyenVM content, [Header("Authorization")] string authorization);
     }

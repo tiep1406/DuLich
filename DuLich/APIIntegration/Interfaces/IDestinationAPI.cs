@@ -29,6 +29,9 @@ namespace APIIntegration.Interfaces
 
         [Put("travelDestinations")]
         Task EditDiemThamQuan([Body] HttpContent content, [Header("Authorization")] string authorization);
+
+        [Put("travelDestinations/toggle/{id}")]
+        Task Toggle([Path("id")] int id, [Header("Authorization")] string authorization);
     }
 
     public static class DestinationAPIExtensions

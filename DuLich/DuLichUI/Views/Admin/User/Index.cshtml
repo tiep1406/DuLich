@@ -1,0 +1,73 @@
+﻿@using ViewModel.Models;
+@model List<NguoiDung>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Danh sách người dùng";
+}
+
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Người dùng</h1>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách người dùng</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Ảnh đại diện</th>
+                        <th>Họ tên</th>
+                        <th>Email</th>
+                        <th>Số điện thoại</th>
+                        <th>Nơi ở</th>
+                        <th>Giới tính</th>
+                        <th>CCCD</th>
+                        <th>Trạng thái</th>
+                        <th>Quyền</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach(var user in Model)
+                    {
+                        var temp = user.TrangThai == 1;
+                        var text = temp ? "Khoá" : "Kích hoạt";
+                        var cls = temp ? "btn btn-danger" : "btn btn-success";
+                        <tr>
+                            <td>@user.Id</td>
+                            <td><img src="@user.AnhDaiDien" alt="Avatar" width="100" height="100" /></td>
+                            <td>@user.HoTen</td>
+                            <td>@user.Email</td>
+                            <td>@user.Sdt</td>
+                            <td>@user.NoiO</td>
+                            @{
+                                var gender = user.GioiTinh == 0 ? "Nam" : "Nữ";
+                            }
+                            <td>@gender</td>
+                            <td>@user.CCCD</td>
+                            @{
+                                var tt = user.TrangThai == 1 ? "Đang hoạt động" : "Đã khóa";
+                            }
+                            <td>@tt</td>
+                            @{
+                                var quyen = user.PhanQuyen == 0 ? "Admin" : "Người dùng";
+                            }
+                            <td>@quyen</td>
+                            @if (user.PhanQuyen != 0)
+                            {
+                                <td>
+                                    <a href="/admin/user/toggle/@user.Id" class="btn @cls">@text</a>
+                                </td>
+                            }
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

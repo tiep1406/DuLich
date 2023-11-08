@@ -84,6 +84,7 @@ namespace DuLich.Repository.Tour
         {
             var tours = await _context.Tours
                 .Include(x => x.TourCT)
+                .Include(x => x.NguoiDung)
                 .ToListAsync();
             foreach (var tour in tours)
             {
@@ -130,9 +131,9 @@ namespace DuLich.Repository.Tour
         {
             var tours = await _context.Tours
                 .Include(x => x.TourCT)
-                .Where(x => x.TenTour.ToLower().Contains(request.Key)
+                .Where(x => (x.TenTour.ToLower().Contains(request.Key)
                 || x.ChiTietTour.ToLower().Contains(request.Key)
-                || x.MoTaTour.ToLower().Contains(request.Key))
+                || x.MoTaTour.ToLower().Contains(request.Key)) && x.TrangThai == true)
                 .ToListAsync();
             foreach (var tour in tours)
             {
@@ -145,6 +146,11 @@ namespace DuLich.Repository.Tour
         {
             var tours = await _context.Tours
                 .Include(x => x.TourCT)
+                .Include(x => x.DatTours)
+                .ThenInclude(x => x.NguoiDung)
+                //.Include(x => x.DatTours)
+                //.ThenInclude(x => x.Tour)
+                //.ThenInclude(x => x.TourCT)
                 .Where(x => x.ChuTour == id)
                 .ToListAsync();
             foreach (var tour in tours)
@@ -178,6 +184,17 @@ namespace DuLich.Repository.Tour
 
             _context.TourCTs.Remove(tour.TourCT);
             _context.Tours.Remove(tour);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task Toggle(int id)
+        {
+            var tour = await _context.Tours
+                .Include(x => x.TourCT)
+                .FirstOrDefaultAsync(x => x.Id == id)
+                ?? throw new KeyNotFoundException("Không tìm thấy tour tương ứng");
+            tour.TrangThai = !tour.TrangThai;
+            _context.Tours.Update(tour);
             await _context.SaveChangesAsync();
         }
     }

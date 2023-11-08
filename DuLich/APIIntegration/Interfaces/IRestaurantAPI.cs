@@ -31,6 +31,9 @@ namespace APIIntegration.Interfaces
 
         [Post("nhahang/order")]
         Task DatNhaHang([Body] DatNhaHangVM request, [Header("Authorization")] string authorization);
+
+        [Put("nhahang/toggle/{id}")]
+        Task Toggle([Path("id")] int id, [Header("Authorization")] string authorization);
     }
 
     public static class RestaurantAPIExtensions

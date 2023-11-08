@@ -1,0 +1,59 @@
+﻿@using ViewModel.Models;
+@model List<KhachSan>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Danh sách khách sạn";
+}
+
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Khách sạn</h1>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách khách sạn</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered display nowrap" id="dataTable" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Ảnh</th>
+                        <th>Chủ dịch vụ</th>
+                        <th>Tên khách sạn</th>
+                        <th>Địa chỉ</th>
+                        <th>Giá</th>
+                        <th>Mô tả</th>
+                        <th>Chi tiết</th>
+                        <th>Đánh giá</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var hotel in Model)
+                    {
+                        var temp = hotel.TrangThai;
+                        var text = temp ? "Ẩn" : "Hiện";
+                        var cls = temp ? "btn btn-danger" : "btn btn-success";
+                        <tr>
+                            <td>@hotel.Id</td>
+                            <td><img src="@hotel.AnhDaiDien" alt="Avatar" width="100" height="100" /></td>
+                            <td>@hotel.NguoiDung.HoTen</td>
+                            <td>@hotel.TenKhachSan</td>
+                            <td>@hotel.DiaChi</td>
+                            <td>@hotel.Gia</td>
+                            <td>@hotel.MoTaKhachSan</td>
+                            <td>@hotel.ChiTietKhachSan</td>
+                            <td>@hotel.DanhGia</td>
+                            <td>
+                                <a href="/admin/hotel/toggle/@hotel.Id" class="btn @cls">@text</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

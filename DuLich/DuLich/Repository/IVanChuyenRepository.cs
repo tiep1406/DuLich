@@ -15,6 +15,8 @@ namespace DemoCrud.Responsitory
 
         Task Delete(int id);
 
+        Task Toggle(int id);
+
         Task Add(VanChuyenVM VanChuyen);
 
         Task DatVanChuyen(DatVanChuyenVM datVanChuyen);

@@ -1,25 +1,24 @@
-﻿using Newtonsoft.Json;
-using RestEase;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Http.Headers;
-using System.Text;
-using System.Threading.Tasks;
+﻿using RestEase;
 using ViewModel.Models;
 using ViewModel.Request.NguoiDung;
-using ViewModel.Request.Tour;
 
 namespace APIIntegration.Interfaces
 {
     public interface IUserAPI
     {
+        [Get("users")]
+        Task<List<NguoiDung>> GetAll([Header("Authorization")] string authorization);
+
         [Get("users/{id}")]
         Task<NguoiDung> GetById([Path("id")] int id, [Header("Authorization")] string authorization);
 
         [Put("users")]
         Task EditUser([Body] HttpContent content, [Header("Authorization")] string authorization);
+
+        [Put("users/toggle/{id}")]
+        Task Toggle([Path("id")] int id, [Header("Authorization")] string authorization);
     }
+
     public static class UserAPIExtensions
     {
         public static async Task EditUser(this IUserAPI api, ChinhSuaNguoiDungRequest request, string token)

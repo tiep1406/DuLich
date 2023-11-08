@@ -37,7 +37,11 @@ namespace DuLichUI.Controllers
 
         public async Task<IActionResult> Booking(int id)
         {
-            var tour = await _deliveryAPI.GetById(id);
+            var delivery = await _deliveryAPI.GetById(id);
+            if (!delivery.TrangThai)
+            {
+                return Redirect("/delivery/list");
+            }
             var temp = HttpContext.Session.GetString("User");
             if (temp != null)
             {
@@ -45,12 +49,17 @@ namespace DuLichUI.Controllers
                 var x = await _userAPI.GetById(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
                 ViewData["user"] = x;
             }
-            return View(tour);
+            return View(delivery);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateBooking([FromForm] DatVanChuyenVM request)
         {
+            var delivery = await _deliveryAPI.GetById(request.IdVanChuyens);
+            if (!delivery.TrangThai)
+            {
+                return Redirect("/delivery/list?order=false");
+            }
             var temp = HttpContext.Session.GetString("User");
             if (temp != null)
             {
@@ -102,7 +111,7 @@ namespace DuLichUI.Controllers
             }
             await _deliveryAPI.EditVanChuyen(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
-            return RedirectToAction("Index");
+            return Redirect("/delivery");
         }
 
         [HttpPost]
@@ -121,7 +130,7 @@ namespace DuLichUI.Controllers
             }
             await _deliveryAPI.CreateVanChuyen(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
-            return RedirectToAction("Index");
+            return Redirect("/delivery");
         }
     }
 }

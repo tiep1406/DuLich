@@ -10,6 +10,8 @@ namespace DuLich.Repository.DiemThamQuan
 
         Task XoaDiemThamQuan(int id);
 
+        Task Toggle(int id);
+
         Task<List<ViewModel.Models.DiemThamQuan>> GetDanhSachDiemThamQuan();
 
         Task<List<ViewModel.Models.DiemThamQuan>> GetDanhSachDiemThamQuanByChuDichVu(int idChuDichVu);

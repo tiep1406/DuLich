@@ -12,6 +12,8 @@ namespace DuLich.Repository.Tour
 
         Task XoaTour(int id);
 
+        Task Toggle(int id);
+
         Task<List<ViewModel.Models.Tour>> GetDanhSachTour();
 
         Task<List<ViewModel.Models.Tour>> GetDanhSachTourByChuDichVu(int id);

@@ -1,0 +1,63 @@
+﻿@using ViewModel.Models;
+@model List<VanChuyen>
+
+@{
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+    ViewData["Title"] = "Danh sách vận chuyển";
+}
+
+<!-- Page Heading -->
+<h1 class="h3 mb-2 text-gray-800">Vận chuyển du lịch</h1>
+
+<!-- DataTales Example -->
+<div class="card shadow mb-4">
+    <div class="card-header py-3">
+        <h6 class="m-0 font-weight-bold text-primary">Danh sách vận chuyển</h6>
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-bordered display nowrap" id="dataTable" cellspacing="0">
+                <thead>
+                    <tr>
+                        <th>Id</th>
+                        <th>Ảnh</th>
+                        <th>Chủ dịch vụ</th>
+                        <th>Địa chỉ đi</th>
+                        <th>Địa chỉ dừng</th>
+                        <th>Chi tiết điểm đi</th>
+                        <th>Chi tiết điểm dừng</th>
+                        <th>Tài xế</th>
+                        <th>Giá</th>
+                        <th>Ngày bắt đầu</th>
+                        <th>Ngày kết thúc</th>
+                        <th>Thao tác</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var delivery in Model)
+                    {
+                        var temp = delivery.TrangThai;
+                        var text = temp ? "Ẩn" : "Hiện";
+                        var cls = temp ? "btn btn-danger" : "btn btn-success";
+                        <tr>
+                            <td>@delivery.Id</td>
+                            <td><img src="@delivery.AnhDaiDien" alt="Avatar" width="100" height="100" /></td>
+                            <td>@delivery.NguoiDung.HoTen</td>
+                            <td>@delivery.DiaChiDi</td>
+                            <td>@delivery.DiaChiDung</td>
+                            <td>@delivery.ChiTietDiemDi</td>
+                            <td>@delivery.ChiTietDiemDung</td>
+                            <td>@delivery.TaiXe</td>
+                            <td>@delivery.Gia</td>
+                            <td>@delivery.ThoiGianBatDau.ToString()</td>
+                            <td>@delivery.ThoiGianKetThuc.ToString()</td>
+                            <td>
+                                <a href="/admin/delivery/toggle/@delivery.Id" class="btn @cls">@text</a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>

@@ -18,6 +18,7 @@ namespace ViewModel.Models
         public DateTime NgayBatDau { get; set; }
         public DateTime NgayKetThuc { get; set; }
         public decimal GiaTour { get; set; }
+        public bool TrangThai { get; set; } = true;
         public List<DatTour> DatTours { get; set; }
         public TourCT TourCT { get; set; }
     }

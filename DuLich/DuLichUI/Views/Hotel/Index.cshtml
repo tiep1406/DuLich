@@ -8,7 +8,8 @@
     <!-- Account page navigation-->
     <nav class="nav nav-borders">
         <a class="nav-link" href="/user">Profile</a>
-        <a class="nav-link" href="/user/order">Đơn hàng</a>
+        <a class="nav-link" href="/user/order">Đơn hàng của tôi</a>
+        <a class="nav-link" href="/user/guestorder">Đơn hàng của khách</a>
         <a class="nav-link" href="/tour">Quản lý tour</a>
         <a class="nav-link" href="/destination" >Quản lý điểm tham quan</a>
         <a class="nav-link" href="/restaurant">Quản lý nhà hàng</a>
@@ -16,35 +17,37 @@
         <a class="nav-link" href="/delivery" >Quản lý vận chuyển</a>
     </nav>
     <hr class="mt-0 mb-4">
-    <a href="/hotel/create">
-        <button type="button" class="btn btn-primary mb-3">Thêm khách sạn</button>
-    </a>
-    <table id="dataTable" class="table table-bordered  dataTable">
-        <thead>
-            <tr class="text-center">
-                <th style="text-align: center; width: 5%">Mã</th>
-                <th style="text-align: center; width: 20%">Tên khách sạn </th>
-                <th style="text-align: center; width: 5%">Địa chỉ </th>
-                <th style="text-align: center; width: 10%">Giá</th>
-                <th style="text-align: center; width: 10%">Đánh giá </th>
-                <th style="text-align: center; width: 20%">Thao tác </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(var dtq in dtqs)
-            {
-                <tr>
-                    <td class="text-center">@dtq.Id</td>
-                    <td class="text-center">@dtq.TenKhachSan</td>
-                    <td class="text-center">@dtq.DiaChi</td>
-                    <td class="text-center">@dtq.Gia</td>
-                    <td class="text-center">@dtq.DanhGia</td>
-                    <td class="text-center">
-                        <a href="/hotel/edit/@dtq.Id" class="btn btn-success">Edit</a>
-                        <a href="/hotel/delete/@dtq.Id" class="btn btn-danger">Delete</a>
-                    </td>
+    <div class=" bg-white p-5">
+        <a href="/hotel/create">
+            <button type="button" class="btn btn-primary mb-3">Thêm khách sạn</button>
+        </a>
+        <table id="dataTable" class="table table-bordered  dataTable">
+            <thead>
+                <tr class="text-center">
+                    <th style="text-align: center; width: 5%">Mã</th>
+                    <th style="text-align: center; width: 20%">Tên khách sạn </th>
+                    <th style="text-align: center; width: 5%">Địa chỉ </th>
+                    <th style="text-align: center; width: 10%">Giá</th>
+                    <th style="text-align: center; width: 10%">Đánh giá </th>
+                    <th style="text-align: center; width: 20%">Thao tác </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var dtq in dtqs)
+                {
+                    <tr>
+                        <td class="text-center">@dtq.Id</td>
+                        <td class="text-center">@dtq.TenKhachSan</td>
+                        <td class="text-center">@dtq.DiaChi</td>
+                        <td class="text-center">@dtq.Gia</td>
+                        <td class="text-center">@dtq.DanhGia</td>
+                        <td class="text-center">
+                            <a href="/hotel/edit/@dtq.Id" class="btn btn-success">Edit</a>
+                            <a href="/hotel/delete/@dtq.Id" class="btn btn-danger">Delete</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

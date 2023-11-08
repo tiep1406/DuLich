@@ -25,6 +25,14 @@ namespace DuLich.Controllers
             return Ok(nguoiDung);
         }
 
+        [HttpPut("toggle/{id}")]
+        public async Task<IActionResult> Toggle([FromRoute] int id)
+        {
+            await _repository.Toggle(id);
+
+            return NoContent();
+        }
+
         [HttpPut]
         public async Task<IActionResult> SuaThongTinNguoiDung([FromForm] ChinhSuaNguoiDungRequest request)
         {
@@ -38,7 +46,7 @@ namespace DuLich.Controllers
         {
             var users = await _repository.GetDanhSachNguoiDung();
 
-            return Ok(new { statusCode = StatusCodes.Status200OK, data = users });
+            return Ok(users);
         }
     }
 }

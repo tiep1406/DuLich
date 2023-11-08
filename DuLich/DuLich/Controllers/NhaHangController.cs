@@ -27,6 +27,14 @@ namespace DuLich.Controllers
             return Ok(dtqs);
         }
 
+        [HttpPut("toggle/{id}")]
+        public async Task<IActionResult> Toggle([FromRoute] int id)
+        {
+            await _repository.Toggle(id);
+
+            return NoContent();
+        }
+
         [HttpGet("owner/{id}")]
         public async Task<IActionResult> GetDanhSachNhaHangByChuDichVu([FromRoute] int id)
         {

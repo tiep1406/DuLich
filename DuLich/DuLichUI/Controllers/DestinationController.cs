@@ -38,9 +38,13 @@ namespace DuLichUI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Detail(int id)
         {
-            var tour = await _destinationAPI.GetById(id);
+            var dest = await _destinationAPI.GetById(id);
+            if (!dest.TrangThai)
+            {
+                return Redirect("/destination/list");
+            }
             ViewData["dtqs"] = await _destinationAPI.GetAll();
-            return View(tour);
+            return View(dest);
         }
 
         [AllowAnonymous]
@@ -83,7 +87,7 @@ namespace DuLichUI.Controllers
             }
             await _destinationAPI.EditDiemThamQuan(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
-            return RedirectToAction("Index");
+            return Redirect("/destination");
         }
 
         [HttpPost]
@@ -102,7 +106,7 @@ namespace DuLichUI.Controllers
             }
             await _destinationAPI.CreateDiemThamQuan(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
-            return RedirectToAction("Index");
+            return Redirect("/destination");
         }
     }
 }

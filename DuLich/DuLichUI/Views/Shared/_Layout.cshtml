@@ -155,6 +155,7 @@
                     <div class="help-block">Your password must be at least 6 characters long</div>
                   </div>
                   <div class="d-none" style="color:red;" id="login-err">Tài khoản hoặc mật khẩu không chính xác</div>
+                  <div class="d-none" style="color:red;" id="login-err-ban">Tài khoản đã bị khoá</div>
                   <div class="d-flex flex-wrap justify-content-between align-items-center">
                     <div class="btn btn-secondary btn--round mr-2 mb-2" onclick="login()">
                         sign in
@@ -495,16 +496,16 @@
                     password: $('#login_pass').val()
                 },
                 success: (data) => {
-                    if(data.token){
-                        window.location.href = '';
+                    if(data.data.token){
+                        window.location.href = data.url;
                     }else{
                         $('#login-err').addClass('d-block').removeClass('d-none');;
                     }
                     $('#loader').addClass('d-none');
                 },
                 error: (err) => {
-                    console.log(err)
                     $('#loader').addClass('d-none');
+                    $('#login-err-ban').addClass('d-block').removeClass('d-none');;
                 }
             });
         }
@@ -554,6 +555,10 @@
             const order = urlParams.get('order')
             if(order == 'true'){
                 alert('Đặt hàng thành công');
+                history.pushState(null, '', path);
+            }
+            else if(order == 'false'){
+                alert('Đặt hàng thất bại');
                 history.pushState(null, '', path);
             }
         });

@@ -40,6 +40,10 @@ namespace DuLichUI.Controllers
         public async Task<IActionResult> Detail(int id)
         {
             var tour = await _tourAPI.GetById(id);
+            if (!tour.TrangThai)
+            {
+                return Redirect("/tour/list");
+            }
             ViewData["tours"] = await _tourAPI.GetAll();
             return View(tour);
         }
@@ -47,6 +51,10 @@ namespace DuLichUI.Controllers
         public async Task<IActionResult> Booking(int id)
         {
             var tour = await _tourAPI.GetById(id);
+            if (!tour.TrangThai)
+            {
+                return Redirect("/tour/list");
+            }
             var temp = HttpContext.Session.GetString("User");
             if (temp != null)
             {
@@ -60,6 +68,11 @@ namespace DuLichUI.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateBooking([FromForm] DatTourRequest request)
         {
+            var tour = await _tourAPI.GetById(request.IdTour);
+            if (!tour.TrangThai)
+            {
+                return Redirect("/tour/list?order=false");
+            }
             var temp = HttpContext.Session.GetString("User");
             if (temp != null)
             {
@@ -111,7 +124,7 @@ namespace DuLichUI.Controllers
             }
             await _tourAPI.EditTour(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
-            return RedirectToAction("Index");
+            return Redirect("/tour");
         }
 
         [HttpPost]
@@ -130,7 +143,7 @@ namespace DuLichUI.Controllers
             }
             await _tourAPI.CreateTour(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
-            return RedirectToAction("Index");
+            return Redirect("/tour");
         }
     }
 }

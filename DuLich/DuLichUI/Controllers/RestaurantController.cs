@@ -39,21 +39,29 @@ namespace DuLichUI.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> Detail(int id)
         {
-            var hotel = await _restaurantAPI.GetById(id);
+            var restaurant = await _restaurantAPI.GetById(id);
+            if (!restaurant.TrangThai)
+            {
+                return Redirect("/restaurant/list");
+            }
             ViewData["nhahangs"] = await _restaurantAPI.GetAll();
-            return View(hotel);
+            return View(restaurant);
         }
 
         [AllowAnonymous]
         public async Task<IActionResult> List()
         {
-            var hotels = await _restaurantAPI.GetAll();
-            return View(hotels);
+            var restaurants = await _restaurantAPI.GetAll();
+            return View(restaurants);
         }
 
         public async Task<IActionResult> Booking(int id)
         {
-            var tour = await _restaurantAPI.GetById(id);
+            var restaurant = await _restaurantAPI.GetById(id);
+            if (!restaurant.TrangThai)
+            {
+                return Redirect("/restaurant/list");
+            }
             var temp = HttpContext.Session.GetString("User");
             if (temp != null)
             {
@@ -61,12 +69,17 @@ namespace DuLichUI.Controllers
                 var x = await _userAPI.GetById(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
                 ViewData["user"] = x;
             }
-            return View(tour);
+            return View(restaurant);
         }
 
         [HttpPost]
         public async Task<IActionResult> CreateBooking([FromForm] DatNhaHangVM request)
         {
+            var restaurant = await _restaurantAPI.GetById(request.IdNhaHangs);
+            if (!restaurant.TrangThai)
+            {
+                return Redirect("/restaurant/list?order=false");
+            }
             var temp = HttpContext.Session.GetString("User");
             if (temp != null)
             {
@@ -112,7 +125,7 @@ namespace DuLichUI.Controllers
             }
             await _restaurantAPI.EditNhaHang(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
-            return RedirectToAction("Index");
+            return Redirect("/restaurant");
         }
 
         [HttpPost]
@@ -131,7 +144,7 @@ namespace DuLichUI.Controllers
             }
             await _restaurantAPI.CreateNhaHang(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
-            return RedirectToAction("Index");
+            return Redirect("/restaurant");
         }
     }
 }

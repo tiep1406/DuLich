@@ -8,7 +8,8 @@
     <!-- Account page navigation-->
     <nav class="nav nav-borders">
         <a class="nav-link" href="/user">Profile</a>
-        <a class="nav-link" href="/user/order">Đơn hàng</a>
+        <a class="nav-link" href="/user/order">Đơn hàng của tôi</a>
+        <a class="nav-link" href="/user/guestorder">Đơn hàng của khách</a>
         <a class="nav-link" href="/tour">Quản lý tour</a>
         <a class="nav-link" href="/destination" >Quản lý điểm tham quan</a>
         <a class="nav-link active ms-0">Quản lý nhà hàng</a>
@@ -16,34 +17,36 @@
         <a class="nav-link" href="/delivery" >Quản lý vận chuyển</a>
     </nav>
     <hr class="mt-0 mb-4">
-    <a href="/restaurant/create">
-        <button type="button" class="btn btn-primary mb-3">Thêm nhà hàng</button>
-    </a>
-    <table id="dataTable" class="table table-bordered  dataTable">
-        <thead>
-            <tr class="text-center">
-                <th style="text-align: center; width: 5%">Mã</th>
-                <th style="text-align: center; width: 20%">Tên nhà hàng </th>
-                <th style="text-align: center; width: 5%">Địa chỉ </th>
-                <th style="text-align: center; width: 10%">Giá</th>
-                <th style="text-align: center; width: 10%">Đánh giá </th>
-                <th style="text-align: center; width: 20%">Thao tác </th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach(var dtq in dtqs)
-            {
-                <tr>
-                    <td class="text-center">@dtq.Id</td>
-                    <td class="text-center">@dtq.TenNhaHang</td>
-                    <td class="text-center">@dtq.DiaChi</td>
-                    <td class="text-center">@dtq.Gia</td>
-                    <td class="text-center">@dtq.DanhGia</td>
-                    <td class="text-center">
-                        <a href="/restaurant/edit/@dtq.Id" class="btn btn-success">Edit</a>
-                    </td>
+    <div class=" bg-white p-5">
+        <a href="/restaurant/create">
+            <button type="button" class="btn btn-primary mb-3">Thêm nhà hàng</button>
+        </a>
+        <table id="dataTable" class="table table-bordered  dataTable">
+            <thead>
+                <tr class="text-center">
+                    <th style="text-align: center; width: 5%">Mã</th>
+                    <th style="text-align: center; width: 20%">Tên nhà hàng </th>
+                    <th style="text-align: center; width: 5%">Địa chỉ </th>
+                    <th style="text-align: center; width: 10%">Giá</th>
+                    <th style="text-align: center; width: 10%">Đánh giá </th>
+                    <th style="text-align: center; width: 20%">Thao tác </th>
                 </tr>
-            }
-        </tbody>
-    </table>
+            </thead>
+            <tbody>
+                @foreach (var dtq in dtqs)
+                {
+                    <tr>
+                        <td class="text-center">@dtq.Id</td>
+                        <td class="text-center">@dtq.TenNhaHang</td>
+                        <td class="text-center">@dtq.DiaChi</td>
+                        <td class="text-center">@dtq.Gia</td>
+                        <td class="text-center">@dtq.DanhGia</td>
+                        <td class="text-center">
+                            <a href="/restaurant/edit/@dtq.Id" class="btn btn-success">Edit</a>
+                        </td>
+                    </tr>
+                }
+            </tbody>
+        </table>
+    </div>
 </div>

@@ -73,6 +73,7 @@ namespace DuLich.Repository.DiemThamQuan
         {
             var dtqs = await _context.DiemThamQuans
                 .Include(x => x.DiemThamQuanCT)
+                .Include(x => x.NguoiDung)
                 .ToListAsync();
 
             foreach (var dtq in dtqs)
@@ -132,9 +133,9 @@ namespace DuLich.Repository.DiemThamQuan
         {
             var dtqs = await _context.DiemThamQuans
                 .Include(x => x.DiemThamQuanCT)
-                .Where(x => x.TenDiaDiem.ToLower().Contains(request.Key)
+                .Where(x => (x.TenDiaDiem.ToLower().Contains(request.Key)
                 || x.DiemThamQuanCT.MoTaDichVu.ToLower().Contains(request.Key)
-                || x.DiaDiem.ToLower().Contains(request.Key))
+                || x.DiaDiem.ToLower().Contains(request.Key)) && x.TrangThai == true)
                 .ToListAsync();
 
             foreach (var dtq in dtqs)
@@ -144,6 +145,20 @@ namespace DuLich.Repository.DiemThamQuan
             }
 
             return dtqs;
+        }
+
+        public async Task Toggle(int id)
+        {
+            var dtq = await _context.DiemThamQuans
+                .Include(x => x.DiemThamQuanCT)
+                .FirstOrDefaultAsync(x => x.Id == id)
+                ?? throw new KeyNotFoundException("Không tìm thấy điểm tham quan tương ứng");
+
+            dtq.TrangThai = !dtq.TrangThai;
+
+            _context.DiemThamQuans.Update(dtq);
+
+            await _context.SaveChangesAsync();
         }
 
         public async Task XoaDiemThamQuan(int id)

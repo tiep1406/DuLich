@@ -52,6 +52,14 @@ namespace DuLich.Controllers
             return NoContent();
         }
 
+        [HttpPut("toggle/{id}")]
+        public async Task<IActionResult> Toggle([FromRoute] int id)
+        {
+            await _repository.Toggle(id);
+
+            return NoContent();
+        }
+
         [HttpPost("order")]
         public async Task<IActionResult> DatKhachSan([FromBody] DatKhachSanVM request)
         {

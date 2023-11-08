@@ -17,6 +17,7 @@ namespace ViewModel.Models
         public DateTime ThoiGianBatDau { get; set; }
         public DateTime ThoiGianKetThuc { get; set; }
         public string TaiXe { get; set; }
+        public bool TrangThai { get; set; } = true;
         public List<DatVanChuyen> DatVanChuyens { get; set; }
         public List<BinhLuanVanChuyen> BinhLuanVanChuyens { get; set; }
     }

@@ -125,5 +125,14 @@ namespace DuLich.Repository.NguoiDung
 
             await _context.SaveChangesAsync();
         }
+
+        public async Task Toggle(int id)
+        {
+            var nguoiDung = await _context.NguoiDungs.FindAsync(id)
+                ?? throw new KeyNotFoundException("Không tìm thấy người dùng");
+            nguoiDung.TrangThai = nguoiDung.TrangThai == 1 ? 0 : 1;
+            _context.NguoiDungs.Update(nguoiDung);
+            await _context.SaveChangesAsync();
+        }
     }
 }

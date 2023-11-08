@@ -7,6 +7,8 @@ namespace DuLich.Repository.NguoiDung
     {
         Task<ViewModel.Models.NguoiDung> GetNguoiDungById(int id);
 
+        Task Toggle(int id);
+
         Task<List<ViewModel.Models.NguoiDung>> GetDanhSachNguoiDung();
 
         Task<AuthResponse> DangNhap(DangNhapRequest request);

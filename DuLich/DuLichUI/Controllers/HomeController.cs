@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Text;
+using System.Text.Encodings.Web;
 using ViewModel.Request.NguoiDung;
 
 namespace DuLichUI.Controllers
@@ -91,23 +92,29 @@ namespace DuLichUI.Controllers
             try
             {
                 var res = await _authAPI.DangNhap(request);
+                var url = "/";
                 if (res.Token != null)
                 {
-                    await AssignCookies(res.Token);
                     var userPrincipal = ValidateJWT(res.Token);
                     string id = userPrincipal.FindFirst(ClaimTypes.NameIdentifier).Value.ToString();
                     var nguoiDung = await _userAPI.GetById(int.Parse(id), "Bearer " + res.Token);
-
+                    if (nguoiDung.TrangThai == 0)
+                        throw new Exception("Tài khoản đã bị khóa");
+                    await AssignCookies(res.Token);
                     HttpContext.Session.SetString("BearerToken", res.Token);
                     HttpContext.Session.SetString("UserId", id);
                     var obj = JsonConvert.SerializeObject(nguoiDung);
                     HttpContext.Session.SetString("User", obj);
+                    HttpContext.Session.SetString("Quyen", nguoiDung.PhanQuyen.ToString());
+                    HttpContext.Session.SetString("Avatar", nguoiDung.AnhDaiDien);
+                    HttpContext.Session.SetString("Name", nguoiDung.HoTen);
+                    if (nguoiDung.PhanQuyen == 0) url = "/admin";
                 }
-                return Ok(res);
+                return Ok(new { data = res, url });
             }
             catch (Exception ex)
             {
-                return BadRequest("Tài khoản hoặc mật khẩu không chính xác");
+                return BadRequest("Tài khoản đã bị khóa");
             }
         }
 
@@ -115,7 +122,11 @@ namespace DuLichUI.Controllers
         public async Task<IActionResult> Logout()
         {
             HttpContext.Session.Remove("BearerToken");
+            HttpContext.Session.Remove("UserId");
             HttpContext.Session.Remove("User");
+            HttpContext.Session.Remove("Quyen");
+            HttpContext.Session.Remove("Avatar");
+            HttpContext.Session.Remove("Name");
             await HttpContext.SignOutAsync("UserAuth");
             HttpContext.Response.Cookies.Delete("X-Access-Token-User");
             return Redirect("/home");
