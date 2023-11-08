@@ -17,7 +17,7 @@ namespace DuLich.Repository.DBContext.Configurations
                 NoiO = "Ha Noi",
                 PhanQuyen = 0,
                 TrangThai = 1,
-                MatKhau = "admin1",
+                MatKhau = "i2yBMU+FxDo=", // 123456
                 HoTen = "Admin",
                 AnhDaiDien = "default-avatar.jpg"
             });

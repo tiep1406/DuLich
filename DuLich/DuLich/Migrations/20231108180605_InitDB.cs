@@ -398,7 +398,7 @@ namespace DuLich.Migrations
             migrationBuilder.InsertData(
                 table: "NguoiDungs",
                 columns: new[] { "Id", "AnhDaiDien", "CCCD", "Email", "GioiTinh", "HoTen", "MatKhau", "NoiO", "PhanQuyen", "Sdt", "TrangThai" },
-                values: new object[] { 1, "default-avatar.jpg", "123456789", "admin@admin.com", 1, "Admin", "admin1", "Ha Noi", 0, "0123456789", 1 });
+                values: new object[] { 1, "default-avatar.jpg", "123456789", "admin@admin.com", 1, "Admin", "i2yBMU+FxDo=", "Ha Noi", 0, "0123456789", 1 });
 
             migrationBuilder.CreateIndex(
                 name: "IX_BinhLuanKhachSan_IdKhachSan",

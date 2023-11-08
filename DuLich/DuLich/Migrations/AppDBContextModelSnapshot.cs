@@ -379,7 +379,7 @@ namespace DuLich.Migrations
                             Email = "admin@admin.com",
                             GioiTinh = 1,
                             HoTen = "Admin",
-                            MatKhau = "admin1",
+                            MatKhau = "i2yBMU+FxDo=",
                             NoiO = "Ha Noi",
                             PhanQuyen = 0,
                             Sdt = "0123456789",

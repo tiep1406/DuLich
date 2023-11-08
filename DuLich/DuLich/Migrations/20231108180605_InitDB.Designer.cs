@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DuLich.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    [Migration("20231108165136_InitDB")]
+    [Migration("20231108180605_InitDB")]
     partial class InitDB
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -381,7 +381,7 @@ namespace DuLich.Migrations
                             Email = "admin@admin.com",
                             GioiTinh = 1,
                             HoTen = "Admin",
-                            MatKhau = "admin1",
+                            MatKhau = "i2yBMU+FxDo=",
                             NoiO = "Ha Noi",
                             PhanQuyen = 0,
                             Sdt = "0123456789",

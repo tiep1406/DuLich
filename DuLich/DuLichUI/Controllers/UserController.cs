@@ -112,7 +112,7 @@ namespace DuLichUI.Controllers
         {
             await _userAPI.EditUser(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
-            return RedirectToAction("Index");
+            return Redirect("/user");
         }
     }
 }

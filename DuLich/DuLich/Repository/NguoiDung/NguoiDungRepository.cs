@@ -5,6 +5,7 @@ using Microsoft.IdentityModel.Tokens;
 using System.Data;
 using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
+using System.Security.Cryptography;
 using System.Text;
 using ViewModel.Models;
 using ViewModel.ModelsView;
@@ -14,6 +15,7 @@ namespace DuLich.Repository.NguoiDung
 {
     public class NguoiDungRepository : INguoiDungRepository
     {
+        private static string key { get; set; } = "A!9HHhi%XjjYY4YP2@Nob009X";
         private readonly AppDBContext _context;
         private readonly IConfiguration _configuration;
         private readonly IUploadService _uploadService;
@@ -23,6 +25,26 @@ namespace DuLich.Repository.NguoiDung
             _context = context;
             _configuration = configuration;
             _uploadService = uploadService;
+        }
+
+        private string Encrypt(string text)
+        {
+            using (var md5 = new MD5CryptoServiceProvider())
+            {
+                using (var tdes = new TripleDESCryptoServiceProvider())
+                {
+                    tdes.Key = md5.ComputeHash(UTF8Encoding.UTF8.GetBytes(key));
+                    tdes.Mode = CipherMode.ECB;
+                    tdes.Padding = PaddingMode.PKCS7;
+
+                    using (var transform = tdes.CreateEncryptor())
+                    {
+                        byte[] textBytes = UTF8Encoding.UTF8.GetBytes(text);
+                        byte[] bytes = transform.TransformFinalBlock(textBytes, 0, textBytes.Length);
+                        return Convert.ToBase64String(bytes, 0, bytes.Length);
+                    }
+                }
+            }
         }
 
         public async Task DangKy(DangKyRequest request)
@@ -38,7 +60,7 @@ namespace DuLich.Repository.NguoiDung
                 Email = request.Email,
                 GioiTinh = request.GioiTinh,
                 NoiO = request.NoiO,
-                MatKhau = request.MatKhau,
+                MatKhau = Encrypt(request.MatKhau),
                 PhanQuyen = 3,
                 TrangThai = 1,
                 AnhDaiDien = "default-avatar.jpg"
@@ -76,7 +98,7 @@ namespace DuLich.Repository.NguoiDung
         public async Task<AuthResponse> DangNhap(DangNhapRequest request)
         {
             var nguoiDung = await _context.NguoiDungs.Where(x => x.Email == request.Email
-            && x.MatKhau == request.Password).FirstOrDefaultAsync()
+            && x.MatKhau == Encrypt(request.Password)).FirstOrDefaultAsync()
                 ?? throw new Exception("Email hoặc mật khẩu không chính xác");
             var token = await CreateJWT(nguoiDung.Id);
 
@@ -115,7 +137,7 @@ namespace DuLich.Repository.NguoiDung
                 nguoiDung.AnhDaiDien = await _uploadService.SaveFile(request.AnhDaiDien);
             }
             if (!string.IsNullOrEmpty(request.MatKhau))
-                nguoiDung.MatKhau = request.MatKhau;
+                nguoiDung.MatKhau = Encrypt(request.MatKhau);
             nguoiDung.NoiO = request.NoiO;
             nguoiDung.Sdt = request.Sdt;
             nguoiDung.TrangThai = request.TrangThai;
