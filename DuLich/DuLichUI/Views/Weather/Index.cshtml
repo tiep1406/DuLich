@@ -1,0 +1,97 @@
+﻿@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewData["Title"] = "Weather";
+}
+
+<h1 class="mx-5">Thời tiết các thành phố</h1>
+
+<div class="mx-5">
+    <strong>Thành phố:</strong>
+    <select id="city">
+        <!option value="10.75-106.6667">Hồ Chí Minh</!option>
+        <!option value="21.024-105.8412">Hà Nội</!option>
+        <!option value="12.25-109.1833">Nha Trang</!option>
+        <!option value="16.0678-108.2208">Đà Nẵng</!option>
+        <!option value="10.9333-108.1">Phan Thiết</!option>
+    </select>
+    <br />
+    <br />
+    <button id="btnSubmit" class="btn btn-primary">Kiểm tra</button>
+</div>
+
+
+<div class="mx-5">
+    <table>
+        <tr>
+            <td>Icon <img id="imgWeatherIconUrl" src="" title="Weather Icon" /></td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Timezone: </strong>
+                <span id="lblCity"></span>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Latitude: </strong>
+                <label id="lblLat"></label><br />
+                <strong>Longitude: </strong>
+                <label id="lblLon"></label>
+
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Description:</strong>
+                <label id="lblDescription"></label><br />
+                <strong>Humidity:</strong>
+                <label id="lblHumidity"></label>
+            </td>
+        </tr>
+        <tr>
+            <td>
+                <strong>Temperature (Feels Like)</strong><label id="lblTempFeelsLike"></label><br />
+                <strong>Temperature</strong> <label id="lblTemp"></label><br />
+            </td>
+        </tr>
+
+
+    </table>
+</div>
+
+@section Scripts {
+
+    <script>
+
+        $("#btnSubmit").click(function () {
+            console.log(1)
+            var cityname = $("#city").val();
+            if (cityname.length > 0) {
+                $.ajax({
+                    url: "/Weather/Index?coord=" + cityname,
+                    type: "POST",
+                    success: function (rsltval) {
+                        var data = rsltval;
+                        console.log(data);
+                        $("#lblCity").html(data.timezone);
+                        $("#lblLat").text(data.lat);
+                        $("#lblLon").text(data.lon);
+                        $("#lblDescription").text(data.current.weather[0].description);
+                        $("#lblHumidity").text(data.current.humidity);
+                        $("#lblTempFeelsLike").text(data.current.feels_Like);
+                        $("#lblTemp").text(data.current.temp);
+                        $("#imgWeatherIconUrl").attr("src", "https://openweathermap.org/img/wn/" + data.current.weather[0].icon + ".png");
+                        //data - response from server
+                    },
+                    error: function () {
+
+                    }
+                });
+            }
+            else {
+                alert("City Not Found");
+            }
+        });
+
+    </script>
+}    
