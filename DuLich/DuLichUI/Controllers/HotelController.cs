@@ -25,6 +25,13 @@ namespace DuLichUI.Controllers
                 var id = HttpContext.Session.GetString("UserId");
                 var hotels = await _hotelAPI.GetKhachSanByOwner(int.Parse(id), "Bearer " + HttpContext.Session.GetString("BearerToken"));
                 ViewData["hotels"] = hotels;
+                var temp = HttpContext.Session.GetString("User");
+                if (temp != null)
+                {
+                    var user = Newtonsoft.Json.JsonConvert.DeserializeObject<NguoiDung>(temp);
+                    var x = await _userAPI.GetById(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+                    ViewData["user"] = x;
+                }
                 return View();
             }
             catch
@@ -97,6 +104,8 @@ namespace DuLichUI.Controllers
                 return Redirect("/hotel/list");
             }
             ViewData["khachsans"] = await _hotelAPI.GetAll();
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserId")))
+                ViewData["UserId"] = HttpContext.Session.GetString("UserId");
             return View(hotel);
         }
 
@@ -142,6 +151,14 @@ namespace DuLichUI.Controllers
             await _hotelAPI.CreateKhachSan(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
             return Redirect("/hotel");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBinhLuan([FromForm] BinhLuanKhachSanVM request)
+        {
+            await _hotelAPI.BinhLuanKhachSan(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+
+            return Redirect("/hotel/detail/" + request.IdKhachSan);
         }
     }
 }

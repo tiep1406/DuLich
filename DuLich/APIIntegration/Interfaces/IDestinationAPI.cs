@@ -5,6 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ViewModel.Models;
+using ViewModel.ModelsView;
 using ViewModel.Request.DiemThamQuan;
 using ViewModel.Request.Tour;
 
@@ -23,6 +24,9 @@ namespace APIIntegration.Interfaces
 
         [Get("travelDestinations/search")]
         Task<List<DiemThamQuan>> SearchDiemThamQuan([Body] TimKiemDiemThamQuanRequest request);
+
+        [Post("travelDestinations/binhluan")]
+        Task BinhLuanDiemThamQuan([Body] BinhLuanDiemThamQuanVM request, [Header("Authorization")] string authorization);
 
         [Post("travelDestinations")]
         Task CreateDiemThamQuan([Body] HttpContent content, [Header("Authorization")] string authorization);

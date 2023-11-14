@@ -52,6 +52,14 @@ namespace DuLich.Controllers
             return Ok(dtqs);
         }
 
+        [HttpPost("binhluan")]
+        public async Task<IActionResult> BinhLuanNhaHang(BinhLuanNhaHangVM request)
+        {
+            await _repository.BinhLuan(request);
+
+            return NoContent();
+        }
+
         [HttpDelete("{id}")]
         public async Task<IActionResult> XoaNhaHang([FromRoute] int id)
         {

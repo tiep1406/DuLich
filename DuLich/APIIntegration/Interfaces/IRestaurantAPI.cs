@@ -34,6 +34,9 @@ namespace APIIntegration.Interfaces
 
         [Put("nhahang/toggle/{id}")]
         Task Toggle([Path("id")] int id, [Header("Authorization")] string authorization);
+
+        [Post("nhahang/binhluan")]
+        Task BinhLuanNhaHang([Body] BinhLuanNhaHangVM request, [Header("Authorization")] string authorization);
     }
 
     public static class RestaurantAPIExtensions

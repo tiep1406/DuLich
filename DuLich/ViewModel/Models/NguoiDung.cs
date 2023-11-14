@@ -10,6 +10,7 @@
         public int PhanQuyen { get; set; }
         public string NoiO { get; set; }
         public int GioiTinh { get; set; }
+        public string DanhSachDichVu { get; set; }
         public string CCCD { get; set; }
         public string AnhDaiDien { get; set; }
         public List<DatKhachSan> DatKhachSans { get; set; }
@@ -19,5 +20,7 @@
         public List<BinhLuanKhachSan> BinhLuanKhachSans { get; set; }
         public List<BinhLuanNhaHang> BinhLuanNhaHangs { get; set; }
         public List<BinhLuanVanChuyen> BinhLuanVanChuyens { get; set; }
+        public List<BinhLuanTour> BinhLuanTours { get; set; }
+        public List<BinhLuanDiemThamQuan> BinhLuanDiemThamQuans { get; set; }
     }
 }

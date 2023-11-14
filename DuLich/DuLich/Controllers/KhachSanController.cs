@@ -76,6 +76,14 @@ namespace DuLich.Controllers
             return NoContent();
         }
 
+        [HttpPost("binhluan")]
+        public async Task<IActionResult> BinhLuanKhachSan(BinhLuanKhachSanVM request)
+        {
+            await _repository.BinhLuan(request);
+
+            return NoContent();
+        }
+
         [HttpPut]
         public async Task<IActionResult> ChinhSuaThongTinKhachSan([FromForm] KhachSanVM request)
         {

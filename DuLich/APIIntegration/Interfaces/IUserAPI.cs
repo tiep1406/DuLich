@@ -30,6 +30,7 @@ namespace APIIntegration.Interfaces
                 { new StringContent(request.HoTen), "HoTen" },
                 { new StringContent(request.Sdt), "Sdt" },
                 { new StringContent(request.NoiO), "NoiO" },
+                { new StringContent(string.Join(",", request.DichVus)), "DanhSachDichVu" },
                 { new StringContent(request.GioiTinh.ToString()), "GioiTinh" },
                 { new StringContent(request.CCCD), "CCCD" },
                 { new StringContent(request.PhanQuyen.ToString()), "PhanQuyen" },

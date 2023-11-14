@@ -61,7 +61,8 @@ namespace DuLich.Repository.NguoiDung
                 GioiTinh = request.GioiTinh,
                 NoiO = request.NoiO,
                 MatKhau = Encrypt(request.MatKhau),
-                PhanQuyen = 3,
+                PhanQuyen = request.PhanQuyen,
+                DanhSachDichVu = string.Join(",", request.DichVus),
                 TrangThai = 1,
                 AnhDaiDien = "default-avatar.jpg"
             };
@@ -132,6 +133,7 @@ namespace DuLich.Repository.NguoiDung
             nguoiDung.CCCD = request.CCCD;
             nguoiDung.Email = request.Email;
             nguoiDung.GioiTinh = request.GioiTinh;
+            nguoiDung.DanhSachDichVu = request.DanhSachDichVu;
             if (request.AnhDaiDien != null)
             {
                 nguoiDung.AnhDaiDien = await _uploadService.SaveFile(request.AnhDaiDien);

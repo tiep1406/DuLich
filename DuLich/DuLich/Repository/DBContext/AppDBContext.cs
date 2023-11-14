@@ -33,5 +33,10 @@ namespace DuLich.Repository.DBContext
         public DbSet<ViewModel.Models.Tour> Tours { get; set; }
         public DbSet<TourCT> TourCTs { get; set; }
         public DbSet<VanChuyen> VanChuyens { get; set; }
+        public DbSet<ViewModel.Models.BinhLuanTour> BinhLuanTours { get; set; }
+        public DbSet<ViewModel.Models.BinhLuanNhaHang> BinhLuanNhaHangs { get; set; }
+        public DbSet<ViewModel.Models.BinhLuanKhachSan> BinhLuanKhachSans { get; set; }
+        public DbSet<ViewModel.Models.BinhLuanDiemThamQuan> BinhLuanDiemThamQuans { get; set; }
+        public DbSet<ViewModel.Models.BinhLuanVanChuyen> BinhLuanVanChuyens { get; set; }
     }
 }

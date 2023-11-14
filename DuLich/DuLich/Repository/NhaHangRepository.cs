@@ -33,8 +33,18 @@ namespace DemoCrud.Responsitory
 
         public async Task<NhaHang> GetNhaHang(int id)
         {
-            var ds = await _DBContext.NhaHangs.Include(x => x.NguoiDung).Where(x => x.Id == id).FirstOrDefaultAsync();
+            var ds = await _DBContext.NhaHangs
+                .Include(x => x.NguoiDung)
+                .Include(x => x.BinhLuanNhaHangs)
+                .ThenInclude(x => x.NguoiDung)
+                .Where(x => x.Id == id).FirstOrDefaultAsync();
             ds.AnhDaiDien = _uploadService.GetFullPath(ds.AnhDaiDien);
+            foreach (var t in ds.BinhLuanNhaHangs)
+            {
+                var x = _uploadService.GetFullPath(t.NguoiDung.AnhDaiDien);
+                if (!t.NguoiDung.AnhDaiDien.Contains("/"))
+                    t.NguoiDung.AnhDaiDien = x;
+            }
             return ds;
         }
 
@@ -150,6 +160,21 @@ namespace DemoCrud.Responsitory
                 _DBContext.Update(nhahang);
                 await _DBContext.SaveChangesAsync();
             }
+        }
+
+        public async Task BinhLuan(BinhLuanNhaHangVM binhLuanNhaHang)
+        {
+            var bl = new BinhLuanNhaHang()
+            {
+                IdNhaHang = binhLuanNhaHang.IdNhaHang,
+                IdNguoiDung = binhLuanNhaHang.IdNguoiDung,
+                NoiDung = binhLuanNhaHang.NoiDung,
+                Rating = binhLuanNhaHang.Rating,
+                ThoiGian = DateTime.Now
+            };
+
+            await _DBContext.BinhLuanNhaHangs.AddAsync(bl);
+            await _DBContext.SaveChangesAsync();
         }
     }
 }

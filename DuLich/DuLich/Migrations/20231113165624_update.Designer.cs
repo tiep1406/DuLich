@@ -4,6 +4,7 @@ using DuLich.Repository.DBContext;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,9 +12,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DuLich.Migrations
 {
     [DbContext(typeof(AppDBContext))]
-    partial class AppDBContextModelSnapshot : ModelSnapshot
+    [Migration("20231113165624_update")]
+    partial class update
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -21,41 +23,6 @@ namespace DuLich.Migrations
                 .HasAnnotation("Relational:MaxIdentifierLength", 128);
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
-
-            modelBuilder.Entity("ViewModel.Models.BinhLuanDiemThamQuan", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("IdDiemThamQuan")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdNguoiDung")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NoiDung")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Rating")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Reply")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ThoiGian")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdDiemThamQuan");
-
-                    b.HasIndex("IdNguoiDung");
-
-                    b.ToTable("BinhLuanDiemThamQuans");
-                });
 
             modelBuilder.Entity("ViewModel.Models.BinhLuanKhachSan", b =>
                 {
@@ -74,12 +41,6 @@ namespace DuLich.Migrations
                     b.Property<string>("NoiDung")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Rating")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Reply")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("ThoiGian")
                         .HasColumnType("datetime2");
 
@@ -89,7 +50,7 @@ namespace DuLich.Migrations
 
                     b.HasIndex("IdNguoiDung");
 
-                    b.ToTable("BinhLuanKhachSans");
+                    b.ToTable("BinhLuanKhachSan");
                 });
 
             modelBuilder.Entity("ViewModel.Models.BinhLuanNhaHang", b =>
@@ -109,12 +70,6 @@ namespace DuLich.Migrations
                     b.Property<string>("NoiDung")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Rating")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Reply")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("ThoiGian")
                         .HasColumnType("datetime2");
 
@@ -124,42 +79,7 @@ namespace DuLich.Migrations
 
                     b.HasIndex("IdNhaHang");
 
-                    b.ToTable("BinhLuanNhaHangs");
-                });
-
-            modelBuilder.Entity("ViewModel.Models.BinhLuanTour", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("IdNguoiDung")
-                        .HasColumnType("int");
-
-                    b.Property<int?>("IdTour")
-                        .HasColumnType("int");
-
-                    b.Property<string>("NoiDung")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<double>("Rating")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Reply")
-                        .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("ThoiGian")
-                        .HasColumnType("datetime2");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("IdNguoiDung");
-
-                    b.HasIndex("IdTour");
-
-                    b.ToTable("BinhLuanTours");
+                    b.ToTable("BinhLuanNhaHang");
                 });
 
             modelBuilder.Entity("ViewModel.Models.BinhLuanVanChuyen", b =>
@@ -179,12 +99,6 @@ namespace DuLich.Migrations
                     b.Property<string>("NoiDung")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<double>("Rating")
-                        .HasColumnType("float");
-
-                    b.Property<string>("Reply")
-                        .HasColumnType("nvarchar(max)");
-
                     b.Property<DateTime>("ThoiGian")
                         .HasColumnType("datetime2");
 
@@ -194,7 +108,7 @@ namespace DuLich.Migrations
 
                     b.HasIndex("IdVanChuyen");
 
-                    b.ToTable("BinhLuanVanChuyens");
+                    b.ToTable("BinhLuanVanChuyen");
                 });
 
             modelBuilder.Entity("ViewModel.Models.DatKhachSan", b =>
@@ -650,21 +564,6 @@ namespace DuLich.Migrations
                     b.ToTable("VanChuyens");
                 });
 
-            modelBuilder.Entity("ViewModel.Models.BinhLuanDiemThamQuan", b =>
-                {
-                    b.HasOne("ViewModel.Models.DiemThamQuan", "DiemThamQuan")
-                        .WithMany("BinhLuanDiemThamQuans")
-                        .HasForeignKey("IdDiemThamQuan");
-
-                    b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
-                        .WithMany("BinhLuanDiemThamQuans")
-                        .HasForeignKey("IdNguoiDung");
-
-                    b.Navigation("DiemThamQuan");
-
-                    b.Navigation("NguoiDung");
-                });
-
             modelBuilder.Entity("ViewModel.Models.BinhLuanKhachSan", b =>
                 {
                     b.HasOne("ViewModel.Models.KhachSan", "KhachSan")
@@ -693,21 +592,6 @@ namespace DuLich.Migrations
                     b.Navigation("NguoiDung");
 
                     b.Navigation("NhaHang");
-                });
-
-            modelBuilder.Entity("ViewModel.Models.BinhLuanTour", b =>
-                {
-                    b.HasOne("ViewModel.Models.NguoiDung", "NguoiDung")
-                        .WithMany("BinhLuanTours")
-                        .HasForeignKey("IdNguoiDung");
-
-                    b.HasOne("ViewModel.Models.Tour", "Tour")
-                        .WithMany("BinhLuanTours")
-                        .HasForeignKey("IdTour");
-
-                    b.Navigation("NguoiDung");
-
-                    b.Navigation("Tour");
                 });
 
             modelBuilder.Entity("ViewModel.Models.BinhLuanVanChuyen", b =>
@@ -864,8 +748,6 @@ namespace DuLich.Migrations
 
             modelBuilder.Entity("ViewModel.Models.DiemThamQuan", b =>
                 {
-                    b.Navigation("BinhLuanDiemThamQuans");
-
                     b.Navigation("DiemThamQuanCT");
                 });
 
@@ -878,13 +760,9 @@ namespace DuLich.Migrations
 
             modelBuilder.Entity("ViewModel.Models.NguoiDung", b =>
                 {
-                    b.Navigation("BinhLuanDiemThamQuans");
-
                     b.Navigation("BinhLuanKhachSans");
 
                     b.Navigation("BinhLuanNhaHangs");
-
-                    b.Navigation("BinhLuanTours");
 
                     b.Navigation("BinhLuanVanChuyens");
 
@@ -906,8 +784,6 @@ namespace DuLich.Migrations
 
             modelBuilder.Entity("ViewModel.Models.Tour", b =>
                 {
-                    b.Navigation("BinhLuanTours");
-
                     b.Navigation("DatTours");
 
                     b.Navigation("TourCT");

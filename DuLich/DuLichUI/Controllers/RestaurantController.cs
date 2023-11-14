@@ -27,6 +27,13 @@ namespace DuLichUI.Controllers
                 var id = HttpContext.Session.GetString("UserId");
                 var restaurants = await _restaurantAPI.GetNhaHangByOwner(int.Parse(id), "Bearer " + HttpContext.Session.GetString("BearerToken"));
                 ViewData["restaurants"] = restaurants;
+                var temp = HttpContext.Session.GetString("User");
+                if (temp != null)
+                {
+                    var user = Newtonsoft.Json.JsonConvert.DeserializeObject<NguoiDung>(temp);
+                    var x = await _userAPI.GetById(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+                    ViewData["user"] = x;
+                }
                 return View();
             }
             catch
@@ -45,6 +52,8 @@ namespace DuLichUI.Controllers
                 return Redirect("/restaurant/list");
             }
             ViewData["nhahangs"] = await _restaurantAPI.GetAll();
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserId")))
+                ViewData["UserId"] = HttpContext.Session.GetString("UserId");
             return View(restaurant);
         }
 
@@ -145,6 +154,14 @@ namespace DuLichUI.Controllers
             await _restaurantAPI.CreateNhaHang(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
             return Redirect("/restaurant");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBinhLuan([FromForm] BinhLuanNhaHangVM request)
+        {
+            await _restaurantAPI.BinhLuanNhaHang(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+
+            return Redirect("/restaurant/detail/" + request.IdNhaHang);
         }
     }
 }

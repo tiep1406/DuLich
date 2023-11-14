@@ -31,8 +31,18 @@ namespace DemoCrud.Responsitory
 
         public async Task<KhachSan> GetKhachSan(int id)
         {
-            var ds = await _DBContext.KhachSans.Include(x => x.NguoiDung).Where(x => x.Id == id).FirstOrDefaultAsync();
+            var ds = await _DBContext.KhachSans
+                .Include(x => x.NguoiDung)
+                .Include(x => x.BinhLuanKhachSans)
+                .ThenInclude(x => x.NguoiDung)
+                .Where(x => x.Id == id).FirstOrDefaultAsync();
             ds.AnhDaiDien = _uploadService.GetFullPath(ds.AnhDaiDien);
+            foreach (var t in ds.BinhLuanKhachSans)
+            {
+                var x = _uploadService.GetFullPath(t.NguoiDung.AnhDaiDien);
+                if (!t.NguoiDung.AnhDaiDien.Contains("/"))
+                    t.NguoiDung.AnhDaiDien = x;
+            }
             return ds;
         }
 
@@ -143,6 +153,20 @@ namespace DemoCrud.Responsitory
                 _DBContext.Update(KhachSan);
                 await _DBContext.SaveChangesAsync();
             }
+        }
+
+        public async Task BinhLuan(BinhLuanKhachSanVM binhLuanKhachSan)
+        {
+            var bl = new BinhLuanKhachSan()
+            {
+                IdKhachSan = binhLuanKhachSan.IdKhachSan,
+                IdNguoiDung = binhLuanKhachSan.IdNguoiDung,
+                NoiDung = binhLuanKhachSan.NoiDung,
+                Rating = binhLuanKhachSan.Rating,
+                ThoiGian = DateTime.Now
+            };
+            await _DBContext.BinhLuanKhachSans.AddAsync(bl);
+            await _DBContext.SaveChangesAsync();
         }
     }
 }

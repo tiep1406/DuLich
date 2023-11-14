@@ -2,10 +2,10 @@
 
 namespace ViewModel.Models
 {
-    public class BinhLuanVanChuyen : BaseEntity
+    public class BinhLuanTour : BaseEntity
     {
-        [ForeignKey("VanChuyen")]
-        public int? IdVanChuyen { get; set; }
+        [ForeignKey("Tour")]
+        public int? IdTour { get; set; }
 
         [ForeignKey("NguoiDung")]
         public int? IdNguoiDung { get; set; }
@@ -14,7 +14,7 @@ namespace ViewModel.Models
         public DateTime ThoiGian { get; set; }
         public double Rating { get; set; }
         public string Reply { get; set; }
-        public VanChuyen VanChuyen { get; set; }
+        public Tour Tour { get; set; }
         public NguoiDung NguoiDung { get; set; }
     }
 }

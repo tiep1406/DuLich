@@ -12,6 +12,8 @@ namespace ViewModel.Models
 
         public string NoiDung { get; set; }
         public DateTime ThoiGian { get; set; }
+        public double Rating { get; set; }
+        public string Reply { get; set; }
         public NhaHang NhaHang { get; set; }
         public NguoiDung NguoiDung { get; set; }
     }

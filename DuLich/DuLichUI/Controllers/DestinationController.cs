@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using ViewModel.Models;
+using ViewModel.ModelsView;
 using ViewModel.Request.DiemThamQuan;
 using ViewModel.Request.NhaHang;
 
@@ -26,6 +27,13 @@ namespace DuLichUI.Controllers
                 var id = HttpContext.Session.GetString("UserId");
                 var destinations = await _destinationAPI.GetDiemThamQuanByOwner(int.Parse(id), "Bearer " + HttpContext.Session.GetString("BearerToken"));
                 ViewData["destinations"] = destinations;
+                var temp = HttpContext.Session.GetString("User");
+                if (temp != null)
+                {
+                    var user = Newtonsoft.Json.JsonConvert.DeserializeObject<NguoiDung>(temp);
+                    var x = await _userAPI.GetById(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+                    ViewData["user"] = x;
+                }
                 return View();
             }
             catch
@@ -44,6 +52,8 @@ namespace DuLichUI.Controllers
                 return Redirect("/destination/list");
             }
             ViewData["dtqs"] = await _destinationAPI.GetAll();
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserId")))
+                ViewData["UserId"] = HttpContext.Session.GetString("UserId");
             return View(dest);
         }
 
@@ -60,6 +70,7 @@ namespace DuLichUI.Controllers
             var dtqs = await _destinationAPI.SearchDiemThamQuan(request);
             return View("List", dtqs);
         }
+
         public async Task<IActionResult> Create()
         {
             var temp = HttpContext.Session.GetString("User");
@@ -107,6 +118,14 @@ namespace DuLichUI.Controllers
             await _destinationAPI.CreateDiemThamQuan(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
             return Redirect("/destination");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBinhLuan([FromForm] BinhLuanDiemThamQuanVM request)
+        {
+            await _destinationAPI.BinhLuanDiemThamQuan(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+
+            return Redirect("/destination/detail/" + request.IdDiemThamQuan);
         }
     }
 }

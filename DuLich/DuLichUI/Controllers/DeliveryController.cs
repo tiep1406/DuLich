@@ -26,6 +26,13 @@ namespace DuLichUI.Controllers
                 var id = HttpContext.Session.GetString("UserId");
                 var deliverys = await _deliveryAPI.GetVanChuyenByOwner(int.Parse(id), "Bearer " + HttpContext.Session.GetString("BearerToken"));
                 ViewData["deliverys"] = deliverys;
+                var temp = HttpContext.Session.GetString("User");
+                if (temp != null)
+                {
+                    var user = Newtonsoft.Json.JsonConvert.DeserializeObject<NguoiDung>(temp);
+                    var x = await _userAPI.GetById(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+                    ViewData["user"] = x;
+                }
                 return View();
             }
             catch

@@ -12,6 +12,8 @@ namespace ViewModel.Models
         [ForeignKey("NguoiDung")]
         public int? IdNguoiDung { get; set; }
 
+        public double Rating { get; set; }
+        public string Reply { get; set; }
         public NguoiDung NguoiDung { get; set; }
 
         public string NoiDung { get; set; }

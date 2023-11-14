@@ -21,9 +21,14 @@ namespace ViewModel.Request.NguoiDung
         public string NoiO { get; set; }
 
         [Required]
+        public int PhanQuyen { get; set; }
+
+        [Required]
         public int GioiTinh { get; set; }
 
         [Required]
         public string CCCD { get; set; }
+
+        public List<int> DichVus { get; set; } = new List<int>();
     }
 }

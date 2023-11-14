@@ -35,6 +35,8 @@ namespace ViewModel.Request.NguoiDung
         [Required]
         public string CCCD { get; set; }
 
+        public List<int> DichVus { get; set; } = new List<int>();
+        public string DanhSachDichVu { get; set; }
         public IFormFile AnhDaiDien { get; set; }
     }
 }

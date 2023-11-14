@@ -213,6 +213,38 @@
                     <input class="form-control form-control-sm" type="password" id="register_matKhauConfirm" name="user_pass_confirm" placeholder="Confirm Password" data-match="#register_matKhau" required="required"/>
                     <div class="help-block">Xác nhận mật khẩu không khớp</div>
                   </div>
+                  
+                  <div class="form-group">
+                      <select onchange="yesnoCheck(this);" class="form-control form-control-md" type="text" name="PhanQuyen" id="register_quyen" required>
+                          <option value="1">Người dùng</option>
+                          <option value="2">Nhà cung cấp</option>
+                      </select>
+                  </div>
+                  <div class="form-group">
+                      <div id="ifYes" style="display: none;">
+                        <p>Vui lòng chọn dịch vụ cần cung cấp</p> 
+                        <div class="form-group">
+                            <input type="checkbox" name="DichVus" value="0" id="t"/>
+                            <label for="t">Tour du lịch</label> 
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="DichVus" value="1" id="ho"/>
+                            <label for="ho">Khách sạn</label> 
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="DichVus" value="2" id="de"/>
+                            <label for="de">Vận chuyển</label> 
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="DichVus" value="3" id="re"/>
+                            <label for="re">Nhà hàng</label> 
+                        </div>
+                        <div class="form-group">
+                            <input type="checkbox" name="DichVus" value="4" id="dtq"/>
+                            <label for="dtq">Điểm tham quan</label> 
+                        </div>
+                    </div>
+                  </div>
                   <div class="form-group">
                     <label class="custom-control custom-checkbox">
                       <input class="custom-control-input" id="agreePolicy" type="checkbox" required><span class="custom-control-label">I have read and agree to the  <a href="#">Terms of Use</a> and the  <a href="#">Privacy Policy.</a></span>
@@ -512,6 +544,10 @@
             });
         }
         function register() {
+            var selected = [];
+            $('#ifYes input:checked').each(function() {
+                selected.push($(this).attr('value'));
+            });
             let data = {
                 hoTen: $('#register_hoTen').val(),
                 sdt: $('#register_sdt').val(),
@@ -519,7 +555,9 @@
                 noiO: $('#register_noiO').val(),
                 gioiTinh: $('#register_gioiTinh').val(),
                 cccd: $('#register_cccd').val(),
-                email: $('#register_email').val()
+                email: $('#register_email').val(),
+                phanQuyen: $('#register_quyen').val(),
+                dichVus: selected
             }
 
             let hasEmpty = hasEmptyProperty(data);
@@ -564,6 +602,15 @@
                 history.pushState(null, '', path);
             }
         });
+    </script>
+    <script>
+        function yesnoCheck(that) {
+        if (that.value == "2") {
+            document.getElementById("ifYes").style.display = "block";
+        } else {
+            document.getElementById("ifYes").style.display = "none";
+        }
+    }
     </script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>

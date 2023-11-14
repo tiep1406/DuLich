@@ -1,4 +1,5 @@
-﻿using ViewModel.Request.Tour;
+﻿using ViewModel.ModelsView;
+using ViewModel.Request.Tour;
 
 namespace DuLich.Repository.Tour
 {
@@ -11,6 +12,8 @@ namespace DuLich.Repository.Tour
         Task ChinhSuaTour(ChinhSuaTourRequest request);
 
         Task XoaTour(int id);
+
+        Task BinhLuan(BinhLuanTourVM binhLuanTour);
 
         Task Toggle(int id);
 

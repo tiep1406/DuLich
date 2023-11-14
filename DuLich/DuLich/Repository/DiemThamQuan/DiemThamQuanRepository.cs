@@ -1,6 +1,8 @@
 ﻿using DuLich.Repository.DBContext;
 using DuLich.Service;
 using Microsoft.EntityFrameworkCore;
+using ViewModel.Models;
+using ViewModel.ModelsView;
 using ViewModel.Request.DiemThamQuan;
 
 namespace DuLich.Repository.DiemThamQuan
@@ -14,6 +16,21 @@ namespace DuLich.Repository.DiemThamQuan
         {
             _context = context;
             _uploadService = uploadService;
+        }
+
+        public async Task BinhLuan(BinhLuanDiemThamQuanVM binhLuanDiemThamQuan)
+        {
+            var bl = new BinhLuanDiemThamQuan()
+            {
+                IdDiemThamQuan = binhLuanDiemThamQuan.IdDiemThamQuan,
+                IdNguoiDung = binhLuanDiemThamQuan.IdNguoiDung,
+                NoiDung = binhLuanDiemThamQuan.NoiDung,
+                Rating = binhLuanDiemThamQuan.Rating,
+                ThoiGian = DateTime.Now
+            };
+
+            await _context.BinhLuanDiemThamQuans.AddAsync(bl);
+            await _context.SaveChangesAsync();
         }
 
         public async Task ChinhSuaDiemThamQuan(ChinhSuaDiemThamQuanRequest request)
@@ -60,12 +77,19 @@ namespace DuLich.Repository.DiemThamQuan
             var dtq = await _context.DiemThamQuans
                 .Include(x => x.DiemThamQuanCT)
                 .Include(x => x.NguoiDung)
+                .Include(x => x.BinhLuanDiemThamQuans)
+                .ThenInclude(x => x.NguoiDung)
                 .FirstOrDefaultAsync(x => x.Id == id)
                 ?? throw new KeyNotFoundException("Không tìm thấy điểm tham quan tương ứng");
 
             dtq.AnhDaiDien = _uploadService.GetFullPath(dtq.AnhDaiDien);
             dtq.DiemThamQuanCT.AnhChiTiet = _uploadService.GetFullPath(dtq.DiemThamQuanCT.AnhChiTiet);
-
+            foreach (var t in dtq.BinhLuanDiemThamQuans)
+            {
+                var x = _uploadService.GetFullPath(t.NguoiDung.AnhDaiDien);
+                if(!t.NguoiDung.AnhDaiDien.Contains("/"))
+                    t.NguoiDung.AnhDaiDien = x;
+            }
             return dtq;
         }
 

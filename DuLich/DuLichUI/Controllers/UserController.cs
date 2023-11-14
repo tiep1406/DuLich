@@ -46,6 +46,9 @@ namespace DuLichUI.Controllers
                 ViewData["hotels"] = await _hotelAPI.GetKhachSanOrder(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
                 ViewData["restaurants"] = await _restaurantAPI.GetNhaHangOrder(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
                 ViewData["deliverys"] = await _deliveryAPI.GetVanChuyenOrder(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+
+                var x = await _userAPI.GetById(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+                ViewData["user"] = x;
             }
             return View();
         }
@@ -56,6 +59,8 @@ namespace DuLichUI.Controllers
             if (temp != null)
             {
                 var user = Newtonsoft.Json.JsonConvert.DeserializeObject<NguoiDung>(temp);
+                var x = await _userAPI.GetById(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+                ViewData["user"] = x;
                 var tours = (await _tourAPI.GetTourByOwner(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken")));
                 var orderTours = new List<DatTour>();
                 tours.ForEach(x =>

@@ -21,5 +21,6 @@ namespace ViewModel.Models
         public bool TrangThai { get; set; } = true;
         public List<DatTour> DatTours { get; set; }
         public TourCT TourCT { get; set; }
+        public List<BinhLuanTour> BinhLuanTours { get; set; }
     }
 }

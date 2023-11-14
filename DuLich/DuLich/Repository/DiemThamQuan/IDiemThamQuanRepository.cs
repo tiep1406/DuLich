@@ -1,4 +1,5 @@
-﻿using ViewModel.Request.DiemThamQuan;
+﻿using ViewModel.ModelsView;
+using ViewModel.Request.DiemThamQuan;
 
 namespace DuLich.Repository.DiemThamQuan
 {
@@ -11,6 +12,8 @@ namespace DuLich.Repository.DiemThamQuan
         Task XoaDiemThamQuan(int id);
 
         Task Toggle(int id);
+
+        Task BinhLuan(BinhLuanDiemThamQuanVM binhLuanDiemThamQuan);
 
         Task<List<ViewModel.Models.DiemThamQuan>> GetDanhSachDiemThamQuan();
 

@@ -18,6 +18,8 @@ namespace DemoCrud.Responsitory
 
         Task Add(KhachSanVM KhachSan);
 
+        Task BinhLuan(BinhLuanKhachSanVM binhLuanKhachSan);
+
         Task DatKhachSan(DatKhachSanVM datKhachSan);
 
         Task<List<KhachSan>> Search(TimKiemKhachSanRequest request);

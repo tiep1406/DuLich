@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using ViewModel.ModelsView;
 using ViewModel.Request.DiemThamQuan;
 
 namespace DuLich.Controllers
@@ -31,6 +32,14 @@ namespace DuLich.Controllers
         public async Task<IActionResult> Toggle([FromRoute] int id)
         {
             await _repository.Toggle(id);
+
+            return NoContent();
+        }
+
+        [HttpPost("binhluan")]
+        public async Task<IActionResult> BinhLuanDiemThamQuan(BinhLuanDiemThamQuanVM request)
+        {
+            await _repository.BinhLuan(request);
 
             return NoContent();
         }

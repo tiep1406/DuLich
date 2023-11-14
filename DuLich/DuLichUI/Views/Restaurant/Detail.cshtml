@@ -118,188 +118,93 @@
                         </div>
                         <div class="tab-pane" id="hotelReviews" role="tabpanel">
                             <section>
-                                <h3 class="fw-md">Guest reviews</h3>
+                                <h3 class="fw-md">Đánh giá</h3>
                                 <hr class="mb-4">
                                 <div class="hotel-card hotel-review">
                                     <div class="row">
                                         <div class="hotel-review__total col-12 col-sm-4">
                                             <ul class="total d-flex mb-1">
-                                                <li class="total__item">8,2</li>
+                                                <li class="total__item">@(Model?.BinhLuanNhaHangs?.Count > 0 ? Model?.BinhLuanNhaHangs?.Average(x => x.Rating) : 0)</li>
                                                 <li class="total__item">10</li>
                                             </ul>
                                             <p class="review">
-                                                Based on  <span class="reviews">9803</span>
-                                                reviews
+                                                Tổng  <span class="reviews">@Model?.BinhLuanNhaHangs?.Count</span>
+                                                đánh giá
                                             </p>
                                             <hr>
-                                            <p>Guest reviews are written by our customers after their stay at Hotel Ravena</p>
                                         </div>
-                                        <div class="hotel-review__progress col-12 col-sm-8 js-point-progress">
-                                            <div class="item pr-3">
-                                                <div class="mb-1">Comfort</div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="progress progress--lg">
-                                                        <div class="progress-bar bg-secondary" role="progressbar" style="width: 0%" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100">
-                                                        </div>
-                                                    </div><span class="fw-bold">8.2</span>
-                                                </div>
+                                        @if (ViewData["UserId"] != null)
+                                        {
+                                            <div class="hotel-review__progress col-12 col-sm-8 js-point-progress">
+                                                <form action="/restaurant/CreateBinhLuan" method="post">
+                                                    <input hidden value="@Model?.Id" name="IdNhaHang" />
+                                                    <input hidden value="@ViewData["UserId"]" name="IdNguoiDung" />
+                                                    <div class="form-group">
+                                                        <label>Điểm: </label>
+                                                        <input required type="number" step="0.1" min="0" max="10" name="Rating" />
+                                                    </div>
+                                                    <div class="form-group d-flex flex-column">
+                                                        <label>Nội dung: </label>
+                                                        <textarea name="NoiDung" required></textarea>
+                                                    </div>
+                                                    <button type="submit" class="btn-success btn">Đánh giá</button>
+                                                </form>
                                             </div>
-                                            <div class="item pr-3">
-                                                <div class="mb-1">Facilities</div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="progress progress--lg">
-                                                        <div class="progress-bar bg-secondary" role="progressbar" style="width: 0%" aria-valuenow="93" aria-valuemin="0" aria-valuemax="100">
-                                                        </div>
-                                                    </div><span class="fw-bold">9.3</span>
-                                                </div>
-                                            </div>
-                                            <div class="item pr-3">
-                                                <div class="mb-1">Staff</div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="progress progress--lg">
-                                                        <div class="progress-bar bg-secondary" role="progressbar" style="width: 0%" aria-valuenow="76" aria-valuemin="0" aria-valuemax="100">
-                                                        </div>
-                                                    </div><span class="fw-bold">7.6</span>
-                                                </div>
-                                            </div>
-                                            <div class="item pr-3">
-                                                <div class="mb-1">Food</div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="progress progress--lg">
-                                                        <div class="progress-bar bg-secondary" role="progressbar" style="width: 0%" aria-valuenow="85" aria-valuemin="0" aria-valuemax="100">
-                                                        </div>
-                                                    </div><span class="fw-bold">8.5</span>
-                                                </div>
-                                            </div>
-                                            <div class="item pr-3">
-                                                <div class="mb-1">Price-quality ratio</div>
-                                                <div class="d-flex align-items-center">
-                                                    <div class="progress progress--lg">
-                                                        <div class="progress-bar bg-secondary" role="progressbar" style="width: 0%" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100">
-                                                        </div>
-                                                    </div><span class="fw-bold">8.2</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        }
                                     </div>
                                 </div>
                                 <div class="hotel-card hotel-guests">
                                     <ul class="hotel-guests__list">
-                                        <li class="comment">
-                                            <div class="row flex-sm-nowrap">
-                                                <div class="comment__left col-12 col-sm-5 col-md-4 mb-4">
-                                                    <div class="d-flex align-items-center w-100">
-                                                        <div class="comment__avatar rounded-circle">
-                                                            <img class="img-fluid rounded-circle" src="/img/avatar-2.jpg" alt="#" />
-                                                        </div>
-                                                        <div class="comment__right">
-                                                            <div class="comment__name mb-0">Jessica</div>
-                                                            <ul class="d-flex align-items-center">
-                                                                <li class="comment__flag mr-2">
-                                                                    <img src="/img/en.png" alt="#" />
-                                                                </li>
-                                                                <li class="comment__country fz-xs">USA</li>
-                                                            </ul>
-                                                            <ul class="comment__like d-flex align-items-baseline fz-xs">
-                                                                <li><i class="icon icon-like-up"></i><span>17</span></li>
-                                                                <li><i class="icon icon-like-down"></i><span>2</span></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="comment__content col-12 col-sm-7 col-md-8">
-                                                    <div class="pr-3">
-                                                        <div class="comment__meta mb-3">
-                                                            <ul class="row justify-content-sm-between align-items-baseline">
-                                                                <li class="comment__level d-flex align-items-center mb-2">
-                                                                    <div class="badge bg-primary">9.0</div>
-                                                                    <h4 class="level m-0">Excellent</h4>
-                                                                </li>
-                                                                <li class="comment__date mb-2">
-                                                                    <span>Review Date:</span>
-                                                                    <time datetime="2017-07-18">July 18, 2017</time>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="comment__desc">
-                                                            <div class="d-flex">
-                                                                <div class="media-object"><i class="icon icon-plus-inside text-success"></i></div>
-                                                                <div class="content">
-                                                                    <p>Excellent breakfast, freshly brewed coffee - specially prepared by the waiter at you. A good big hotel, beautiful design, clean, comfortable parking free at the bottom, spacious rooms.</p>
-                                                                </div>
+                                        @foreach (var item in Model?.BinhLuanNhaHangs)
+                                        {
+                                            <li class="comment">
+                                                <div class="row flex-sm-nowrap">
+                                                    <div class="comment__left col-12 col-sm-5 col-md-4 mb-4">
+                                                        <div class="d-flex align-items-center w-100">
+                                                            <div class="comment__avatar rounded-circle">
+                                                                <img class="img-fluid rounded-circle" src="@item?.NguoiDung?.AnhDaiDien" alt="#" />
                                                             </div>
-                                                            <div class="d-flex">
-                                                                <div class="media-object"><i class="icon icon-minus-inside text-danger"></i></div>
-                                                                <div class="content">
-                                                                    <p>Far from the center, there is no dressing gown or taprock, or shampoo.</p>
-                                                                </div>
+                                                            <div class="comment__right">
+                                                                <div class="comment__name mb-0">@item?.NguoiDung?.HoTen</div>
                                                             </div>
                                                         </div>
                                                     </div>
-                                                    <div class="comment__alert alert d-flex bg-primary-light">
-                                                        <div class="media-object pr-3"><i class="icon icon-comments"></i></div>
-                                                        <div class="alert__content">
-                                                            <h4 class="mb-1">Ravena Hotel responded to this review</h4>
-                                                            <p>Dear Jessica, thank you for taking the time to leave a feedback about your stay at the Raven Hotel. Glad you liked it. We will certainly take into account your comments to make arrivals at the hotel even more comfortable.</p>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </li>
-                                        <li class="comment">
-                                            <div class="row flex-sm-nowrap">
-                                                <div class="comment__left col-12 col-sm-5 col-md-4 mb-4">
-                                                    <div class="d-flex align-items-center w-100">
-                                                        <div class="comment__avatar rounded-circle">
-                                                            <img class="img-fluid rounded-circle" src="/img/avatar-1.jpg" alt="#" />
-                                                        </div>
-                                                        <div class="comment__right">
-                                                            <div class="comment__name mb-0">Roman</div>
-                                                            <ul class="d-flex align-items-center">
-                                                                <li class="comment__flag mr-2">
-                                                                    <img src="/img/ru.png" alt="#" />
-                                                                </li>
-                                                                <li class="comment__country fz-xs">Russia</li>
-                                                            </ul>
-                                                            <ul class="comment__like d-flex align-items-baseline fz-xs">
-                                                                <li><i class="icon icon-like-up"></i><span>17</span></li>
-                                                                <li><i class="icon icon-like-down"></i><span>2</span></li>
-                                                            </ul>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <div class="comment__content col-12 col-sm-7 col-md-8">
-                                                    <div class="pr-3">
-                                                        <div class="comment__meta mb-3">
-                                                            <ul class="row justify-content-sm-between align-items-baseline">
-                                                                <li class="comment__level d-flex align-items-center mb-2">
-                                                                    <div class="badge bg-primary">9.2</div>
-                                                                    <h4 class="level m-0">Excellent</h4>
-                                                                </li>
-                                                                <li class="comment__date mb-2">
-                                                                    <span>Review Date:</span>
-                                                                    <time datetime="2017-05-15">May 15, 2017</time>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                        <div class="comment__desc">
-                                                            <div class="d-flex">
-                                                                <div class="media-object"><i class="icon icon-plus-inside text-success"></i></div>
-                                                                <div class="content">
-                                                                    <p>For breakfast buffet, a comfortable place for breakfast, with a large load, the staff does not have time to clean from the tables, but this will make you wait literally minutes 2. The rooms are nice, the staff is polite. And the price-quality really fit.</p>
-                                                                </div>
+                                                    <div class="comment__content col-12 col-sm-7 col-md-8">
+                                                        <div class="pr-3">
+                                                            <div class="comment__meta mb-3">
+                                                                <ul class="row justify-content-sm-between align-items-baseline">
+                                                                    <li class="comment__level d-flex align-items-center mb-2">
+                                                                        <div class="badge bg-primary">@item.Rating</div>
+                                                                    </li>
+                                                                    <li class="comment__date mb-2">
+                                                                        <span>Ngày đánh giá:</span>
+                                                                        <time datetime="2017-07-18">@item.ThoiGian.ToString()</time>
+                                                                    </li>
+                                                                </ul>
                                                             </div>
-                                                            <div class="d-flex">
-                                                                <div class="media-object"><i class="icon icon-minus-inside text-danger"></i></div>
-                                                                <div class="content">
-                                                                    <p>Cold in the rooms, when the heating was switched on, but the room was heated only in the middle of the night.</p>
+                                                            <div class="comment__desc">
+                                                                <div class="d-flex">
+                                                                    <div class="media-object"><i class="icon icon-plus-inside text-success"></i></div>
+                                                                    <div class="content">
+                                                                        <p>@item.NoiDung</p>
+                                                                    </div>
                                                                 </div>
                                                             </div>
                                                         </div>
+                                                        @if (!string.IsNullOrEmpty(item.Reply))
+                                                        {
+                                                            <div class="comment__alert alert d-flex bg-primary-light">
+                                                                <div class="media-object pr-3"><i class="icon icon-comments"></i></div>
+                                                                <div class="alert__content">
+                                                                    <h4 class="mb-1">Phản hồi</h4>
+                                                                    <p>@item.Reply</p>
+                                                                </div>
+                                                            </div>
+                                                        }
                                                     </div>
                                                 </div>
-                                            </div>
-                                        </li>
+                                            </li>
+                                        }
                                     </ul>
                                 </div>
                             </section>

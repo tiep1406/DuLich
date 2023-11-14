@@ -1,5 +1,6 @@
 ﻿using RestEase;
 using ViewModel.Models;
+using ViewModel.ModelsView;
 using ViewModel.Request.Tour;
 
 namespace APIIntegration.Interfaces
@@ -32,6 +33,9 @@ namespace APIIntegration.Interfaces
 
         [Put("tours/toggle/{id}")]
         Task Toggle([Path("id")] int id, [Header("Authorization")] string authorization);
+
+        [Post("tours/binhluan")]
+        Task BinhLuanTour([Body] BinhLuanTourVM request, [Header("Authorization")] string authorization);
     }
 
     public static class TourAPIExtensions

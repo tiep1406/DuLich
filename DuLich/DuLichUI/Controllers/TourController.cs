@@ -4,6 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 using RestEase.Implementation;
 using System.Linq.Expressions;
 using ViewModel.Models;
+using ViewModel.ModelsView;
 using ViewModel.Request.Tour;
 
 namespace DuLichUI.Controllers
@@ -27,6 +28,13 @@ namespace DuLichUI.Controllers
                 var id = HttpContext.Session.GetString("UserId");
                 var tours = await _tourAPI.GetTourByOwner(int.Parse(id), "Bearer " + HttpContext.Session.GetString("BearerToken"));
                 ViewData["tours"] = tours;
+                var temp = HttpContext.Session.GetString("User");
+                if (temp != null)
+                {
+                    var user = Newtonsoft.Json.JsonConvert.DeserializeObject<NguoiDung>(temp);
+                    var x = await _userAPI.GetById(user.Id, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+                    ViewData["user"] = x;
+                }
                 return View();
             }
             catch
@@ -45,6 +53,8 @@ namespace DuLichUI.Controllers
                 return Redirect("/tour/list");
             }
             ViewData["tours"] = await _tourAPI.GetAll();
+            if (!string.IsNullOrEmpty(HttpContext.Session.GetString("UserId")))
+                ViewData["UserId"] = HttpContext.Session.GetString("UserId");
             return View(tour);
         }
 
@@ -144,6 +154,14 @@ namespace DuLichUI.Controllers
             await _tourAPI.CreateTour(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
 
             return Redirect("/tour");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> CreateBinhLuan([FromForm] BinhLuanTourVM request)
+        {
+            await _tourAPI.BinhLuanTour(request, "Bearer " + HttpContext.Session.GetString("BearerToken"));
+
+            return Redirect("/tour/detail/" + request.IdTour);
         }
     }
 }

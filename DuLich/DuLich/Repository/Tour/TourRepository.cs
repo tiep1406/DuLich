@@ -2,6 +2,7 @@
 using DuLich.Service;
 using Microsoft.EntityFrameworkCore;
 using ViewModel.Models;
+using ViewModel.ModelsView;
 using ViewModel.Request.Tour;
 
 namespace DuLich.Repository.Tour
@@ -74,9 +75,17 @@ namespace DuLich.Repository.Tour
             var tour = await _context.Tours
                 .Include(x => x.TourCT)
                 .Include(x => x.NguoiDung)
+                .Include(x => x.BinhLuanTours)
+                .ThenInclude(x => x.NguoiDung)
                 .FirstOrDefaultAsync(x => x.Id == id)
                 ?? throw new KeyNotFoundException("Không tìm thấy tour tương ứng");
             tour.HinhAnhTour = _uploadService.GetFullPath(tour.HinhAnhTour);
+            foreach (var t in tour.BinhLuanTours)
+            {
+                var x = _uploadService.GetFullPath(t.NguoiDung.AnhDaiDien);
+                if (!t.NguoiDung.AnhDaiDien.Contains("/"))
+                    t.NguoiDung.AnhDaiDien = x;
+            }
             return tour;
         }
 
@@ -195,6 +204,21 @@ namespace DuLich.Repository.Tour
                 ?? throw new KeyNotFoundException("Không tìm thấy tour tương ứng");
             tour.TrangThai = !tour.TrangThai;
             _context.Tours.Update(tour);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task BinhLuan(BinhLuanTourVM binhLuanTour)
+        {
+            var bl = new BinhLuanTour()
+            {
+                IdTour = binhLuanTour.IdTour,
+                IdNguoiDung = binhLuanTour.IdNguoiDung,
+                NoiDung = binhLuanTour.NoiDung,
+                Rating = binhLuanTour.Rating,
+                ThoiGian = DateTime.Now
+            };
+
+            await _context.BinhLuanTours.AddAsync(bl);
             await _context.SaveChangesAsync();
         }
     }

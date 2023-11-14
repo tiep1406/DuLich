@@ -3,18 +3,37 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
     ViewData["Title"] = "Quản lý điểm tham quan";
     List<DiemThamQuan> dtqs = (List<DiemThamQuan>)ViewData["destinations"];
+    NguoiDung user = ViewData["user"] as NguoiDung;
 }
 <div class="container-xl px-4 mt-4">
     <!-- Account page navigation-->
     <nav class="nav nav-borders">
         <a class="nav-link" href="/user">Profile</a>
         <a class="nav-link" href="/user/order">Đơn hàng của tôi</a>
-        <a class="nav-link" href="/user/guestorder">Đơn hàng của khách</a>
-        <a class="nav-link" href="/tour">Quản lý tour</a>
-        <a class="nav-link active ms-0">Quản lý điểm tham quan</a>
-        <a class="nav-link" href="/restaurant">Quản lý nhà hàng</a>
-        <a class="nav-link" href="/hotel">Quản lý khách sạn</a>
-        <a class="nav-link" href="/delivery">Quản lý vận chuyển</a>
+        @if (user.PhanQuyen == 2)
+        {
+            <a class="nav-link" href="/user/guestorder">Đơn hàng của khách</a>
+        }
+        @if (user.PhanQuyen == 2 && user.DanhSachDichVu.Contains("0"))
+        {
+            <a class="nav-link" href="/tour">Quản lý tour</a>
+        }
+        @if (user.PhanQuyen == 2 && user.DanhSachDichVu.Contains("1"))
+        {
+            <a class="nav-link" href="/hotel">Quản lý khách sạn</a>
+        }
+        @if (user.PhanQuyen == 2 && user.DanhSachDichVu.Contains("2"))
+        {
+            <a class="nav-link" href="/delivery">Quản lý vận chuyển</a>
+        }
+        @if (user.PhanQuyen == 2 && user.DanhSachDichVu.Contains("3"))
+        {
+            <a class="nav-link" href="/restaurant">Quản lý nhà hàng</a>
+        }
+        @if (user.PhanQuyen == 2 && user.DanhSachDichVu.Contains("4"))
+        {
+            <a class="nav-link active ms-0" href="/destination">Quản lý điểm tham quan</a>
+        }
     </nav>
     <hr class="mt-0 mb-4">
     <div class=" bg-white p-5">

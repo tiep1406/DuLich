@@ -6,18 +6,37 @@
     List<DatVanChuyen> deliverys = (List<DatVanChuyen>)ViewData["deliverys"];
     List<DatNhaHang> restaurants = (List<DatNhaHang>)ViewData["restaurants"];
     List<DatKhachSan> hotels = (List<DatKhachSan>)ViewData["hotels"];
+    NguoiDung user = ViewData["user"] as NguoiDung;
 }
 <div class="container-xxl px-5 mt-4">
     <!-- Account page navigation-->
     <nav class="nav nav-borders">
         <a class="nav-link" href="/user">Profile</a>
         <a class="nav-link" href="/user/order">Đơn hàng của tôi</a>
-        <a class="nav-link active ms-0">Đơn hàng của khách</a>
-        <a class="nav-link" href="/tour">Quản lý tour</a>
-        <a class="nav-link" href="/destination">Quản lý điểm tham quan</a>
-        <a class="nav-link" href="/restaurant">Quản lý nhà hàng</a>
-        <a class="nav-link" href="/hotel">Quản lý khách sạn</a>
-        <a class="nav-link" href="/delivery">Quản lý vận chuyển</a>
+        @if (user.PhanQuyen == 2)
+        {
+            <a class="nav-link active ms-0" href="/user/guestorder">Đơn hàng của khách</a>
+        }
+        @if (user.PhanQuyen == 2 && user.DanhSachDichVu.Contains("0"))
+        {
+            <a class="nav-link" href="/tour">Quản lý tour</a>
+        }
+        @if (user.PhanQuyen == 2 && user.DanhSachDichVu.Contains("1"))
+        {
+            <a class="nav-link" href="/hotel">Quản lý khách sạn</a>
+        }
+        @if (user.PhanQuyen == 2 && user.DanhSachDichVu.Contains("2"))
+        {
+            <a class="nav-link" href="/delivery">Quản lý vận chuyển</a>
+        }
+        @if (user.PhanQuyen == 2 && user.DanhSachDichVu.Contains("3"))
+        {
+            <a class="nav-link" href="/restaurant">Quản lý nhà hàng</a>
+        }
+        @if (user.PhanQuyen == 2 && user.DanhSachDichVu.Contains("4"))
+        {
+            <a class="nav-link" href="/destination">Quản lý điểm tham quan</a>
+        }
     </nav>
     <hr class="mt-0 mb-4">
     <div class="mt-4 mb-4 bg-white p-5">
